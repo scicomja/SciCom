@@ -1,26 +1,30 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-
+import {
+  Jumbotron, Button,
+  Container, Row, Col,
+} from 'reactstrap'
+import Header from './Header'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import LoginPage from './pages/LoginPage'
+import AboutPage from './pages/AboutPage'
+import { Provider } from 'react-redux'
+import configureStore from './store'
+const store = configureStore()
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Provider store={store}>
+        <div className="App">
+          <Header />
+          <Router>
+            <Switch>
+              <Route exact path="/" component={LoginPage} />
+              <Route exact path="/about" component={AboutPage} />
+            </Switch>
+        </Router>
+        </div>
+      </Provider>
     );
   }
 }
