@@ -19,8 +19,8 @@ class UserPage extends React.Component {
   */
   constructor(props) {
     super(props)
-
   }
+
   headerBar() {
     return (
       <div className="bg-secondary" style={style.coverPhoto}>
@@ -31,17 +31,22 @@ class UserPage extends React.Component {
     )
   }
   render() {
+    if(!this.props.user) {
+      this.props.history.push('/')
+      return null
+    }
     return (
-      <div style={style.container}>
+      <div className="page center" style={style.container}>
         {this.headerBar()}
       </div>
     )
   }
 }
 
-const mapStateToProps = state => ({
-  user: state.auth.user
-})
+const mapStateToProps = state => {
+  console.log('map state to props', state)
+  return {user: state.auth.user}
+}
 const coverPhotoHeight = 200
 const style = {
   coverPhoto: {
@@ -65,5 +70,6 @@ const style = {
     left: 30
   }
 }
-const routedUserPage = withRouter(UserPage)
-export default connect(mapStateToProps, null)(routedUserPage)
+export default withRouter(
+  connect(mapStateToProps, null)(UserPage)
+)

@@ -11,13 +11,20 @@ import AboutPage from './pages/AboutPage'
 import { Provider, connect } from 'react-redux'
 import configureStore from './store'
 import UserPage from './pages/UserPage'
+import { withRouter } from 'react-router-dom'
+import { createBrowserHistory } from 'history'
 
-const store = configureStore()
+import { PersistGate } from 'redux-persist/integration/react'
+const {store, persistor} = configureStore()
+
+export const history = createBrowserHistory()
 class Root extends Component {
   render() {
     return (
       <Provider store={store}>
-        <AppContainer />
+        <PersistGate loading={null} persistor={persistor}>
+          <AppContainer />
+        </PersistGate>
       </Provider>
     );
   }
@@ -27,12 +34,14 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header mode={this.props.mode}/>
-        <Router>
+        <Header
+          user={this.props.auth.user}
+          mode={this.props.mode}/>
+        <Router history={history}>
           <Switch>
-            <Route exact path="/" component={LoginPage} />
-            <Route exact path="/about" component={AboutPage} />
-            <Route path="/user/:email?" component={UserPage} />
+            <Route path="/about" component={AboutPage} />
+            <Route path="/user" component={UserPage} />
+            <Route path="/" component={LoginPage} />
           </Switch>
       </Router>
       </div>
@@ -41,4 +50,4 @@ class App extends Component {
 }
 const mapStateToProps = state => state
 const AppContainer = connect(mapStateToProps, null)(App)
-export default Root;
+export default Root

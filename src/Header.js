@@ -13,7 +13,7 @@ import  {
   DropdownMenu,
   DropdownItem
 } from 'reactstrap'
-
+import { LOGOUT } from './actions/auth'
 class Header extends Component {
   /*
 
@@ -27,7 +27,7 @@ class Header extends Component {
             <NavLink href="/user"> {username} </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="/logout"> Logout </NavLink>
+            <NavLink href="/" onClick={this.props.logout}> Logout </NavLink>
           </NavItem>
         </Nav>
       )
@@ -57,4 +57,9 @@ class Header extends Component {
 const mapStateToProps = state => ({
   user: state.auth.user
 })
-export default connect(mapStateToProps, null)(Header)
+const mapDispatchToProps = dispatch => ({
+  logout: () => dispatch({
+    type: LOGOUT
+  })
+})
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

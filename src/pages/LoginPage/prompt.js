@@ -71,8 +71,9 @@ class Prompt extends React.Component {
         ...formValues,
         isPolitician
       }
-      console.log('payload', payload)
       this.props.register(payload)
+
+      setTimeout(() => this.props.history.push('/user'), 2000)
     }
   }
   getAlert() {

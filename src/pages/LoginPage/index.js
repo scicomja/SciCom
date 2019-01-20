@@ -7,12 +7,16 @@ import LoginCard from './LoginCard'
 import {login as Locale} from '../../locale'
 import { Mode } from '../../constants'
 import Prompt from './prompt'
+import { withRouter } from 'react-router-dom'
 
-export default class LoginPage extends Component {
+class LoginPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
       mode: null
+    }
+    if(!props.user) {
+      return
     }
   }
   register(asPolitician) {
@@ -77,6 +81,7 @@ const style = {
     marginTop: 32
   },
   container: {
-    // h
   }
 }
+
+export default withRouter(LoginPage)

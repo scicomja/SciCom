@@ -1,5 +1,5 @@
 import { put, call, takeLatest } from 'redux-saga/effects'
-import { push } from 'react-router-redux'
+import { history } from '../App'
 import { serverURL } from '../constants'
 import { postJSON } from '../utils/requests'
 import { authorizedRequestGet } from '../utils/requests'
@@ -14,22 +14,25 @@ export function* login({ username, password }) {
   const payload = {username, password}
   const response = yield postJSON(`${serverURL}/auth/login`, payload)
   const { error, token } = response
-  console.log("got token ", token)
   if(error) {
     yield put({
       type: LoginActions.SET_AUTH_ERROR,
       error
     })
   } else {
+
     yield put({
       type: LoginActions.SET_TOKEN,
       token
     })
+
     const user = yield call(getUser)
     yield put({
       type: LoginActions.SET_USER,
       user
     })
+    yield call(history.push, '/user')
+    window.location.refresh()
   }
 }
 
@@ -52,6 +55,10 @@ export function* register({ username, password, email, isPolitician}) {
       type: LoginActions.SET_USER,
       user
     })
+    // finally, redirect to user's home page
+    // yield put(push('/user/'))
+    yield call(history.push, '/user')
+    window.location.refresh()
   }
 }
 
