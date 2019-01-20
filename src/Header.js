@@ -15,14 +15,34 @@ import  {
 } from 'reactstrap'
 import { LOGOUT } from './actions/auth'
 class Header extends Component {
-  /*
+  getSearchNavItems() {
+    if(!this.props.user) return null
+    const { isPolitician } = this.props.user
+    let searchItems = [(
+      <NavItem>
+        <NavLink onClick={() => this.searchUsers()}>
+          Search Users
+        </NavLink>
+      </NavItem>
+    )]
+    if (!isPolitician) {
+      searchItems.push((
+        <NavItem>
+          <NavLink onClick={() => this.searchProjects()}>
+            Search Projects
+          </NavLink>
+        </NavItem>
+      ))
+    }
 
-  */
+    return searchItems
+  }
   getNavItem() {
     if(this.props.user) {
       const { username } = this.props.user
       return (
         <Nav className="ml-auto" navbar>
+          {this.getSearchNavItems()}
           <NavItem>
             <NavLink href="/user"> {username} </NavLink>
           </NavItem>
@@ -35,6 +55,7 @@ class Header extends Component {
       // not logged in...
       return (
         <Nav className="ml-auto" navbar>
+          {this.getSearchNavItems()}
           <NavItem>
             <NavLink href="/about">Über uns</NavLink>
           </NavItem>

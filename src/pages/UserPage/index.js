@@ -36,17 +36,16 @@ class UserPage extends React.Component {
       return null
     }
     return (
-      <div className="page center" style={style.container}>
+      <div style={style.container}>
         {this.headerBar()}
       </div>
     )
   }
 }
 
-const mapStateToProps = state => {
-  console.log('map state to props', state)
-  return {user: state.auth.user}
-}
+const mapStateToProps = state => ({
+  user: state.auth.user
+})
 const coverPhotoHeight = 200
 const style = {
   coverPhoto: {
