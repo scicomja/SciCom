@@ -4,7 +4,7 @@ import {
   Button
 } from 'reactstrap'
 import { login as Locale, common as CommonLocale } from '../../locale'
-import { Mode } from './constants'
+import { Mode } from '../../constants'
 import { CreateForm } from '../../utils/Form'
 import { login as requestLogin } from './backend'
 import { connect } from 'react-redux'

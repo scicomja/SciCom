@@ -1,13 +1,12 @@
 import * as Actions from '../action'
-
 const initialState = {
-  loggedIn: false,
+  mode: null,
 }
 
 export default function reducer(state = initialState, action) {
   switch(action.type) {
     case Actions.LOGIN:
-      return { ...state, loggedIn: true }
+      return { ...state, mode: action.mode }
     default:
       return state
   }
