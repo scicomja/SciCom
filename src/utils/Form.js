@@ -45,9 +45,15 @@ export const CreateForm = (config) => {
         return TextInput(conf)
     }
   })
-  return (
+  const form = (
     <Form>
       {fields}
     </Form>
   )
+  const getFormValues = () => config.reduce(
+    (values, { fieldName }) => {
+      values[fieldName] = document.getElementById(fieldName).value
+      return values
+    }, {})
+  return { form, getFormValues }
 }

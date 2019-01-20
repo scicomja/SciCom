@@ -1,22 +1,24 @@
 import React from 'react'
 import {
+  Alert,
   Modal, ModalHeader, ModalBody, ModalFooter,
   Button
 } from 'reactstrap'
 import { login as Locale, common as CommonLocale } from '../../locale'
 import { Mode } from './constants'
 import { CreateForm } from '../../utils/Form'
-import { login as requestLogin } from './backend'
 import { connect } from 'react-redux'
-import * as Actions from '../../action'
+import * as Actions from '../../actions/auth'
 import { withRouter } from 'react-router-dom'
+import _ from 'lodash'
 
 class Prompt extends React.Component {
   constructor(props) {
     super(props)
-
     this.state = {
+      // fields that could be filled out
       form: {
+        username: "",
         email: "",
         password: ""
       }
@@ -33,13 +35,18 @@ class Prompt extends React.Component {
     }
   }
   isLogin() {
-    return this.props.mode === Mode.REGISTER_PHD || this.props.mode === Mode.REGISTER_POLITICIAN
+    return this.props.mode === Mode.LOGIN
   }
   loginOrRegisterString() {
     return this.isLogin()?Locale.login.de:Locale.register.de
   }
-  getForm() {
-    return CreateForm([
+  getFields() {
+    let fields = [
+      {
+        type: 'username',
+        fieldName: 'username',
+        placeholder: 'username'
+      },
       {
         type: 'email',
         fieldName: 'email',
@@ -50,40 +57,59 @@ class Prompt extends React.Component {
         fieldName: 'password',
         placeholder: 'password'
       }
-    ])
+    ]
+    if(this.isLogin()) {
+      // no email required for this login
+      fields = fields.filter(f => f.type !== 'email')
+    }
+    return fields
+  }
+  getForm() {
+    const fields = this.getFields()
+    const { form } = CreateForm(fields)
+    return form
   }
   submit() {
-    // TODO: remove hardcode
-    let payload = {
-      ...this.state.form
+    const fields = this.getFields()
+    const { getFormValues } = CreateForm(fields)
+    const formValues = getFormValues()
+    if(this.isLogin()) {
+      this.props.login(formValues)
+    } else {
+      const isPolitician = this.props.mode === Mode.REGISTER_POLITICIAN
+      // we are registering
+      const payload = {
+        ...formValues,
+        isPolitician
+      }
+      console.log('payload', payload)
+      this.props.register(payload)
     }
-    switch(this.props.mode) {
-      case Mode.REGISTER_PHD:
-        payload.type = "PHD"
-        break
-      case Mode.REGISTER_POLITICIAN:
-        payload.type = "politician"
-        break
-      default:
-        break
-    }
-    requestLogin(null,null).then(res => {
-      this.props.toContentPage(this.props.mode === Mode.REGISTER_POLITICIAN)
-    }).then(() => {
-      // redirect to content page
-        this.props.history.push(`/user/johndoe`)
-    })
+  }
+  getAlert() {
+    const { error } = this.props
+    if(!error) return null
+    return (
+      <Alert color="danger">
+        {error}
+      </Alert>
+    )
+  }
+  toggle() {
+    this.props.toggle()
+    this.props.resetError()
   }
   render() {
     return (
-      <Modal isOpen={this.props.mode} toggle={this.props.toggle}>
-        <ModalHeader toggle={this.props.toggle}>{this.getModeString()}</ModalHeader>
+      <Modal isOpen={this.props.mode} toggle={this.toggle.bind(this)}>
+        <ModalHeader toggle={this.toggle.bind(this)}>{this.getModeString()}</ModalHeader>
         <ModalBody>
+          {this.getAlert()}
           {this.getForm()}
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={() => this.submit()}>{this.loginOrRegisterString()}</Button>{' '}
-          <Button color="secondary" onClick={this.props.toggle}>{CommonLocale.cancel.de}</Button>
+          <Button color="secondary" onClick={this.toggle.bind(this)}>{CommonLocale.cancel.de}</Button>
         </ModalFooter>
       </Modal>
 
@@ -92,9 +118,21 @@ class Prompt extends React.Component {
 }
 
 const routedPrompt = withRouter(Prompt)
+const mapStateToProps = state => ({
+  error: state.auth.error
+})
 const mapDispatchToProps = dispatch => ({
-  toContentPage: () => dispatch({
-    type: Actions.LOGIN
+  login: (credentials) => dispatch({
+    type: Actions.LOGIN,
+    ...credentials
+  }),
+  register: (payload) => dispatch({
+    type: Actions.REGISTER,
+    ...payload
+  }),
+  resetError: () => dispatch({
+    type: Actions.SET_AUTH_ERROR,
+    error: null
   })
 })
-export default connect(null,mapDispatchToProps)(routedPrompt)
+export default connect(mapStateToProps, mapDispatchToProps)(routedPrompt)

@@ -34,6 +34,7 @@ export default class LoginPage extends Component {
   render () {
     return (
       <div className="page center">
+      {/* This prompt is for login AND register */}
       <Prompt
         toggle={() => this.setState({mode: null})}
         mode={this.state.mode} />
@@ -44,6 +45,7 @@ export default class LoginPage extends Component {
               text={Locale.politician.de}
               buttonText={Locale.register.de}
               onClick={() => this.register(true)}
+              isPolitician={true}
             />
           </Col>
           <Col>
@@ -51,6 +53,7 @@ export default class LoginPage extends Component {
               text={Locale.PHD.de}
               buttonText={Locale.register.de}
               onClick={() => this.register(false)}
+              isPolitician={false}
             />
           </Col>
         </Row>
