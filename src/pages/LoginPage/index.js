@@ -5,7 +5,7 @@ import {
 } from 'reactstrap'
 import LoginCard from './LoginCard'
 import {login as Locale} from '../../locale'
-import { Mode } from './constants'
+import { Mode } from '../../constants'
 import Prompt from './prompt'
 
 export default class LoginPage extends Component {
