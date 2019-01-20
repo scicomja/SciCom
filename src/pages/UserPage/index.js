@@ -17,6 +17,10 @@ class UserPage extends React.Component {
       - contact methods
 
   */
+  constructor(props) {
+    super(props)
+
+  }
   headerBar() {
     return (
       <div className="bg-secondary" style={style.coverPhoto}>
@@ -36,17 +40,7 @@ class UserPage extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  ...state,
-  // dummy user
-  // TODO: remove me!
-  user: {
-    name: "John Doe",
-    title: "Local Politician",
-    contact: {
-      email: "johndoe@haha.de",
-      "phone": "+49 177 7654321"
-    }
-  }
+  user: state.auth.user
 })
 const coverPhotoHeight = 200
 const style = {

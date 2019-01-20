@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import  {
   Navbar,
   NavbarToggler,
@@ -14,21 +15,46 @@ import  {
 } from 'reactstrap'
 
 class Header extends Component {
+  /*
+
+  */
+  getNavItem() {
+    if(this.props.user) {
+      const { username } = this.props.user
+      return (
+        <Nav className="ml-auto" navbar>
+          <NavItem>
+            <NavLink href="/user"> {username} </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink href="/logout"> Logout </NavLink>
+          </NavItem>
+        </Nav>
+      )
+    } else {
+      // not logged in...
+      return (
+        <Nav className="ml-auto" navbar>
+          <NavItem>
+            <NavLink href="/about">Über uns</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink href="/">Login</NavLink>
+          </NavItem>
+        </Nav>
+      )
+    }
+  }
   render() {
     return (
       <Navbar color="dark" dark expand="md">
         <NavbarBrand href="/">SciCom</NavbarBrand>
-          <Nav className="ml-auto" navbar>
-            <NavItem>
-              <NavLink href="/about">Über uns</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="/">Login</NavLink>
-            </NavItem>
-          </Nav>
+        {this.getNavItem()}
       </Navbar>
     )
   }
 }
-
-export default Header
+const mapStateToProps = state => ({
+  user: state.auth.user
+})
+export default connect(mapStateToProps, null)(Header)

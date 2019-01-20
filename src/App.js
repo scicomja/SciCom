@@ -32,7 +32,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={LoginPage} />
             <Route exact path="/about" component={AboutPage} />
-            <Route path="/user/:email" component={UserPage} />
+            <Route path="/user/:email?" component={UserPage} />
           </Switch>
       </Router>
       </div>

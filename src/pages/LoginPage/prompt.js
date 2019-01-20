@@ -13,17 +13,6 @@ import { withRouter } from 'react-router-dom'
 import _ from 'lodash'
 
 class Prompt extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      // fields that could be filled out
-      form: {
-        username: "",
-        email: "",
-        password: ""
-      }
-    }
-  }
   getModeString() {
     switch(this.props.mode) {
       case Mode.REGISTER_PHD:
