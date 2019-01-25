@@ -5,6 +5,7 @@ import {
   Container, Row, Col,
 } from 'reactstrap'
 import Header from './Header'
+import MainModal from './MainModal'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import LoginPage from './pages/LoginPage'
 import AboutPage from './pages/AboutPage'
@@ -33,18 +34,20 @@ class Root extends Component {
 class App extends Component {
   render() {
     return (
+      <Router history={history}>
       <div className="App">
         <Header
           user={this.props.auth.user}
           mode={this.props.mode}/>
-        <Router history={history}>
+        <MainModal />
+
           <Switch>
             <Route path="/about" component={AboutPage} />
             <Route path="/user" component={UserPage} />
             <Route path="/" component={LoginPage} />
           </Switch>
-      </Router>
       </div>
+      </Router>
     )
   }
 }

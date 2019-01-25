@@ -21,18 +21,22 @@ export function* login({ username, password }) {
     })
   } else {
 
-    yield put({
-      type: LoginActions.SET_TOKEN,
-      token
-    })
+    try {
+      yield put({
+        type: LoginActions.SET_TOKEN,
+        token
+      })
 
-    const user = yield call(getUser)
-    yield put({
-      type: LoginActions.SET_USER,
-      user
-    })
-    yield call(history.push, '/user')
-    window.location.refresh()
+      const user = yield call(getUser)
+      yield put({
+        type: LoginActions.SET_USER,
+        user
+      })
+      yield call(history.push, '/user')
+      window.location.reload()
+    } catch(err) {
+      console.log(err)
+    }
   }
 }
 
@@ -58,7 +62,7 @@ export function* register({ username, password, email, isPolitician}) {
     // finally, redirect to user's home page
     // yield put(push('/user/'))
     yield call(history.push, '/user')
-    window.location.refresh()
+    window.location.reload()
   }
 }
 

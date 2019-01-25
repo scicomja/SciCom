@@ -8,15 +8,13 @@ import {login as Locale} from '../../locale'
 import { Mode } from '../../constants'
 import Prompt from './prompt'
 import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 class LoginPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
       mode: null
-    }
-    if(!props.user) {
-      return
     }
   }
   register(asPolitician) {
@@ -36,6 +34,11 @@ class LoginPage extends Component {
     })
   }
   render () {
+    // redirect to user page when he has logged in
+    if(this.props.user) {
+      this.props.history.push('/user')
+      return null
+    }
     return (
       <div className="page center">
       {/* This prompt is for login AND register */}
@@ -84,4 +87,7 @@ const style = {
   }
 }
 
-export default withRouter(LoginPage)
+const mapStateToProps = state => ({
+  user: state.auth.user
+})
+export default withRouter(connect(mapStateToProps, null)(LoginPage))

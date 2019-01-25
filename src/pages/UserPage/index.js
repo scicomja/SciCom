@@ -20,12 +20,22 @@ class UserPage extends React.Component {
   constructor(props) {
     super(props)
   }
-
+  getName() {
+    const { firstName, lastName, username } = this.props.user
+    if(!firstName && !lastName) return username
+    if(firstName && lastName) return `${firstName} ${lastName}`
+    return firstName?firstName:lastName
+  }
   headerBar() {
+    const {avatar} = this.props.user
+    let avatarConfig
+    if(avatar) avatarConfig = {'src': avatar}
+    else avatarConfig = {'name': this.getName()}
+
     return (
       <div className="bg-secondary" style={style.coverPhoto}>
-        <Avatar round style={style.avatar} name={this.props.user.name} />
-        <h2 style={style.name}> {this.props.user.name} </h2>
+        <Avatar round style={style.avatar} {...avatarConfig} />
+        <h2 style={style.name}> {this.getName()} </h2>
         <h5 style={style.title}> {this.props.user.title} </h5>
       </div>
     )

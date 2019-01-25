@@ -20,8 +20,10 @@ export const postJSON = async (url, json) => {
 
 export function* authorizedRequestGet(url, params = {}) {
   const jwt = yield select(state => state.auth.token)
-  const response = yield fetch(
-    `${url}?${constructGetQuery(params)}`, {
+  if(Object.keys(params).length > 0) {
+    url = `${url}?${constructGetQuery(params)}`
+  }
+  const response = yield fetch(url, {
     headers: {
       'Authorization': `Bearer ${jwt}`
     }

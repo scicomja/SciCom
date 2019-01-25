@@ -11,16 +11,21 @@ import  {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+
+  Modal, ModalHeader, ModalBody, ModalFooter
 } from 'reactstrap'
+import * as ModalActions from './actions/modal'
+import { ModalMode } from './constants'
 import { LOGOUT } from './actions/auth'
 class Header extends Component {
+
   getSearchNavItems() {
     if(!this.props.user) return null
     const { isPolitician } = this.props.user
     let searchItems = [(
       <NavItem>
-        <NavLink onClick={() => this.searchUsers()}>
+        <NavLink onClick={this.props.searchUsers}>
           Search Users
         </NavLink>
       </NavItem>
@@ -28,11 +33,20 @@ class Header extends Component {
     if (!isPolitician) {
       searchItems.push((
         <NavItem>
-          <NavLink onClick={() => this.searchProjects()}>
+          <NavLink onClick={this.props.searchProjects}>
             Search Projects
           </NavLink>
         </NavItem>
       ))
+    } else {
+      // politician can create projects
+      searchItems = [(
+        <NavItem>
+          <NavLink onClick={this.props.createProject}>
+            Create projects
+          </NavLink>
+        </NavItem>
+      )].concat(searchItems)
     }
 
     return searchItems
@@ -81,6 +95,17 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   logout: () => dispatch({
     type: LOGOUT
+  }),
+  searchProjects: () => dispatch({
+    type: ModalActions.SET_MODAL_TYPE,
+    mode: ModalMode.SEARCH_PROJECT
+  }),
+  searchUsers: () => dispatch({
+    type: ModalActions.SET_MODAL_TYPE,
+    mode: ModalMode.SEARCH_USER
+  }),
+  createProject: () => dispatch({
+    type: ModalActions.CREATE_PROJECT,
   })
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Header)
