@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.2.1",
+    "font-awesome": "^4.7.0",
     "formik": "^1.4.2",
     "react": "^16.7.0",
     "react-avatar": "^3.5.0",

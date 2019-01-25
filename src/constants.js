@@ -11,3 +11,10 @@ export const ModalMode = {
   PROJECT_DETAILS: "PROJECT_DETAILS",
   USER_DETAILS: "USER_DETAILS"
 }
+
+export const Icon = {
+  "email": "at",
+  "phone": "phone",
+  "linkedin": "linkedin",
+  
+}

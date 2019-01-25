@@ -2,10 +2,19 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import Avatar from 'react-avatar'
+import { getUser } from '../../backend/user'
+import { authorizedRequestGet } from '../../utils/requests'
+import ContentBox from '../../components/contentBox'
+import {
+  Button,
+  Card,CardTitle, CardText
+} from 'reactstrap'
+import { Icon } from '../../constants'
+import IconComponent from '../../components/icon'
+
 /*
   User profile page
   display info of the particular user
-  TODO: get the identity of the user!
 */
 class UserPage extends React.Component {
   /*
@@ -19,66 +28,203 @@ class UserPage extends React.Component {
   */
   constructor(props) {
     super(props)
+    this.state = {
+      user: null,
+      isUserHimself: true
+    }
   }
-  getName() {
-    const { firstName, lastName, username } = this.props.user
+  async componentDidMount() {
+    const { user_id } = this.props.match.params
+    if(user_id && user_id != this.props.user.username) {
+      this.setState({ isUserHimself: false})
+      try {
+        let user = await getUser(user_id,this.props.token)
+        if(!user) {
+          this.props.history.push('/')
+          return
+        }
+        this.setState({
+          user
+        })
+      } catch(err) {
+        this.props.history.push('/')
+      }
+    }
+
+  }
+  getName(user) {
+    const { firstName, lastName, username } = user
     if(!firstName && !lastName) return username
     if(firstName && lastName) return `${firstName} ${lastName}`
     return firstName?firstName:lastName
   }
-  headerBar() {
-    const {avatar} = this.props.user
+
+  headerBar(user) {
+    const {avatar} = user
+    const name = this.getName(user)
     let avatarConfig
     if(avatar) avatarConfig = {'src': avatar}
-    else avatarConfig = {'name': this.getName()}
+    else avatarConfig = {'name': name}
 
     return (
       <div className="bg-secondary" style={style.coverPhoto}>
-        <Avatar round style={style.avatar} {...avatarConfig} />
-        <h2 style={style.name}> {this.getName()} </h2>
-        <h5 style={style.title}> {this.props.user.title} </h5>
+        <div style={style.avatarContainer}>
+          <div style={style.avatarWrapper}>
+            <Avatar
+              size={avatarSize}
+              round
+              style={style.avatar}
+              {...avatarConfig}
+            />
+          </div>
+          <div style={style.primaryInfo}>
+            <div style={style.primaryInfoItem}>
+              <h2 style={style.name}> {name}</h2>
+                {this.state.isUserHimself && (
+                  <div>
+                    <Button
+                      style={style.editButton}
+                      color="primary">
+                       Edit Profile
+                   </Button>
+                  </div>
+                )}
+            </div>
+            <div style={style.primaryInfoItem}>
+              <h5 style={style.title}>{user.title}</h5>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    )
+  }
+
+  contact(user) {
+    const {
+      phone, email, website, linkedin
+    } = user
+    const contactItem = (iconName, content) => (
+      <div style={style.contactItem}>
+        <IconComponent style={style.contactIcon}
+          name={iconName} />
+        {content}
+      </div>
+    )
+    return (
+      <div style={style.contact}>
+        <Card body>
+          <CardTitle>
+            <IconComponent
+              style={style.contactIcon}
+              name="address-book"
+            />
+          <b>Contact information</b>
+          </CardTitle>
+          <CardText>
+            <div style={style.contactContainer}>
+              {
+                email && contactItem(Icon["email"], email)
+              }
+              {
+                phone && contactItem(Icon["phone"], phone)
+              }
+              {
+                linkedin && contactItem(Icon["linkedin"], linkedin)
+              }
+              {
+                website && contactItem(Icon["website"], website)
+              }
+
+            </div>
+
+          </CardText>
+        </Card>
       </div>
     )
   }
   render() {
-    if(!this.props.user) {
+    const user = this.state.user || this.props.user
+    if(!user) {
       this.props.history.push('/')
       return null
     }
     return (
       <div style={style.container}>
-        {this.headerBar()}
+        {this.headerBar(user)}
+        {this.contact(user)}
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  user: state.auth.user
+  user: state.auth.user,
+  token: state.auth.token
 })
-const coverPhotoHeight = 200
+
+const mapDispatchToProps = dispatch => ({
+
+})
+
+const coverPhotoHeight = 120
+const avatarSize = 96
 const style = {
   coverPhoto: {
-    height: coverPhotoHeight
+    height: coverPhotoHeight,
+    marginBottom: avatarSize / 2 + 16,
+    paddingTop: coverPhotoHeight - avatarSize / 2,
+  },
+  avatarContainer: {
+    height: avatarSize,
+    marginLeft: 30,
+    display: 'flex'
+  },
+  avatarWrapper: {
+    width: avatarSize,
+    // flex: `0 0 ${avatarSize}px`,
+  },
+  primaryInfo: {
+    // flex: 1,
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    paddingLeft: 16
+  },
+  primaryInfoItem: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'row'
   },
   name: {
     color: 'white',
-    position: 'absolute',
-    top: coverPhotoHeight,
-    left: 150
+    paddingRight: 16
+  },
+  editButton: {
   },
   title: {
     color: 'gray',
-    position: 'absolute',
-    top: 1.3 * coverPhotoHeight,
     left: 150
   },
-  avatar: {
-    position: 'absolute',
-    top: coverPhotoHeight,
-    left: 30
-  }
+  contact: {
+    margin: 32,
+    marginTop: avatarSize / 2,
+  },
+  contactItem: {
+    // flex: '0 0 50vw',
+    width: '50%',
+  },
+  contactContainer: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'space-between'
+  },
+  contactIcon: {
+    margin: 8
+  },
+
 }
+
 export default withRouter(
-  connect(mapStateToProps, null)(UserPage)
+  connect(mapStateToProps, mapDispatchToProps)(UserPage)
 )

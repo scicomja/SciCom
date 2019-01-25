@@ -1,6 +1,6 @@
 import { select } from 'redux-saga/effects'
 
-const constructGetQuery = query => {
+export const constructGetQuery = query => {
   const esc = encodeURIComponent
   return Object.keys(query)
    .map(k => `${esc(k)}=${esc(query[k])}`)

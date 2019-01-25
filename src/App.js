@@ -43,7 +43,7 @@ class App extends Component {
 
           <Switch>
             <Route path="/about" component={AboutPage} />
-            <Route path="/user" component={UserPage} />
+            <Route path="/user/:user_id?" component={UserPage} />
             <Route path="/" component={LoginPage} />
           </Switch>
       </div>
