@@ -1,0 +1,4 @@
+export const SET_MODAL_TYPE = "SET_MODAL_TYPE"
+export const SET_CONTENT = "SET_CONTENT"
+export const CREATE_USER = "CREATE_USER"
+export const CREATE_PROJECT = "CREATE_PROJECT"
