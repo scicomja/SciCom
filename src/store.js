@@ -10,6 +10,7 @@ import rootSaga from './sagas'
 const sagaMiddleware = createSagaMiddleware()
 const persistConfig = {
   key: 'root',
+  blacklist: ['modal'],
   storage,
 }
 const persistedReducer = persistReducer(persistConfig, rootReducer)

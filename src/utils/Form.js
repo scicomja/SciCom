@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  Button, Form, FormGroup, Label, Input, FormText
+  Button, Form, FormGroup, Label, Input, FormText, FormFeedback
 } from 'reactstrap'
 import _ from 'lodash'
 
@@ -65,6 +65,5 @@ export const FormikInput = ({name, type, errors}) => (
   <FormGroup>
     <Label for={name}>{_.startCase(name)}</Label>
     <Input tag={Field} name={name} type={type} invalid={errors && errors[name]}/>
-    <ErrorMessage name={name} />
   </FormGroup>
 )

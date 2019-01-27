@@ -13,8 +13,13 @@ import {
   Col, Label
 } from 'reactstrap'
 import {
+  ReactstrapInput,
+  ReactstrapSelect,
+} from "reactstrap-formik"
+import {
   ModalMode,
   ProjectNature,
+  ProjectStatus,
 } from './constants'
 import {
   Formik,
@@ -22,12 +27,16 @@ import {
   Field,
   ErrorMessage
 } from 'formik'
-import { createProject } from './backend/user'
+import {
+  createProject,
+  modifyProject
+} from './backend/user'
 import {
   FormikInput
 } from './utils/Form'
 
 import * as Yup from 'yup'
+import * as _ from 'lodash'
 import * as ModalActions from './actions/modal'
 
 class MainModal extends React.Component {
@@ -54,41 +63,157 @@ class MainModal extends React.Component {
         return ''
     }
   }
+  prepareInitialValue(content) {
+    // default values for new projects
+    if(!content) return {
+      title: "",
+      description: "",
+      file: null,
+      from: new Date(),
+      to: new Date(),
+      nature: ProjectNature[0],
+      salary: 0,
+    }
+    const { from, to } = content
+    return {
+      ...content,
+      from: new Date(from),
+      to: new Date(to)
+    }
+  }
   getForm() {
     const { mode, content } = this.props
+    const isOwner = !!content && (content.creator && this.props.user._id == content.creator._id)
+    console.log('form', isOwner)
+
     switch(mode) {
       case ModalMode.PROJECT_DETAILS:
-        return (
-          <Formik
-            initialValues={content || initialFormValues.project}
-            validationSchema={(validationSchema.project)}
-            onSubmit={async (values, actions) => {
-              try {
-                let payload = {
-                  ...values,
-                  status: "open"
+          return (
+            <Formik
+              initialValues={this.prepareInitialValue(content)}
+              validationSchema={Yup.object().shape({
+                title: Yup.string()
+                  .min(8, "Title is too short")
+                  .required("Title is required"),
+                nature: Yup.string()
+                  .oneOf(ProjectNature, "Please select the nature of the project")
+                  .required("Nature is required"),
+                from: Yup.date()
+                  .min(new Date(), "Project cannot start from the past")
+                  .required(),
+                to: Yup.date().when("from", (from, schema) => {
+                    return Yup.date().min(from)
+                  }),
+                salary: Yup.number()
+                  .min(0, "Salary must be greater than 0")
+                  .required("Invalid number")
+              })}
+              render={({
+                isValid,
+                errors,
+                dirty,
+                isSubmitting,
+                handleChange,
+                setFieldValue}) => (
+                <Form>
+                  <Field name="title" label="Title" type="text"
+                    component={ReactstrapInput}
+                  />
+                <Field type="textarea"
+                      label="Description"
+                      name="description"
+                      component={ReactstrapInput}
+                  />
+                  <Field
+                    label="File"
+                    type="file"
+                    name="file"
+                    component={ReactstrapInput}/>
+                  <FormGroup>
+                    <Label for="nature"> Project Type </Label>
+                      <Field
+                        label="Project Type"
+                        name="nature"
+                        component={ReactstrapSelect}
+                        inputprops={{
+                          name: "nature",
+                          options: ProjectNature,
+                        }}
+                      />
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col>
+                      <Label for="from"> From </Label>
+                      <Field component={Input}
+                        onChange={e => {
+                          const date = new Date(e.target.value)
+                          setFieldValue('from',date)
+                        }}
+                        type="date" name="from" invalid={errors.from} />
+                      <FormFeedback invalid={errors.from}>{errors.from}</FormFeedback>
+                    </Col>
+                    <Col>
+                      <Label for="to"> To </Label>
+                      <Field
+                        invalid={errors.to}
+                        onChange={e => {
+                          const date = new Date(e.target.value)
+                          setFieldValue('to',date)
+                        }}
+                        component={Input} type="date" name="to" />
+                      <FormFeedback invalid={errors.to}>{errors.to}</FormFeedback>
+                    </Col>
+                  </FormGroup>
+
+                  <Field
+                      label="Salary"
+                      type="number"
+                      name="salary"
+                      component={ReactstrapInput}
+                  />
+                  <Button
+                    disabled={isSubmitting || !_.isEmpty(errors) || !dirty || !isValid}
+                    type="submit" color="primary">
+                    Submit
+                  </Button>
+                  {' '}
+                  {
+                    content && (
+                      <Button color="info">Mark as closed</Button>
+                    )
+                  }
+                </Form>
+              )}
+              onSubmit={async (values, actions) => {
+                try {
+
+                  if(!content) {
+                    const payload = {...values, status: 'open'} // default value
+                    const project = await createProject(payload, this.props.token)
+                  } else {
+                    const payload = {...values, _id: content._id}
+                    const project = await modifyProject(payload, this.props.token)
+                  }
+                  this.props.close()
+                  window.location.reload()
+                } catch(err) {
+                  console.log(err)
+                } finally {
+                  actions.setSubmitting(false)
                 }
-                const project = await createProject(payload, this.props.token)
-                this.props.close()
-                window.location.reload()
-              } catch(err) {
-                console.log(err)
-              } finally {
-                actions.setSubmitting(false)
-              }
-            }}
-          >
-          {formComponent.project}
-          </Formik>
-        )
+              }}
+            />
+          )
     }
   }
   render() {
+    const {content, mode, close} = this.props
     return (
+
       <Modal
-        isOpen={!!this.props.mode}
-        toggle={this.props.close}>
-        <ModalHeader toggle={this.props.close}>
+        isOpen={!!mode}
+        toggle={close}>
+        <ModalHeader toggle={close}>
           {this.getHeader()}
         </ModalHeader>
         <ModalBody>
@@ -99,59 +224,12 @@ class MainModal extends React.Component {
   }
 }
 
-const initialFormValues = {
-  project: {
-    title: "",
-    description: "",
-    file: null,
-    from: new Date(),
-    to: new Date(),
-    nature: ProjectNature[0],
-    salary: 0,
 
-  }
-}
-
-const formComponent = {
-  project: ({errors, touched}) => (
-    <Form>
-      <FormikInput type="text" name="title" error={errors}/>
-      <FormikInput type="text" name="description" error={errors} />
-      <FormikInput type="file" name="file" error={errors} />
-      <FormGroup>
-        <Label for="nature"> Project Type </Label>
-        <Field component="select" name="nature" >
-          {ProjectNature.map((opt,i) => (
-            <option
-              selected={i == 0}
-              value={opt}>
-              {opt}
-            </option>))}
-        </Field>
-      </FormGroup>
-      <FormGroup row>
-        <Col>
-          <Label for="from"> From </Label>
-          <Input tag={Field} type="date" name="from" />
-          <ErrorMessage name="from" />
-        </Col>
-        <Col>
-          <Label for="to"> To </Label>
-          <Input tag={Field} type="date" name="to" />
-          <ErrorMessage name="to" />
-        </Col>
-
-      </FormGroup>
-
-      <FormikInput type="number" name="salary" error={errors}/>
-      <Button type="submit" color="primary"> Submit </Button>
-    </Form>
-  )
-}
-
-const validationSchema = {
+const validators = {
   project: Yup.object().shape({
-    title: Yup.string().required("Title is required"),
+    title: Yup.string()
+      .min(8, "Title is too short")
+      .required("Title is required"),
     from: Yup.date()
       .when("to", {
         is: to => !!to,
@@ -162,12 +240,15 @@ const validationSchema = {
     // to: Yup.date().when("from", (from, schema) => (
     //   Yup.date().min(from, "To date must be after From")
     // )),
-    salary: Yup.number().required("Salary information is required.")
-  })
+    salary: Yup.number()
+      .min(0, "Salary must be greater than 0")
+      .required("Salary information is required.")
+  }),
+
 }
 const mapStateToProps = state => ({
   ...state.modal,
-  token: state.auth.token
+  ...state.auth
 })
 const mapDispatchToProps = dispatch => ({
   close: () => dispatch({

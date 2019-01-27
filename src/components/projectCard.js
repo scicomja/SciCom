@@ -5,8 +5,13 @@ import {
   CardText,
   Badge
 } from 'reactstrap'
+import { connect } from 'react-redux'
 import UserChip from './userChip'
-export default function({project, isOwner}) {
+import * as ModalActions from '../actions/modal'
+import * as _ from 'lodash'
+import moment from 'moment'
+const ProjectCard = function(props) {
+  const {project, isOwner} = props
   if(!project) return null
   const {
     title,
@@ -15,7 +20,8 @@ export default function({project, isOwner}) {
     description,
     topic,
     salary,
-    nature
+    nature,
+    from, to
   } = project
   if(!title || !creator) return null
   const getStatusChip = (status) => {
@@ -30,11 +36,20 @@ export default function({project, isOwner}) {
     }
     return (<Badge color={color}> {status} </Badge>)
   }
+  const formatDate = date => moment(date).format("MMM Do YY")
   return (
     <Card body inverse color="secondary"
+      onClick={() => props.showProject(project)}
       style={style.container}>
       <CardTitle>
-        <b>{title}</b> {getStatusChip(status)}
+        <div style={style.spread}>
+          <div>
+            <b>{title}</b> {getStatusChip(status)}
+          </div>
+          <div>
+            <h6>{formatDate(from)} { to && `- ${formatDate(to)}`} </h6>
+          </div>
+        </div>
       </CardTitle>
       {
         !isOwner && (
@@ -47,7 +62,10 @@ export default function({project, isOwner}) {
         {topic.map(t => (<Badge>{t}</Badge>))}
       </CardText>
       <CardText>
-        {nature} | <b>{salary} </b>
+        <div>
+          <div> {_.startCase(nature)} </div>
+          <div className="text-success"><b>{salary}€</b></div>
+      </div>
       </CardText>
     </Card>
   )
@@ -55,8 +73,20 @@ export default function({project, isOwner}) {
 
 const style = {
   container: {
-    maxWidth: 256,
+    maxWidth: "40vw",
+    width: "40vw",
     margin: 16
   },
-
+  spread: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  }
 }
+
+const mapDispatchToProps = dispatch => ({
+  showProject: p => dispatch({
+    type: ModalActions.MODIFY_PROJECT,
+    content: p
+  })
+})
+export default connect(null,mapDispatchToProps)(ProjectCard)

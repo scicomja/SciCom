@@ -29,6 +29,9 @@ export default class FrontPage extends React.Component {
   projectList(projects) {
     return (
       <div style={style.content}>
+        <h3 style={style.contentHeader}>
+          <b> Projects </b>
+        </h3>
         {projects.map(p => (
           <ProjectCard
             project={p}
@@ -48,6 +51,9 @@ export default class FrontPage extends React.Component {
     }
     return (
       <div style={style.content}>
+        <h3 style={style.contentHeader}>
+          <b> Bookmarks </b>
+        </h3>
         {bookmarks.map(p => (
           <ProjectCard
             project={p}
@@ -120,6 +126,9 @@ export default class FrontPage extends React.Component {
 const style = {
   container: {
     padding: 16
+  },
+  contentHeader: {
+    width: '100%'
   },
   content: {
     display: 'flex',

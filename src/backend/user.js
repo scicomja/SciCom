@@ -45,3 +45,9 @@ export const getApplications = async (token) => {
 export const createProject = async (project, token) => {
   return await authorizedPostMultipartForm(`${serverURL}/project`, project, token)
 }
+
+export const modifyProject = async (project, token) => {
+  const { _id: id} = project
+  if(!id) return
+  return await authorizedPostMultipartForm(`${serverURL}/project/${id}`, project, token)
+}

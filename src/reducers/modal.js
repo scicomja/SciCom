@@ -15,14 +15,25 @@ export default function modalReducer(state = initialState, action) {
       return {...state, content}
     case ModalActions.CREATE_USER:
       return {
-        ...state, content: null,
+        ...state, content,
          mode: ModalMode.USER_DETAILS
+      }
+
+    case ModalActions.MODIFY_USER:
+      return {
+        ...state, content
       }
     case ModalActions.CREATE_PROJECT:
       return {
         ...state,
         content: null,
         mode: ModalMode.PROJECT_DETAILS
+      }
+    case ModalActions.MODIFY_PROJECT:
+      return {
+        ...state,
+        mode: ModalMode.PROJECT_DETAILS,
+        content
       }
     default:
       return state
