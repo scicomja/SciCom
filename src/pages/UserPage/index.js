@@ -2,13 +2,18 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import Avatar from 'react-avatar'
-import { getUser } from '../../backend/user'
+import {
+  getUser,
+  getProject,
+  getApplications,
+} from '../../backend/user'
 import { authorizedRequestGet } from '../../utils/requests'
 import ContentBox from '../../components/contentBox'
 import {
   Button,
   Card,CardTitle, CardText
 } from 'reactstrap'
+import FrontPage from './frontPage'
 import { Icon } from '../../constants'
 import IconComponent from '../../components/icon'
 
@@ -48,6 +53,26 @@ class UserPage extends React.Component {
         })
       } catch(err) {
         this.props.history.push('/')
+      }
+    } else {
+      // it's the user himself
+      const { isPolitician } = this.props.user
+      if(isPolitician) {
+        let projects = await getProject(this.props.token)
+        console.log('projects',projects)
+        this.setState({
+          user: {
+            ...this.props.user, projects
+          }
+        })
+      } else {
+        // bookmark is already there, go for applications
+        let applications = await getApplications(this.props.token)
+        this.setState({
+          user: {
+            ...this.props.user, applications
+          }
+        })
       }
     }
 
@@ -153,6 +178,9 @@ class UserPage extends React.Component {
       <div style={style.container}>
         {this.headerBar(user)}
         {this.contact(user)}
+        <FrontPage user={user}
+          isUserHimself={user.username === this.props.user.username}
+        />
       </div>
     )
   }

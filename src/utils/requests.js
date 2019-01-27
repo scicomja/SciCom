@@ -6,11 +6,12 @@ export const constructGetQuery = query => {
    .map(k => `${esc(k)}=${esc(query[k])}`)
    .join('&')
 }
-export const postJSON = async (url, json) => {
+export const postJSON = async (url, json, token = null) => {
   const response = await fetch(url, {
     method: "POST",
     headers: {
       'Accept': 'application/json',
+      "Authorization": `Bearer ${token}`,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(json)

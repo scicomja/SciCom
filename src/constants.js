@@ -8,7 +8,10 @@ export const Mode = {
 export const ModalMode = {
   SEARCH_PROJECT: "SEARCH_PROJECT",
   SEARCH_USER: "SEARCH_USER",
+
+  // when one creates / modifies / view project
   PROJECT_DETAILS: "PROJECT_DETAILS",
+  // only when user updates their profile
   USER_DETAILS: "USER_DETAILS"
 }
 
@@ -16,5 +19,12 @@ export const Icon = {
   "email": "at",
   "phone": "phone",
   "linkedin": "linkedin",
-  
+
 }
+
+export const ProjectNature = [
+  'internship',
+  'thesis',
+  'parttime',
+  'voluntary'
+]

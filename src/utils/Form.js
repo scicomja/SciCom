@@ -4,6 +4,9 @@ import {
 } from 'reactstrap'
 import _ from 'lodash'
 
+import {
+  Formik, Field, ErrorMessage
+} from 'formik'
 /*
   Component: the parent of the elements below
   Config: the configuration, some compulsory fields:
@@ -57,3 +60,11 @@ export const CreateForm = (config) => {
     }, {})
   return { form, getFormValues }
 }
+
+export const FormikInput = ({name, type, errors}) => (
+  <FormGroup>
+    <Label for={name}>{_.startCase(name)}</Label>
+    <Input tag={Field} name={name} type={type} invalid={errors && errors[name]}/>
+    <ErrorMessage name={name} />
+  </FormGroup>
+)

@@ -40,12 +40,11 @@ class App extends Component {
           user={this.props.auth.user}
           mode={this.props.mode}/>
         <MainModal />
-
-          <Switch>
-            <Route path="/about" component={AboutPage} />
-            <Route path="/user/:user_id?" component={UserPage} />
-            <Route path="/" component={LoginPage} />
-          </Switch>
+        <Switch>
+          <Route path="/about" component={AboutPage} />
+          <Route path="/user/:user_id?" component={UserPage} />
+          <Route path="/" component={LoginPage} />
+        </Switch>
       </div>
       </Router>
     )
