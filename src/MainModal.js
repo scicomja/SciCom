@@ -12,6 +12,8 @@ import {
   Button,
   Col, Label
 } from 'reactstrap'
+import DatePicker from 'react-datepicker'
+import "react-datepicker/dist/react-datepicker.css"
 import {
   ReactstrapInput,
   ReactstrapSelect,
@@ -37,6 +39,7 @@ import {
 
 import * as Yup from 'yup'
 import * as _ from 'lodash'
+import moment from 'moment'
 import * as ModalActions from './actions/modal'
 
 class MainModal extends React.Component {
@@ -65,26 +68,30 @@ class MainModal extends React.Component {
   }
   prepareInitialValue(content) {
     // default values for new projects
+    const formatDate = date => moment(date).startOf('day').toISOString()
+    const now = formatDate(new Date())
     if(!content) return {
       title: "",
       description: "",
       file: null,
-      from: new Date(),
-      to: new Date(),
+      from: now,
+      to: null,
       nature: ProjectNature[0],
       salary: 0,
     }
     const { from, to } = content
-    return {
+    const result = {
       ...content,
-      from: new Date(from),
-      to: new Date(to)
+      file: null,
+      from: formatDate(from),
+      to: formatDate(to)
     }
+    console.log('preparing to fill form with',result)
+    return result
   }
   getForm() {
     const { mode, content } = this.props
     const isOwner = !!content && (content.creator && this.props.user._id == content.creator._id)
-    console.log('form', isOwner)
 
     switch(mode) {
       case ModalMode.PROJECT_DETAILS:
@@ -99,7 +106,7 @@ class MainModal extends React.Component {
                   .oneOf(ProjectNature, "Please select the nature of the project")
                   .required("Nature is required"),
                 from: Yup.date()
-                  .min(new Date(), "Project cannot start from the past")
+                  .min(moment().startOf('day'), "Project cannot start from the past")
                   .required(),
                 to: Yup.date().when("from", (from, schema) => {
                     return Yup.date().min(from)
@@ -109,6 +116,7 @@ class MainModal extends React.Component {
                   .required("Invalid number")
               })}
               render={({
+                values,
                 isValid,
                 errors,
                 dirty,
@@ -128,6 +136,7 @@ class MainModal extends React.Component {
                     label="File"
                     type="file"
                     name="file"
+                    autoComplete="off"
                     component={ReactstrapInput}/>
                   <FormGroup>
                     <Label for="nature"> Project Type </Label>
@@ -144,24 +153,30 @@ class MainModal extends React.Component {
                   <FormGroup row>
                     <Col>
                       <Label for="from"> From </Label>
-                      <Field component={Input}
-                        onChange={e => {
-                          const date = new Date(e.target.value)
-                          setFieldValue('from',date)
-                        }}
-                        type="date" name="from" invalid={errors.from} />
-                      <FormFeedback invalid={errors.from}>{errors.from}</FormFeedback>
+                        <DatePicker
+                          name="from"
+                          autoComplete="off"
+                          selected={values.from}
+                          onChange={e => {
+                            const date = moment(e).startOf('day').toISOString()
+                            setFieldValue('from',date)
+                          }}
+                        />
+                      <ErrorMessage name="from" />
                     </Col>
                     <Col>
-                      <Label for="to"> To </Label>
-                      <Field
-                        invalid={errors.to}
+                      <Label for="to"> To </Label> {'\n'}
+                      <DatePicker
+                        name="to"
+                        autoComplete="off"
+                        selected={values.to}
                         onChange={e => {
-                          const date = new Date(e.target.value)
-                          setFieldValue('to',date)
+                          const date = moment(e).startOf('day').toISOString()
+                          setFieldValue('to', e)
+                          // setFieldValue('to',date)
                         }}
-                        component={Input} type="date" name="to" />
-                      <FormFeedback invalid={errors.to}>{errors.to}</FormFeedback>
+                      />
+                      <ErrorMessage name="to" />
                     </Col>
                   </FormGroup>
 

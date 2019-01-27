@@ -17,7 +17,6 @@ import FrontPage from './frontPage'
 import { Icon } from '../../constants'
 import IconComponent from '../../components/icon'
 import * as ModalActions from '../../actions/modal'
-
 /*
   User profile page
   display info of the particular user

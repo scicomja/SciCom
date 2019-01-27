@@ -6,7 +6,7 @@ import {
 } from 'reactstrap'
 import ProjectCard from '../../components/projectCard'
 import UserChip from '../../components/userChip'
-
+import Icon from '../../components/icon'
 import classnames from 'classnames'
 
 export default class FrontPage extends React.Component {
@@ -30,7 +30,7 @@ export default class FrontPage extends React.Component {
     return (
       <div style={style.content}>
         <h3 style={style.contentHeader}>
-          <b> Projects </b>
+          <b> <Icon name="project"/> Projects </b>
         </h3>
         {projects.map(p => (
           <ProjectCard

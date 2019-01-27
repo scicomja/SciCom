@@ -19,6 +19,8 @@ export const Icon = {
   "email": "at",
   "phone": "phone",
   "linkedin": "linkedin",
+  "project": "file-chart-line",
+  "bookmark": "bookmark"
 
 }
 
