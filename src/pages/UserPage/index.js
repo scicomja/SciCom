@@ -6,6 +6,7 @@ import {
   getUser,
   getProject,
   getApplications,
+  getProjectsOfUser,
 } from '../../backend/user'
 import { authorizedRequestGet } from '../../utils/requests'
 import ContentBox from '../../components/contentBox'
@@ -41,6 +42,7 @@ class UserPage extends React.Component {
   }
   async componentDidMount() {
     const { user_id } = this.props.match.params
+    const { isPolitician } = this.props.user
     if(user_id && user_id != this.props.user.username) {
       this.setState({ isUserHimself: false})
       try {
@@ -52,6 +54,17 @@ class UserPage extends React.Component {
         this.setState({
           user
         })
+        // if you are looking at a politician, give the list of projects as well
+        if (user.isPolitician) {
+          let projects = await getProjectsOfUser(user.username, this.props.token)
+          this.setState({
+            user: {...this.state.user, projects}
+          })
+        }
+        // TODO: this
+        // if(!isPolitician && user.isPolitician) {
+        //   let projects = await getProject()
+        // }
       } catch(err) {
         this.props.history.push('/')
       }

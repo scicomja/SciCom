@@ -11,6 +11,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import SearchResultPage from './pages/SearchResultPage'
 import LoginPage from './pages/LoginPage'
 import AboutPage from './pages/AboutPage'
 import { Provider, connect } from 'react-redux'
@@ -50,6 +51,7 @@ class App extends Component {
           <Route path="/about" component={AboutPage} />
           <Route path="/user/:user_id?" component={UserPage} />
           <Route path="/project/:project_id" component={ProjectPage} />
+          <Route path="/search/:search_category" component={SearchResultPage} />
           <Route path="/" component={LoginPage} />
         </Switch>
       </div>

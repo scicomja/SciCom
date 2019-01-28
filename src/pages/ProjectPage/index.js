@@ -16,15 +16,17 @@ import {
 } from 'reactstrap'
 import {
   getProjectById,
+  getApplications,
   closeProject,
   openProject,
-  applyProject
+  applyProject,
+  toggleBookmarkProject
 } from '../../backend/user'
 import { authorizedRequestGet } from '../../utils/requests'
 import ProjectStatusBadge from '../../components/projectStatusBadge'
 import Icon from '../../components/icon'
 import * as ModalActions from '../../actions/modal'
-import ContentBox from '../../components/contentBox'
+import CreatorCard from './CreatorCard'
 import moment from 'moment'
 import * as _ from 'lodash'
 /*
@@ -40,7 +42,9 @@ class ProjectPage extends React.Component {
     super(props)
     this.state = {
       project: null,
-      isOwner: false
+      isOwner: false,
+      hasAppliedThis: false,
+      hasBookmarkedThis: false
     }
   }
 
@@ -50,13 +54,16 @@ class ProjectPage extends React.Component {
     const { token, user } = this.props
     try {
       let project = await getProjectById(project_id, token)
+      let applications = await getApplications(token)
       if(!project) {
         this.props.history.push('/')
         return
       }
       this.setState({
         project,
-        isOwner: project.creator._id == user._id
+        isOwner: project.creator._id == user._id,
+        hasBookmarkedThis: !!user.bookmarks.filter(bm => bm._id == project._id).length,
+        hasAppliedThis: !!applications.filter(app => app.project._id == project._id).length
       })
     } catch(err) {
       console.log(err)
@@ -86,23 +93,43 @@ class ProjectPage extends React.Component {
     try {
       const result = await applyProject(this.state.project, this.props.token)
       if(result) {
-        toast("You applied this project", {
+        toast.success("You applied this project", {
           position: toast.POSITION.BOTTOM_RIGHT
         })
       }
+      window.location.reload()
     } catch(err) {
-      toast("Error occured:" + err.message, {
+      toast.error("Error occured:" + err.message, {
         position: toast.POSITION.BOTTOM_RIGHT
       })
     }
   }
   async bookmarkProject() {
+    try {
+      const result = await toggleBookmarkProject(
+          this.state.project,
+          this.props.token)
+      let message = "Bookmark removed"
+      if(!result.length) {
+        message = "Bookmark added"
+      }
+      // we bookmarked it!
+      toast.success(message, {
+          position: toast.POSITION.BOTTOM_RIGHT
+        })
+      window.location.reload()
+    } catch(err) {
+      toast("Error occured:" + err.message, {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
+    }
 
   }
   getActionButtons() {
     // if you are student, you can apply or bookmark...
     const { isPolitician } = this.props.user
     const { status } = this.state.project
+    const { hasAppliedThis, hasBookmarkedThis, isOwner } = this.state
     if(!isPolitician) {
       return (
         <div style={style.secondaryInfo}>
@@ -112,23 +139,25 @@ class ProjectPage extends React.Component {
             size="md"
             disabled={status != 'open'}
             onClick={this.applyProject.bind(this)}
-            color="primary">
-            <Icon name="plus" /> Apply
+            color={hasAppliedThis?"danger":"primary"}>
+            <Icon name={hasAppliedThis?"remove":"add"} />
+            {hasAppliedThis?"Un-apply":"Apply"}
           </Button>
           <Button
             style={style.actionButton}
             block
-            outline
+            outline={!hasBookmarkedThis}
             size="md"
             onClick={this.bookmarkProject.bind(this)}
             color="info">
-            <Icon name="bookmark" /> Bookmark
+            <Icon name="bookmark" /> {hasBookmarkedThis?"Remove bookmark":"Add to Bookmark"}
           </Button>
         </div>
       )
     } else {
       // if you are politician and that you are owner,
       // you can modify or close the project
+      if(!isOwner) return null
       return (
         <div style={style.secondaryInfo}>
           <Button
@@ -154,8 +183,8 @@ class ProjectPage extends React.Component {
   statusAndDate(status, from, to) {
     return (
       <div style={style.secondaryInfo}>
-        <h3><ProjectStatusBadge status={status} /></h3>
-        <h3> | </h3>
+        <h5><ProjectStatusBadge status={status} /></h5>
+        <h3>|</h3>
         <h5>
           <b>
           <Icon name="calendar"/>
@@ -168,15 +197,17 @@ class ProjectPage extends React.Component {
     )
   }
   infoCard({_id, salary, nature, topic, tags, file}) {
+    const color = "primary"
+    const listItemClassName = `text-white bg-${color} justify-content-between`
     return (
-      <Card body inverse color="secondary">
+      <Card body inverse color={color}>
         <CardTitle>
           <Icon name="info"/> <b>About</b>
         </CardTitle>
         <CardText>
           <ListGroup flush>
             <ListGroupItem
-              className="text-white bg-secondary justify-content-between"
+              className={listItemClassName}
             >
                 <Icon name="money"/> Salary
                 <h5 className="text-success">
@@ -184,7 +215,7 @@ class ProjectPage extends React.Component {
                 </h5>
             </ListGroupItem>
             <ListGroupItem
-              className="text-white bg-secondary justify-content-between"
+              className={listItemClassName}
             >
               <Icon name="question"/> Type
               <h5>
@@ -192,7 +223,7 @@ class ProjectPage extends React.Component {
               </h5>
             </ListGroupItem>
             <ListGroupItem
-              className="text-white bg-secondary justify-content-between"
+              className={listItemClassName}
             >
               <Icon name="tag" /> Tags
               <div style={style.secondaryInfo}>
@@ -242,6 +273,13 @@ class ProjectPage extends React.Component {
     return <ApplicationCard applications={applications} />
   }
 
+  getCreatorCard() {
+    const { isOwner, project } = this.state
+    if(isOwner) return null // nothing to tell about oneself
+    return (
+      <CreatorCard creator={project.creator} />
+    )
+  }
   render() {
     // extract info
     const { project } = this.state
@@ -274,6 +312,11 @@ class ProjectPage extends React.Component {
             <Row>
               <Col>
                 {this.getActionButtons()}
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                {this.getCreatorCard()}
               </Col>
             </Row>
           </Col>

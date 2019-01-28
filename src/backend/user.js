@@ -83,3 +83,29 @@ export const applyProject = async (project, token) => {
   if(!id) return
   return await authorizedPost(`${serverURL}/project/apply/${id}`, null, token)
 }
+
+export const toggleBookmarkProject = async (project, token) => {
+  const { _id: id} = project
+  if(!id) return
+  return await authorizedPost(`${serverURL}/project/bookmark/${id}`, null, token)
+}
+
+export const getProjectsOfUser = async (username, token) => {
+  return await authorizedGet(`${serverURL}/user/${username}/projects`, token)
+}
+
+export const acceptApplication = async (appId, token) => {
+  return await authorizedPost(`${serverURL}/application/${appId}/accept`, null, token)
+}
+
+export const rejectApplication = async (appId, token) => {
+  return await authorizedPost(`${serverURL}/application/${appId}/reject`, null, token)
+}
+
+export const searchProject = async (searchParams, token) => {
+  return await authorizedGet(`${serverURL}/project`, token, searchParams)
+}
+
+export const searchUser = async (searchParams, token) => {
+  return await authorizedGet(`${serverURL}/user`, token, searchParams)
+}
