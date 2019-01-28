@@ -6,12 +6,17 @@ import {
 } from 'reactstrap'
 import Header from './Header'
 import MainModal from './MainModal'
+
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import LoginPage from './pages/LoginPage'
 import AboutPage from './pages/AboutPage'
 import { Provider, connect } from 'react-redux'
 import configureStore from './store'
 import UserPage from './pages/UserPage'
+import ProjectPage from './pages/ProjectPage'
 import { withRouter } from 'react-router-dom'
 import { createBrowserHistory } from 'history'
 
@@ -40,9 +45,11 @@ class App extends Component {
           user={this.props.auth.user}
           mode={this.props.mode}/>
         <MainModal />
+        <ToastContainer />
         <Switch>
           <Route path="/about" component={AboutPage} />
           <Route path="/user/:user_id?" component={UserPage} />
+          <Route path="/project/:project_id" component={ProjectPage} />
           <Route path="/" component={LoginPage} />
         </Switch>
       </div>

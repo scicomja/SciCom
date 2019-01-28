@@ -15,6 +15,17 @@ export const authorizedPostMultipartForm = async (url, form, jwt) => {
   })
   return await response.json()
 }
+export const authorizedPost = async (url, json, jwt) => {
+  const response = await fetch(url, {
+    method: 'post',
+    headers: {
+      'Authorization': `Bearer ${jwt}`
+
+    },
+    body: JSON.stringify(json)
+  })
+  return await response.json()
+}
 export const authorizedGet = async (url, jwt, params = {}) => {
   if(Object.keys(params).length > 0) {
     url = `${url}?${constructGetQuery(params)}`
@@ -38,6 +49,9 @@ export const getProject = async (token) => {
   return await authorizedGet(`${serverURL}/project`, token)
 }
 
+export const getProjectById = async (id, token) => {
+  return await authorizedGet(`${serverURL}/project/${id}`, token)
+}
 export const getApplications = async (token) => {
   return await authorizedGet(`${serverURL}/application`, token)
 }
@@ -50,4 +64,22 @@ export const modifyProject = async (project, token) => {
   const { _id: id} = project
   if(!id) return
   return await authorizedPostMultipartForm(`${serverURL}/project/${id}`, project, token)
+}
+
+export const closeProject = async (project, token) => {
+  const { _id: id} = project
+  if(!id) return
+  return await authorizedPost(`${serverURL}/project/close/${id}`, null, token)
+}
+
+export const openProject = async (project, token) => {
+  const { _id: id} = project
+  if(!id) return
+  return await authorizedPost(`${serverURL}/project/open/${id}`, null, token)
+}
+
+export const applyProject = async (project, token) => {
+  const { _id: id} = project
+  if(!id) return
+  return await authorizedPost(`${serverURL}/project/apply/${id}`, null, token)
 }

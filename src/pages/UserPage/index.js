@@ -13,6 +13,7 @@ import {
   Button,
   Card,CardTitle, CardText
 } from 'reactstrap'
+import ProjectStatusBadge from '../../components/projectStatusBadge'
 import FrontPage from './frontPage'
 import { Icon } from '../../constants'
 import IconComponent from '../../components/icon'

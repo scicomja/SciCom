@@ -1,17 +1,19 @@
 import React from 'react'
-
+import Icon from './icon'
 export default class ContentBox extends React.Component {
   render() {
+      const { title, children, icon } = this.props
     return (
       <div style={{
           ...style.container,
           ...this.props.style}
         }>
         <div style={style.titleRow}>
-          {this.props.title}
+          <Icon name={icon} />{' '}
+          {title}
         </div>
         <div style={style.content}>
-          {this.props.children}
+          {children}
         </div>
       </div>
     )

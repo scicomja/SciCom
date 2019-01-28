@@ -10,6 +10,8 @@ import UserChip from './userChip'
 import * as ModalActions from '../actions/modal'
 import * as _ from 'lodash'
 import moment from 'moment'
+import { withRouter } from 'react-router-dom'
+
 const ProjectCard = function(props) {
   const {project, isOwner} = props
   if(!project) return null
@@ -21,7 +23,8 @@ const ProjectCard = function(props) {
     topic,
     salary,
     nature,
-    from, to
+    from, to,
+    _id: id
   } = project
   if(!title || !creator) return null
   const getStatusChip = (status) => {
@@ -39,7 +42,7 @@ const ProjectCard = function(props) {
   const formatDate = date => moment(date).format("MMM Do YY")
   return (
     <Card body inverse color="secondary"
-      onClick={() => props.showProject(project)}
+      onClick={() => props.history.push(`/project/${id}`)}
       style={style.container}>
       <CardTitle>
         <div style={style.spread}>
@@ -89,4 +92,6 @@ const mapDispatchToProps = dispatch => ({
     content: p
   })
 })
-export default connect(null,mapDispatchToProps)(ProjectCard)
+export default withRouter(
+  connect(null,mapDispatchToProps)(ProjectCard)
+)
