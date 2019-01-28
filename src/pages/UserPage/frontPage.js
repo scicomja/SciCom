@@ -7,6 +7,7 @@ import {
 import ProjectCard from '../../components/projectCard'
 import UserChip from '../../components/userChip'
 import Icon from '../../components/icon'
+import ApplicationCard from './applicationCard'
 import classnames from 'classnames'
 
 export default class FrontPage extends React.Component {
@@ -70,11 +71,9 @@ export default class FrontPage extends React.Component {
     return (
       <div style={style.content}>
         {applications.map(app => (
-          <ProjectCard
-            color="info"
-            project={app.project}
-            key={app._id}
-            isOwner={false} />
+          <ApplicationCard
+            application={app}
+          />
         ))}
       </div>
     )
