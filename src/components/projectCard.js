@@ -13,7 +13,7 @@ import moment from 'moment'
 import { withRouter } from 'react-router-dom'
 
 const ProjectCard = function(props) {
-  const {project, isOwner} = props
+  const {project, isOwner, color: customColor} = props
   if(!project) return null
   const {
     title,
@@ -41,7 +41,7 @@ const ProjectCard = function(props) {
   }
   const formatDate = date => moment(date).format("MMM Do YY")
   return (
-    <Card body inverse color="secondary"
+    <Card body inverse color={customColor || "secondary"}
       onClick={() => props.history.push(`/project/${id}`)}
       style={style.container}>
       <CardTitle>

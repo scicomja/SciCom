@@ -11,12 +11,16 @@ import Icon from '../../components/icon'
 import UserChip from '../../components/userChip'
 import CenterNotice from '../../components/centerNotice'
 import { withRouter } from 'react-router-dom'
-export default class ApplicationCard extends React.Component {
+class ApplicationCard extends React.Component {
   noApplicationsNotice() {
     return <CenterNotice title="No applications found" />
   }
   applicationItem(application) {
 
+  }
+  toUserPage(user) {
+    const { username } = user
+    this.props.history.push(`/user/${username}`)
   }
   applicationsList(applications) {
     return (
@@ -24,15 +28,29 @@ export default class ApplicationCard extends React.Component {
         {
           applications.map(app => (
             <ListGroupItem
-              className="text-white bg-info justify-content-between"
+              className="text-white bg-info"
+              style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}
             >
-              <UserChip user={app.applicant} />
-              <Button color="primary">
-                <Icon name="tick" /> Accept
-              </Button>
-              <Button color="secondary">
-                <Icon name="cross"/> Reject
-              </Button>
+              <div style={{flex: 1}}>
+                <UserChip
+                  onClick={() => this.toUserPage(app.applicant)}
+                  avatarSize={32}
+                  user={app.applicant} />
+              </div>
+              <div style={{flex: 1, display: 'flex', justifyContent: 'flex-end'}}>
+                <Button
+                  onClick={() => this.acceptApplication(app)}
+                  color="primary">
+                  <Icon name="check" /> Accept
+                </Button>
+                {' '}
+                <Button
+                  onClick={() => this.rejectApplication(app)}
+                  color="secondary">
+                  <Icon name="times"/> Reject
+                </Button>
+              </div>
+
             </ListGroupItem>
           ))
         }
@@ -65,3 +83,5 @@ const style = {
     marginTop: 16
   }
 }
+
+export default withRouter(ApplicationCard)

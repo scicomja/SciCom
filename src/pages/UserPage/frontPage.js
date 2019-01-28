@@ -51,9 +51,6 @@ export default class FrontPage extends React.Component {
     }
     return (
       <div style={style.content}>
-        <h3 style={style.contentHeader}>
-          <b> Bookmarks </b>
-        </h3>
         {bookmarks.map(p => (
           <ProjectCard
             project={p}
@@ -69,8 +66,17 @@ export default class FrontPage extends React.Component {
         <CenterNotice title="No applications found" />
       )
     }
+    console.log('applications', applications)
     return (
-      <CenterNotice title="To be done" />
+      <div style={style.content}>
+        {applications.map(app => (
+          <ProjectCard
+            color="info"
+            project={app.project}
+            key={app._id}
+            isOwner={false} />
+        ))}
+      </div>
     )
   }
   navTab(name) {
@@ -80,7 +86,7 @@ export default class FrontPage extends React.Component {
           className={classnames({ active: this.state.activeTab === name })}
           onClick={() => this.setState({activeTab: name}) }
         >
-          {name.toUpperCase()}
+          <Icon name={name}/>{' '}{name.toUpperCase()}
         </NavLink>
       </NavItem>
     )
@@ -101,7 +107,7 @@ export default class FrontPage extends React.Component {
       }
     }
     // students' front page
-    if(!this.props.isUserHimself)
+    if(this.props.isUserHimself)
     return (
       <div style={style.container}>
         <Nav tabs>

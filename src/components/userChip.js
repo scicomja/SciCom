@@ -1,9 +1,13 @@
 import React from 'react'
 import Avatar from 'react-avatar'
-export default function({user}) {
+export default function({
+  user,
+  avatarSize,
+  onClick,
+  style: customStyle}) {
   return (
-    <div style={style.container}>
-      <Avatar style={style.avatar} round size={16} name={user.username} />
+    <div onClick={onClick} style={{...style.container, ...customStyle}}>
+      <Avatar style={style.avatar} round size={avatarSize || 16} name={user.username} />
       {user.username}
     </div>
   )

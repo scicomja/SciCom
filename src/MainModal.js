@@ -201,8 +201,8 @@ class MainModal extends React.Component {
               )}
               onSubmit={async (values, actions) => {
                 try {
-
                   if(!content) {
+
                     const payload = {...values, status: 'open'} // default value
                     const project = await createProject(payload, this.props.token)
                   } else {

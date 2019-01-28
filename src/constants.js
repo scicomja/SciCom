@@ -20,7 +20,8 @@ export const Icon = {
   "phone": "phone",
   "linkedin": "linkedin",
   "project": "wrench",
-  "bookmark": "bookmark"
+  "bookmark": "bookmark",
+  "application": "edit"
 
 }
 
