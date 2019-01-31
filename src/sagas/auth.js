@@ -66,6 +66,13 @@ export function* register({ username, password, email, isPolitician}) {
   }
 }
 
+export function* refreshUserInfo() {
+  const user = yield call(getUser)
+  yield put({
+    type: LoginActions.SET_USER,
+    user
+  })
+}
 // watchers
 export function* watchLogin() {
   yield takeLatest(LoginActions.LOGIN, login)
@@ -73,4 +80,8 @@ export function* watchLogin() {
 
 export function* watchRegister() {
   yield takeLatest(LoginActions.REGISTER, register)
+}
+
+export function* watchRefreshUserInfo() {
+  yield takeLatest(LoginActions.REFRESH_USER_INFO, refreshUserInfo)
 }

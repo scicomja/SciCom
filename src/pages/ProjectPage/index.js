@@ -26,6 +26,7 @@ import { authorizedRequestGet } from '../../utils/requests'
 import ProjectStatusBadge from '../../components/projectStatusBadge'
 import Icon from '../../components/icon'
 import * as ModalActions from '../../actions/modal'
+import { REFRESH_USER_INFO } from '../../actions/auth'
 import CreatorCard from './CreatorCard'
 import moment from 'moment'
 import * as _ from 'lodash'
@@ -44,10 +45,15 @@ class ProjectPage extends React.Component {
       project: null,
       isOwner: false,
       hasAppliedThis: false,
-      hasBookmarkedThis: false
     }
   }
 
+  hasBookmarkedThis() {
+    const { user } = this.props
+    const { project } = this.state
+    if(!project) return false
+    return !!user.bookmarks.filter(bm => bm._id == project._id).length
+  }
   async componentDidMount() {
     // find and populate the project info
     const { project_id } = this.props.match.params
@@ -62,7 +68,6 @@ class ProjectPage extends React.Component {
       this.setState({
         project,
         isOwner: project.creator._id == user._id,
-        hasBookmarkedThis: !!user.bookmarks.filter(bm => bm._id == project._id).length,
         hasAppliedThis: !!applications.filter(app => app.project._id == project._id).length
       })
     } catch(err) {
@@ -115,9 +120,11 @@ class ProjectPage extends React.Component {
       }
       // we bookmarked it!
       toast.success(message, {
-          position: toast.POSITION.BOTTOM_RIGHT
-        })
-      window.location.reload()
+          position: toast.POSITION.BOTTOM_RIGHT,
+          // onClose: window.location.reload
+      })
+      this.props.refreshUserInfo()
+
     } catch(err) {
       toast("Error occured:" + err.message, {
         position: toast.POSITION.BOTTOM_RIGHT
@@ -129,7 +136,7 @@ class ProjectPage extends React.Component {
     // if you are student, you can apply or bookmark...
     const { isPolitician } = this.props.user
     const { status } = this.state.project
-    const { hasAppliedThis, hasBookmarkedThis, isOwner } = this.state
+    const { hasAppliedThis, isOwner } = this.state
     if(!isPolitician) {
       return (
         <div style={style.secondaryInfo}>
@@ -146,11 +153,11 @@ class ProjectPage extends React.Component {
           <Button
             style={style.actionButton}
             block
-            outline={!hasBookmarkedThis}
+            outline={!this.hasBookmarkedThis()}
             size="md"
             onClick={this.bookmarkProject.bind(this)}
             color="info">
-            <Icon name="bookmark" /> {hasBookmarkedThis?"Remove bookmark":"Add to Bookmark"}
+            <Icon name="bookmark" /> {this.hasBookmarkedThis()?"Remove bookmark":"Add to Bookmark"}
           </Button>
         </div>
       )
@@ -371,6 +378,9 @@ const mapDispatchToProps = dispatch => ({
   editProject: (project) => dispatch({
     type: ModalActions.MODIFY_PROJECT,
     content: project
+  }),
+  refreshUserInfo: () => dispatch({
+    type: REFRESH_USER_INFO
   })
 })
 export default withRouter(

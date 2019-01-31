@@ -87,6 +87,7 @@ export const applyProject = async (project, token) => {
 export const toggleBookmarkProject = async (project, token) => {
   const { _id: id} = project
   if(!id) return
+  console.log(`${serverURL}/project/bookmark/${id}`)
   return await authorizedPost(`${serverURL}/project/bookmark/${id}`, null, token)
 }
 

@@ -9,6 +9,10 @@ import UserChip from '../../components/userChip'
 import Icon from '../../components/icon'
 import ApplicationCard from './applicationCard'
 import classnames from 'classnames'
+import {
+  getProject,
+  getApplications
+} from '../../backend/user'
 
 export default class FrontPage extends React.Component {
   constructor(props) {
