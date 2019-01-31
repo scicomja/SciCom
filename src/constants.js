@@ -1,3 +1,5 @@
+import * as Yup from 'yup'
+
 export const serverURL = "http://localhost:3000"
 export const Mode = {
   REGISTER_POLITICIAN: "REGISTER_POLITICIAN",
@@ -31,3 +33,13 @@ export const ProjectNature = [
   'parttime',
   'voluntary'
 ]
+
+export const InitialProjectSearchPayload = {
+  "name": ""
+}
+
+export const ProjectSearchPayloadValidator = Yup.object()
+  .shape({
+    name: Yup.string().min(3, "Search term is too short")
+          .required("Search term is required")
+  })

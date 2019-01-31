@@ -42,7 +42,7 @@ class ApplicationCard extends React.Component {
     const { applicant, status } = application
     return (
       <ListGroupItem
-        className="text-white bg-info"
+        className="text-white bg-secondary"
         style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}
       >
         <div style={{flex: 1}}>
@@ -125,7 +125,7 @@ class ApplicationCard extends React.Component {
   render() {
     const { applications } = this.props
     return (
-      <Card body inverse color="info" style={style.container}>
+      <Card body inverse color="secondary" style={style.container}>
         <CardTitle>
           <Icon name="question"/>{' '}
           Applications

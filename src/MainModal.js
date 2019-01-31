@@ -22,6 +22,8 @@ import {
   ModalMode,
   ProjectNature,
   ProjectStatus,
+  InitialProjectSearchPayload,
+  ProjectSearchPayloadValidator
 } from './constants'
 import {
   Formik,
@@ -37,9 +39,12 @@ import {
   FormikInput
 } from './utils/Form'
 
+import Icon from './components/icon'
+
 import * as Yup from 'yup'
 import * as _ from 'lodash'
 import moment from 'moment'
+
 import * as ModalActions from './actions/modal'
 
 class MainModal extends React.Component {
@@ -94,6 +99,31 @@ class MainModal extends React.Component {
     const isOwner = !!content && (content.creator && this.props.user._id == content.creator._id)
 
     switch(mode) {
+      case ModalMode.SEARCH_PROJECT:
+          return (
+            <Formik
+              initialValues={InitialProjectSearchPayload}
+              validationSchema={ProjectSearchPayloadValidator}
+              render={({
+                isValid,
+                errors,
+                isSubmitting,
+                dirty
+              }) => (
+                <Form>
+                  <Field name="name" label="Project Name" type="text"
+                    component={ReactstrapInput}
+                  />
+                  <Button
+                    disabled={isSubmitting || !_.isEmpty(errors) || !dirty || !isValid}
+                    type="submit" color="primary">
+                    <Icon name="search" /> Search
+                  </Button>
+                </Form>
+              )}
+            >
+            </Formik>
+          )
       case ModalMode.PROJECT_DETAILS:
           return (
             <Formik
