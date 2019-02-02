@@ -164,7 +164,7 @@ class ProjectPage extends React.Component {
     } else {
       // if you are politician and that you are owner,
       // you can modify or close the project
-      if(!isOwner) return null
+      if(!isOwner || status == 'completed') return null
       return (
         <div style={style.secondaryInfo}>
           <Button
@@ -183,9 +183,23 @@ class ProjectPage extends React.Component {
             size="md" color="danger">
             {(status != "closed")?"Mark as closed":"Reopen the project"}
           </Button>
+          {
+            (status == "closed") && (
+              <Button
+                block
+                style={style.actionButton}
+                size="md" color="info"
+                onClick={this.completeProject.bind(this)}>
+                Mark as Completed
+              </Button>
+            )
+          }
         </div>
       )
     }
+  }
+  completeProject() {
+
   }
   statusAndDate(status, from, to) {
     return (

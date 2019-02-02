@@ -70,8 +70,13 @@ export const Icon = {
   "linkedin": "linkedin",
   "project": "wrench",
   "bookmark": "bookmark",
-  "application": "edit"
+  "application": "edit",
 
+  // search filters' icon
+  name: 'person',
+  salary: 'money',
+  title: 'tag',
+  state: 'pin'
 }
 
 export const ProjectNature = [

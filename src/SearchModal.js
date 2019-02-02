@@ -39,21 +39,32 @@ import Icon from './components/icon'
 import * as Yup from 'yup'
 import * as SearchActions from './actions/search'
 import moment from 'moment'
+import * as _ from 'lodash'
 
 class SearchModal extends React.Component {
   search(values) {
     // TODO: submit search here...
-    console.log('submitting payload', values)
-    const { close, search, history } = this.props
-    close()
+    const {search, history } = this.props
     search(values)
-    history.push('/search')
+    // DO NOT push to search page here: wait till the params are set
+  }
+  componentWillReceiveProps(newProps) {
+    console.log('current location', newProps)
+    const {
+      searchMode,
+      searchParams,
+      history, location
+    } = this.props
+    if (location.pathName != '/search' &&
+      !_.isEqual(newProps.searchParams, searchParams)) {
 
-    // determine the endpoints depending on searchMode
+      history.push('/search')
+    }
   }
   getForm(params) {
     const { searchMode, searchParams } = this.props
     const { values, dirty, isValid, setFieldValue, resetForm } = params
+    const defaultFormValue = SearchInitialValue[searchMode]
     const buttonGroup = (
       <FormGroup row>
         <Col md="6" className="justify-space-between">
@@ -65,8 +76,8 @@ class SearchModal extends React.Component {
           </Button>
           {' '}
           <Button
-            onClick={() => resetForm(SearchInitialValue[searchMode])}
-            disabled={!dirty}>
+            onClick={() => resetForm(defaultFormValue)}
+            disabled={_.isEqual(values, defaultFormValue)}>
             Clear
           </Button>
         </Col>
@@ -208,8 +219,9 @@ class SearchModal extends React.Component {
     }
   }
   getNavs() {
-    const { searchMode, switchMode } = this.props
-    const { isPolitician } = this.props.user
+    const { searchMode, switchMode, user } = this.props
+    if(!user) return null // not logged in
+    const { isPolitician } = user
     if(!isPolitician) return null
     return (
       <Nav tabs>
@@ -229,10 +241,10 @@ class SearchModal extends React.Component {
     )
   }
   render() {
-    const { searchParams, searchMode, close } = this.props
+    const { searchParams, searchMode, isModalOpen, close } = this.props
     return (
       <Modal
-        isOpen={!!searchMode}
+        isOpen={isModalOpen}
         toggle={close}>
         <ModalHeader toggle={close}>
           <Icon name="search" /> Search
@@ -259,7 +271,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   close: () => dispatch({
-    type: SearchActions.CLOSE_SEARCH
+    type: SearchActions.CLOSE_SEARCH_MODAL
   }),
   search: (params) => dispatch({
     type: SearchActions.SET_SEARCH_PARAMS,

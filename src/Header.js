@@ -102,19 +102,19 @@ const mapDispatchToProps = dispatch => ({
     type: LOGOUT
   }),
   searchProjects: () => dispatch({
-    type: SearchActions.SET_SEARCH_PARAMS,
+    type: SearchActions.OPEN_SEARCH_MODAL,
     mode: SearchMode.PROJECT,
-    params: null
+
   }),
   searchStudents: () => dispatch({
-    type: SearchActions.SET_SEARCH_PARAMS,
+    type: SearchActions.OPEN_SEARCH_MODAL,
     mode: SearchMode.STUDENT,
-    params: null
+
   }),
   searchPoliticians: () => dispatch({
-    type: SearchActions.SET_SEARCH_PARAMS,
+    type: SearchActions.OPEN_SEARCH_MODAL,
     mode: SearchMode.POLITICIAN,
-    params: null
+
   }),
   createProject: () => dispatch({
     type: ModalActions.CREATE_PROJECT,

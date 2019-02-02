@@ -1,11 +1,7 @@
-export const searchStudent = (params) => {
+export const searchUser = (params) => {
 
 }
 
 export const searchProject = (params) => {
-
-}
-
-export const searchPoliticians = (params) => {
 
 }
