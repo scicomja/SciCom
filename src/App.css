@@ -12,3 +12,7 @@
   display: flex;
   width: 100%;
 }
+
+li.nav-item {
+  cursor: pointer;
+}

@@ -10,13 +10,17 @@ import Section from './Section'
 
 class HomePage extends React.Component {
 
+  componentDidMount() {
+    const { isPolitician } = this.props.user
+    // TODO: request search here
+  }
   render() {
     const { isPolitician } = this.props.user
     return (
       <Container>
         <Row>
           <Col>
-            
+
           </Col>
         </Row>
       </Container>

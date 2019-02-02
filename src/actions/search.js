@@ -1,0 +1,4 @@
+export const CLEAR_SEARCH = "CLEAR_SEARCH"
+export const SET_SEARCH_PARAMS = "SET_SEARCH_PARAMS"
+export const CLOSE_SEARCH = "CLOSE_SEARCH"
+export const SET_SEARCH_MODE = "SET_SEARCH_MODE"

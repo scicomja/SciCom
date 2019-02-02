@@ -14,6 +14,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import SearchResultPage from './pages/SearchResultPage'
 import LoginPage from './pages/LoginPage'
 import AboutPage from './pages/AboutPage'
+import HomePage from './pages/HomePage'
+import SearchModal from './SearchModal'
 import { Provider, connect } from 'react-redux'
 import configureStore from './store'
 import UserPage from './pages/UserPage'
@@ -46,12 +48,14 @@ class App extends Component {
           user={this.props.auth.user}
           mode={this.props.mode}/>
         <MainModal />
+        <SearchModal />
         <ToastContainer />
         <Switch>
+          <Route path="/home" components={HomePage} />
           <Route path="/about" component={AboutPage} />
           <Route path="/user/:user_id?" component={UserPage} />
           <Route path="/project/:project_id" component={ProjectPage} />
-          <Route path="/search/:search_category" component={SearchResultPage} />
+          <Route path="/search" component={SearchResultPage} />
           <Route path="/" component={LoginPage} />
         </Switch>
       </div>

@@ -99,31 +99,9 @@ class MainModal extends React.Component {
     const isOwner = !!content && (content.creator && this.props.user._id == content.creator._id)
 
     switch(mode) {
-      case ModalMode.SEARCH_PROJECT:
-          return (
-            <Formik
-              initialValues={InitialProjectSearchPayload}
-              validationSchema={ProjectSearchPayloadValidator}
-              render={({
-                isValid,
-                errors,
-                isSubmitting,
-                dirty
-              }) => (
-                <Form>
-                  <Field name="name" label="Project Name" type="text"
-                    component={ReactstrapInput}
-                  />
-                  <Button
-                    disabled={isSubmitting || !_.isEmpty(errors) || !dirty || !isValid}
-                    type="submit" color="primary">
-                    <Icon name="search" /> Search
-                  </Button>
-                </Form>
-              )}
-            >
-            </Formik>
-          )
+      // mode for modifying user info
+      case ModalMode.USER_DETAILS:
+          return null
       case ModalMode.PROJECT_DETAILS:
           return (
             <Formik

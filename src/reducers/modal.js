@@ -7,7 +7,6 @@ const initialState = {
 
 export default function modalReducer(state = initialState, action) {
   const { content, mode } = action
-  console.log('modal reducer', action)
   switch(action.type) {
     case ModalActions.SET_MODAL_TYPE:
       return {...state, mode}

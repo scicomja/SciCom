@@ -16,7 +16,8 @@ import  {
   Modal, ModalHeader, ModalBody, ModalFooter
 } from 'reactstrap'
 import * as ModalActions from './actions/modal'
-import { ModalMode } from './constants'
+import * as SearchActions from './actions/search'
+import { ModalMode, SearchMode } from './constants'
 import { LOGOUT } from './actions/auth'
 class Header extends Component {
 
@@ -25,25 +26,29 @@ class Header extends Component {
     const { isPolitician } = this.props.user
     let searchItems = [(
       <NavItem>
-        <NavLink onClick={this.props.searchUsers}>
-          Search Users
+        <NavLink onClick={this.props.searchProjects}>
+          Search Projects
         </NavLink>
       </NavItem>
     )]
-    if (!isPolitician) {
-      searchItems.push((
-        <NavItem>
-          <NavLink onClick={this.props.searchProjects}>
-            Search Projects
-          </NavLink>
-        </NavItem>
-      ))
-    } else {
+    if(isPolitician) {
       // politician can create projects
       searchItems = [(
         <NavItem>
           <NavLink onClick={this.props.createProject}>
             Create projects
+          </NavLink>
+        </NavItem>
+      ), (
+        <NavItem>
+          <NavLink onClick={this.props.searchStudents}>
+            Search Students
+          </NavLink>
+        </NavItem>
+      ), (
+        <NavItem>
+          <NavLink onClick={this.props.searchPoliticians}>
+            Search Politicians
           </NavLink>
         </NavItem>
       )].concat(searchItems)
@@ -97,12 +102,19 @@ const mapDispatchToProps = dispatch => ({
     type: LOGOUT
   }),
   searchProjects: () => dispatch({
-    type: ModalActions.SET_MODAL_TYPE,
-    mode: ModalMode.SEARCH_PROJECT
+    type: SearchActions.SET_SEARCH_PARAMS,
+    mode: SearchMode.PROJECT,
+    params: null
   }),
-  searchUsers: () => dispatch({
-    type: ModalActions.SET_MODAL_TYPE,
-    mode: ModalMode.SEARCH_USER
+  searchStudents: () => dispatch({
+    type: SearchActions.SET_SEARCH_PARAMS,
+    mode: SearchMode.STUDENT,
+    params: null
+  }),
+  searchPoliticians: () => dispatch({
+    type: SearchActions.SET_SEARCH_PARAMS,
+    mode: SearchMode.POLITICIAN,
+    params: null
   }),
   createProject: () => dispatch({
     type: ModalActions.CREATE_PROJECT,

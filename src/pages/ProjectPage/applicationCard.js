@@ -60,12 +60,9 @@ class ApplicationCard extends React.Component {
             this.getApplicationAcceptedButtons(application)
         }
         {
-
           (status == 'rejected') &&
             this.getApplicationRejectedButtons(application)
         }
-
-
       </ListGroupItem>
     )
   }
