@@ -103,6 +103,9 @@ export const rejectApplication = async (appId, token) => {
   return await authorizedPost(`${serverURL}/application/${appId}/reject`, null, token)
 }
 
+export const completeProject = async (projectId, token) => {
+  return await authorizedPost(`${serverURL}/project/complete/${projectId}`, null, token)
+}
 export const searchProject = async (searchParams, token) => {
   return await authorizedGet(`${serverURL}/project`, token, searchParams)
 }

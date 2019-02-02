@@ -115,6 +115,7 @@ class SearchResultPage extends React.Component {
           <div style={style.filterContainer}>
             {
               Object.keys(searchParams)
+              .filter(p => !!searchParams[p])
               .map(p => filterItem(p, searchParams[p]))
             }
           </div>
@@ -152,14 +153,14 @@ const style = {
   filterItem: {
     display: 'flex',
     margin: 16,
-    width: '25%',
+    width: '30%',
     maxWidth: '33%'
   },
   filterContainer: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    // alignItems: '',
   },
   filterCard: {
     margin: 16,

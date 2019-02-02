@@ -20,6 +20,7 @@ import {
   closeProject,
   openProject,
   applyProject,
+  completeProject,
   toggleBookmarkProject
 } from '../../backend/user'
 import { authorizedRequestGet } from '../../utils/requests'
@@ -198,8 +199,11 @@ class ProjectPage extends React.Component {
       )
     }
   }
-  completeProject() {
-
+  async completeProject() {
+    const {_id: id} = this.state.project
+    const { token } = this.props
+    await completeProject(id, token)
+    window.location.reload()
   }
   statusAndDate(status, from, to) {
     return (
