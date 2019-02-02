@@ -53,7 +53,7 @@ class SearchModal extends React.Component {
   }
   getForm(params) {
     const { searchMode, searchParams } = this.props
-    const { values, dirty, isValid, setFieldValue } = params
+    const { values, dirty, isValid, setFieldValue, resetForm } = params
     const buttonGroup = (
       <FormGroup row>
         <Col md="6" className="justify-space-between">
@@ -64,7 +64,9 @@ class SearchModal extends React.Component {
             Search
           </Button>
           {' '}
-          <Button disabled={!dirty}>
+          <Button
+            onClick={() => resetForm(SearchInitialValue[searchMode])}
+            disabled={!dirty}>
             Clear
           </Button>
         </Col>
@@ -207,6 +209,8 @@ class SearchModal extends React.Component {
   }
   getNavs() {
     const { searchMode, switchMode } = this.props
+    const { isPolitician } = this.props.user
+    if(!isPolitician) return null
     return (
       <Nav tabs>
           {
@@ -249,7 +253,8 @@ class SearchModal extends React.Component {
 
 
 const mapStateToProps = state => ({
-  ...state.search
+  ...state.search,
+  user: state.auth.user
 })
 
 const mapDispatchToProps = dispatch => ({

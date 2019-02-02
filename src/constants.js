@@ -135,6 +135,8 @@ export const SearchValidationSchema = {
       .min(3, "Search term is too short"),
     state: Yup.string()
       .oneOf(germanStates),
+    salary: Yup.number()
+      .min(0, "Salary must be greater than 0")
   }),
   [SearchMode.POLITICIAN]: Yup.object().shape({
     name: Yup.string()
