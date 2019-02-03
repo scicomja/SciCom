@@ -17,7 +17,8 @@ const style = {
   container: {
     display: 'flex',
     height: 16,
-    alignItems: 'center'
+    alignItems: 'center',
+    cursor: "pointer"
   },
   avatar: {
     marginRight: 8

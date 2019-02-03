@@ -6,8 +6,12 @@ import * as _ from 'lodash'
 import {
   Card, CardTitle, CardText,
   Button,
-  Col
+  Col,
+  Pagination, PaginationItem, PaginationLink
 } from 'reactstrap'
+import CenterNotice from '../../components/centerNotice'
+import ProjectCard from '../../components/projectCard'
+import UserChip from '../../components/userChip'
 import { SearchMode } from '../../constants'
 import {
   searchProject,
@@ -23,33 +27,20 @@ class SearchResultPage extends React.Component {
     this.state = {
       searchMode: null,
       searchParams: null,
-      results: []
+      results: [],
+      page: 0, // pagination,
+      total: 0
     }
   }
   async reloadSearchConfig({searchMode, searchParams}) {
     this.setState({
       searchMode, searchParams
-    })
-    const isSearchingProject = searchMode == SearchMode.PROJECT
-    // launch search here
-    // first pick the right function to call
-    let searchFunc
-    if (isSearchingProject) {
-      searchFunc = searchProject
-    } else {
-      searchFunc = searchUser
-    }
+    }, async () => {
+      await this.goToPage(1)
+    } )
     // then prepare the payload
     // copy the values, retrieve the right payload
-    let payload = {...searchParams[searchMode]}
-    if(!isSearchingProject) {
-      // split out the call between politician and students.
-      payload.isPolitician = searchMode ==  SearchMode.POLITICIAN
-    }
-    console.log('search payload', payload)
-
-    let results = await searchFunc(payload)
-    this.setState({results})
+    // await this.goToPage(1)
   }
   /*
     Explanation here:
@@ -128,7 +119,82 @@ class SearchResultPage extends React.Component {
       </Card>
     )
   }
+  async goToPage(n) {
+    const { page, searchParams, searchMode} = this.state
+    const { token } = this.props
+    const isSearchingProject = searchMode == SearchMode.PROJECT
+    // launch search here
+    // first pick the right function to call
+    let searchFunc
+    if (isSearchingProject) {
+      searchFunc = searchProject
+    } else {
+      searchFunc = searchUser
+    }
+    let payload = _.omitBy(searchParams[searchMode], _.isEmpty)
+    if(!isSearchingProject) {
+      // split out the call between politician and students.
+      payload.isPolitician = searchMode ==  SearchMode.POLITICIAN
+    }
+    console.log('search payload', payload)
 
+    const {results, total} = await searchFunc(payload, token, n)
+    this.setState({results, total, page: n})
+    // fetch for it.
+  }
+  getPaginationComponent() {
+    const { results, total, page} = this.state
+    if(!results || !results.length) return null
+    console.log('get pagination', results, total, page)
+    let listOfN = []
+    for(let i = 1; i <= total; i++) listOfN.push(i)
+    return (
+      <Pagination>
+        <PaginationItem previous disabled={page == 1}>
+          <PaginationLink  onClick={() => this.goToPage(page - 1)}
+            previous href="#" />
+        </PaginationItem>
+        {
+          listOfN.map(n => (
+            <PaginationItem
+              onClick={() => this.goToPage(n)}
+              active={n == page}>
+              <PaginationLink href="#">
+                {n}
+              </PaginationLink>
+            </PaginationItem>
+          ))
+        }
+        <PaginationItem disabled={page == total}>
+          <PaginationLink next href="#" onClick={() => this.goToPage(page + 1)}/>
+        </PaginationItem>
+      </Pagination>
+    )
+  }
+  getSearchResultContainer() {
+    const { results, searchMode } = this.state
+    const {history} = this.props
+    if(!searchMode || !results || !results.length) {
+      return (<CenterNotice
+        icon="search"
+        title="No results"
+        subtitle="Try lowering your search constraints"
+      />)
+    }
+    if(searchMode == SearchMode.PROJECT) {
+      return results.map(proj => (
+        <ProjectCard project={proj} />
+      ))
+    } else {
+      // users' search result
+      return results.map(user => (
+        <UserChip
+          onClick={() => history.push(`/user/${user.username}`)}
+          user={user} />
+      ))
+    }
+
+  }
   render() {
     const {searchMode, searchParams} = this.state
     if(!searchMode || !searchParams) {
@@ -140,6 +206,13 @@ class SearchResultPage extends React.Component {
           Search {_.startCase(searchMode.toLowerCase())} Result
         </h3>
         {this.getSearchCriteriaCard()}
+        <div style={style.paginationContainer}>
+          {this.getPaginationComponent()}
+        </div>
+
+        <div style={style.resultContainer}>
+          {this.getSearchResultContainer()}
+        </div>
       </div>
 
     )
@@ -162,12 +235,20 @@ const style = {
     justifyContent: 'flex-start',
     // alignItems: '',
   },
+  paginationContainer: {
+    height: 72
+  },
   filterCard: {
     margin: 16,
     padding: 16
   },
   filterItemCell: {
     marginRight: 4
+  },
+  resultContainer: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between'
   }
 }
 const mapStateToProps = state => ({
