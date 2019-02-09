@@ -15,7 +15,6 @@ import {
   Card,CardTitle, CardText
 } from 'reactstrap'
 import ProjectStatusBadge from '../../components/projectStatusBadge'
-import FrontPage from './frontPage'
 import { Icon } from '../../constants'
 import IconComponent from '../../components/icon'
 import * as ModalActions from '../../actions/modal'
@@ -192,9 +191,7 @@ class UserPage extends React.Component {
       <div style={style.container}>
         {this.headerBar(user)}
         {this.contact(user)}
-        <FrontPage user={user}
-          isUserHimself={user.username === this.props.user.username}
-        />
+
       </div>
     )
   }

@@ -51,7 +51,7 @@ class App extends Component {
         <SearchModal />
         <ToastContainer />
         <Switch>
-          <Route path="/home" components={HomePage} />
+          <Route path="/home" component={HomePage} />
           <Route path="/about" component={AboutPage} />
           <Route path="/user/:user_id?" component={UserPage} />
           <Route path="/project/:project_id" component={ProjectPage} />
