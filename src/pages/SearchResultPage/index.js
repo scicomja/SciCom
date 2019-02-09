@@ -77,6 +77,7 @@ class SearchResultPage extends React.Component {
         searchParams: nextParams})
     }
   }
+
   getSearchCriteriaCard() {
     const {
       searchMode,
@@ -131,12 +132,11 @@ class SearchResultPage extends React.Component {
     } else {
       searchFunc = searchUser
     }
-    let payload = _.omitBy(searchParams[searchMode], _.isEmpty)
+    let payload = _.omitBy(searchParams[searchMode], f => !f)
     if(!isSearchingProject) {
       // split out the call between politician and students.
       payload.isPolitician = searchMode ==  SearchMode.POLITICIAN
     }
-    console.log('search payload', payload)
 
     const {results, total} = await searchFunc(payload, token, n)
     this.setState({results, total, page: n})

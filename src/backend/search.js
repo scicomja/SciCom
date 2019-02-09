@@ -13,6 +13,7 @@ export const searchUser = async (params, token, page = 1) => {
 }
 
 export const searchProject = async (params, token, page = 1) => {
+  console.log('search with payload', params)
   return await authorizedGet(`${serverURL}/project/`, token,
     {
       ...params,
