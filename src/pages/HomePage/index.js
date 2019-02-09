@@ -12,6 +12,7 @@ import {
   getProject,
   getApplications,
 } from '../../backend/user'
+import { CREATE_PROJECT } from '../../actions/modal'
 
 class HomePage extends React.Component {
 
@@ -48,29 +49,58 @@ class HomePage extends React.Component {
     const { extendedUser: user } = this.state
     console.log('home for user', user)
     return (
-      <Container>
-        <Row>
-          <Col>
-            <h3>Home</h3>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <FrontPage
-              user={user}
-              isUserHimself={true}
-            />
-          </Col>
-        </Row>
-      </Container>
+      <div style={style.container}>
+        <Container>
+          <Row>
+            <Col>
+              <h3>Home</h3>
+            </Col>
+            {
+              user.isPolitician && (
+                <Col style={style.createProjectContainer}>
+                  <Button
+                    color="primary"
+                    onClick={this.props.createProject}
+                  >
+                    Create Projects
+                  </Button>
+                </Col>
+              )
+            }
+          </Row>
+          <Row>
+            <Col>
+              <FrontPage
+                user={user}
+                isUserHimself={true}
+              />
+            </Col>
+          </Row>
+        </Container>
+      </div>
     )
   }
 }
-
+const style = {
+  container: {
+    marginTop: 16
+  },
+  createProjectContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end'
+  }
+}
 const mapStateToProps = state => ({
   ...state.auth
 })
 
+const mapDispatchToProps = dispatch => ({
+  createProject: () => dispatch({
+    type: CREATE_PROJECT,
+  })
+})
 export default withRouter(
-  connect(mapStateToProps, null)(HomePage)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps)(HomePage)
 )

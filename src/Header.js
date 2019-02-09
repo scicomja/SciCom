@@ -19,27 +19,30 @@ import * as ModalActions from './actions/modal'
 import * as SearchActions from './actions/search'
 import { ModalMode, SearchMode } from './constants'
 import { LOGOUT } from './actions/auth'
+import Icon from './components/icon'
+
 class Header extends Component {
 
   getSearchNavItems() {
     if(!this.props.user) return null
     const { isPolitician } = this.props.user
-    let searchItems = [(
+    let searchItems = [
+    (
       <NavItem>
         <NavLink onClick={this.props.searchProjects}>
           Search Projects
+        </NavLink>
+      </NavItem>
+    ), (
+      <NavItem>
+        <NavLink href="/home">
+          <Icon name="home" />
         </NavLink>
       </NavItem>
     )]
     if(isPolitician) {
       // politician can create projects
       searchItems = [(
-        <NavItem>
-          <NavLink onClick={this.props.createProject}>
-            Create projects
-          </NavLink>
-        </NavItem>
-      ), (
         <NavItem>
           <NavLink onClick={this.props.searchStudents}>
             Search Students

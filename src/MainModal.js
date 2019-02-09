@@ -74,7 +74,8 @@ class MainModal extends React.Component {
   prepareInitialValue(content) {
     // default values for new projects
     const formatDate = date => moment(date).startOf('day').toISOString()
-    const now = formatDate(new Date())
+    const tomorrow = moment().add(1,'day').endOf('day')
+    const now = formatDate(tomorrow.toDate())
     if(!content) return {
       title: "",
       description: "",
@@ -97,6 +98,7 @@ class MainModal extends React.Component {
   getForm() {
     const { mode, content } = this.props
     const isOwner = !!content && (content.creator && this.props.user._id == content.creator._id)
+    const tomorrow = moment().add(1,'day').endOf('day')
 
     switch(mode) {
       // mode for modifying user info
@@ -165,6 +167,7 @@ class MainModal extends React.Component {
                           name="from"
                           autoComplete="off"
                           selected={values.from}
+                          minDate={tomorrow.toDate()}
                           onChange={e => {
                             const date = moment(e).startOf('day').toISOString()
                             setFieldValue('from',date)
@@ -178,6 +181,7 @@ class MainModal extends React.Component {
                         name="to"
                         autoComplete="off"
                         selected={values.to}
+                        minDate={moment(values.from).add(1,'day').toDate()}
                         onChange={e => {
                           const date = moment(e).startOf('day').toISOString()
                           setFieldValue('to', e)

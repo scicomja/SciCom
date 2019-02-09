@@ -13,7 +13,11 @@ import moment from 'moment'
 import { withRouter } from 'react-router-dom'
 
 const ProjectCard = function(props) {
-  const {project, isOwner, color: customColor} = props
+  const {
+    style,
+    project, isOwner,
+    color: customColor
+  } = props
   if(!project) return null
   const {
     title,
@@ -43,7 +47,7 @@ const ProjectCard = function(props) {
   return (
     <Card body inverse color={customColor || "secondary"}
       onClick={() => props.history.push(`/project/${id}`)}
-      style={style.container}>
+      style={{...style.container, ...style}}>
       <CardTitle>
         <div style={style.spread}>
           <div>

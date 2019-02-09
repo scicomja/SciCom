@@ -6,7 +6,7 @@ import {
 import { withRouter } from 'react-router-dom'
 import UserChip from '../../components/userChip'
 
-const ApplicationCard = ({application, history}) => {
+const ApplicationCard = ({application, history, style = {}}) => {
   const { project, status } = application
   const getBadge = (status) => {
     let color = 'primary'
@@ -25,7 +25,7 @@ const ApplicationCard = ({application, history}) => {
   }
   return (
     <Card body inverse color="info"
-      style={style.container}
+      style={{...style.container, ...style}}
       onClick={() => history.push(`/project/${project._id}`)}>
       <CardTitle>
         {project.title}

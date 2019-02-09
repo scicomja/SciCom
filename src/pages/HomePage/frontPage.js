@@ -30,6 +30,7 @@ export default class FrontPage extends React.Component {
     return (
       projects.map(p => (
         <ProjectCard
+          style={style.projectCard}
           project={p}
           key={p._id}
           isOwner={true} />
@@ -71,6 +72,20 @@ export default class FrontPage extends React.Component {
     )
   }
 
+  onGoingProjectsTab(projects) {
+    if(!projects) return null
+    const onGoingProjects =
+      projects.filter(p => p.status == "active")
+
+    return (
+      <Section
+        icon="project"
+        title="Ongoing Projects">
+        {this.projectList(onGoingProjects)}
+      </Section>
+    )
+  }
+
   render() {
     const {
       isPolitician,
@@ -86,37 +101,30 @@ export default class FrontPage extends React.Component {
         <Container>
           {
             isPolitician && projects && (
-              <Row>
-                <Col>
-                  <Section
-                    title="Projects"
-                    icon="project">
-                    {
-                      this.projectList(projects)
-                    }
-                  </Section>
-                </Col>
-              </Row>
+              <Section
+                title="Projects"
+                icon="project">
+                {
+                  this.projectList(projects)
+                }
+              </Section>
             )
           }
-          <Row>
-            <Col>
+          {
+            !isPolitician && bookmarks && (
               <Section
                 icon="bookmark"
                 title="Bookmarks">
                 {this.bookmarkTab(bookmarks)}
               </Section>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Section
-                icon="application"
-                title="Applications">
-                {this.applicationTab(applications)}
-              </Section>
-            </Col>
-          </Row>
+            )
+          }
+
+          <Section
+            icon="application"
+            title="Applications">
+            {this.applicationTab(applications)}
+          </Section>
 
         </Container>
       </div>
@@ -138,6 +146,10 @@ const style = {
     justifyContent: 'space-between',
     alignItems: 'flex-start',
     flexWrap: 'wrap',
+    margin: 16
+  },
+  projectCard: {
+    maxWidth: '40%',
     margin: 16
   }
 }
