@@ -4,8 +4,9 @@ import {
 import {
   serverURL
 } from '../constants'
+
 export const searchUser = async (params, token, page = 1) => {
-  return await authorizedGet(`${serverURL}/users/`, token,
+  return await authorizedGet(`${serverURL}/user/`, token,
     {
       ...params,
       page

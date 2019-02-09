@@ -140,11 +140,11 @@ class SearchResultPage extends React.Component {
 
     const {results, total} = await searchFunc(payload, token, n)
     this.setState({results, total, page: n})
-    // fetch for it.
   }
+
   getPaginationComponent() {
     const { results, total, page} = this.state
-    if(!results || !results.length) return null
+    if(!results || !results.length || total <= 1) return null
     console.log('get pagination', results, total, page)
     let listOfN = []
     for(let i = 1; i <= total; i++) listOfN.push(i)
@@ -175,11 +175,13 @@ class SearchResultPage extends React.Component {
     const { results, searchMode } = this.state
     const {history} = this.props
     if(!searchMode || !results || !results.length) {
-      return (<CenterNotice
-        icon="search"
-        title="No results"
-        subtitle="Try lowering your search constraints"
-      />)
+      return (
+        <CenterNotice
+          icon="search"
+          title="No results"
+          subtitle="Try lowering your search constraints"
+        />
+      )
     }
     if(searchMode == SearchMode.PROJECT) {
       return results.map(proj => (
@@ -188,9 +190,18 @@ class SearchResultPage extends React.Component {
     } else {
       // users' search result
       return results.map(user => (
-        <UserChip
+        <Card
+          inverse body
+          style={style.userCard}
           onClick={() => history.push(`/user/${user.username}`)}
-          user={user} />
+          color="secondary">
+          <CardTitle>
+            <Icon name="user" />{' '}{user.username}
+          </CardTitle>
+          <CardText>
+            <UserChip user={user} />
+          </CardText>
+        </Card>
       ))
     }
 
@@ -249,6 +260,11 @@ const style = {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-between'
+  },
+  userCard: {
+    maxWidth: '40vw',
+    width: '40vw',
+    margin: 16
   }
 }
 const mapStateToProps = state => ({
