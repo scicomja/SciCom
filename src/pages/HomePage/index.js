@@ -13,6 +13,7 @@ import {
   getApplications,
 } from '../../backend/user'
 import { CREATE_PROJECT } from '../../actions/modal'
+import Icon from '../../components/icon'
 
 class HomePage extends React.Component {
 
@@ -53,7 +54,11 @@ class HomePage extends React.Component {
         <Container>
           <Row>
             <Col>
-              <h3>Home</h3>
+              <h1>
+                <Icon name="home"/>
+                {' '}
+                Home
+              </h1>
             </Col>
             {
               user.isPolitician && (
