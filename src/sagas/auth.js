@@ -4,7 +4,7 @@ import { serverURL } from '../constants'
 import { postJSON } from '../utils/requests'
 import { authorizedRequestGet } from '../utils/requests'
 import * as LoginActions from '../actions/auth'
-
+import { toast } from 'react-toastify'
 export function* getUser() {
   const user = yield call(authorizedRequestGet, `${serverURL}/user`)
   return user
@@ -49,20 +49,23 @@ export function* register({ username, password, email, isPolitician}) {
       type: LoginActions.SET_AUTH_ERROR,
       error
     })
+    toast.error(error.message)
   } else {
-    yield put({
-      type: LoginActions.SET_TOKEN,
-      token
-    })
-    const user = yield call(getUser)
-    yield put({
-      type: LoginActions.SET_USER,
-      user
-    })
+    toast.success("You have registered an account successfully")
+
+    // yield put({
+    //   type: LoginActions.SET_TOKEN,
+    //   token
+    // })
+    // const user = yield call(getUser)
+    // yield put({
+    //   type: LoginActions.SET_USER,
+    //   user
+    // })
     // finally, redirect to user's home page
     // yield put(push('/user/'))
-    yield call(history.push, '/user')
-    window.location.reload()
+    // yield call(history.push, '/user')
+    // window.location.reload()
   }
 }
 
