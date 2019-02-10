@@ -14,6 +14,7 @@ import {
   Button,
   Card,CardTitle, CardText
 } from 'reactstrap'
+import StatisticCell from './statisticCell'
 import ProjectStatusBadge from '../../components/projectStatusBadge'
 import { Icon } from '../../constants'
 import IconComponent from '../../components/icon'
@@ -178,7 +179,41 @@ class UserPage extends React.Component {
 
           </CardText>
         </Card>
+        {this.getStatisticComponents()}
       </div>
+    )
+  }
+  getStatisticComponents() {
+    const { user } = this.state
+    if(!user) return null
+    const { projects } = user
+    if(!projects) return null
+    const completedProjectCount =
+      projects.filter(p => p.status == 'completed').length
+    const activeProjectCount =
+      projects.filter(p => p.status == 'active').length
+    return (
+        <Card
+          style={style.statistics}
+          body inverse color="primary">
+          <CardTitle>
+            <IconComponent name="line-chart" />
+            {' '}
+            Statistics
+          </CardTitle>
+          <CardText>
+            <StatisticCell
+              icon="refresh"
+              name="Active"
+              count={activeProjectCount}
+            />
+            <StatisticCell
+              icon="check-circle"
+              name="Completed"
+              count={completedProjectCount}
+            />
+          </CardText>
+        </Card>
     )
   }
   render() {
@@ -190,6 +225,7 @@ class UserPage extends React.Component {
     return (
       <div style={style.container}>
         {this.headerBar(user)}
+
         {this.contact(user)}
 
       </div>
@@ -248,6 +284,7 @@ const style = {
   contact: {
     margin: 32,
     marginTop: avatarSize / 2,
+    display: 'flex'
   },
   contactItem: {
     // flex: '0 0 50vw',
@@ -261,7 +298,10 @@ const style = {
   contactIcon: {
     margin: 8
   },
-
+  statistics: {
+    maxWidth: '20%',
+    marginLeft: 16
+  }
 }
 
 export default withRouter(
