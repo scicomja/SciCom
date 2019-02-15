@@ -15,6 +15,7 @@ import SearchResultPage from './pages/SearchResultPage'
 import LoginPage from './pages/LoginPage'
 import AboutPage from './pages/AboutPage'
 import HomePage from './pages/HomePage'
+import EditInfoPage from './pages/EditInfoPage'
 import SearchModal from './SearchModal'
 import { Provider, connect } from 'react-redux'
 import configureStore from './store'
@@ -52,6 +53,7 @@ class App extends Component {
         <ToastContainer />
         <Switch>
           <Route path="/home" component={HomePage} />
+          <Route path="/editInfo" component={EditInfoPage} />
           <Route path="/about" component={AboutPage} />
           <Route path="/user/:user_id?" component={UserPage} />
           <Route path="/project/:project_id" component={ProjectPage} />

@@ -7,7 +7,7 @@ const initialState = {
 }
 export default function authReducer(state = initialState, action) {
   // list of possible attributes from action
-  const { token, user, error } = action
+  const { token, user, error, info } = action
   switch(action.type) {
     case AuthActions.SET_TOKEN:
       return {...state, error: null, token}
@@ -17,6 +17,8 @@ export default function authReducer(state = initialState, action) {
       return {...state, error}
     case AuthActions.LOGOUT:
       return {...initialState}
+    case AuthActions.UPDATE_USER_INFO:
+      return {...state, user: {...state.user, ...info}}
     default:
       return state
   }

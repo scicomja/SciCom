@@ -54,13 +54,10 @@ class UserPage extends React.Component {
         this.setState({
           user
         })
-        // if you are looking at a politician, give the list of projects as well
-        if (user.isPolitician) {
-          let projects = await getProjectsOfUser(user.username, this.props.token)
-          this.setState({
-            user: {...this.state.user, projects}
-          })
-        }
+        let projects = await getProjectsOfUser(user.username, this.props.token)
+        this.setState({
+          user: {...this.state.user, projects}
+        })
         // TODO: this
         // if(!isPolitician && user.isPolitician) {
         //   let projects = await getProject()
@@ -71,15 +68,14 @@ class UserPage extends React.Component {
     } else {
       // it's the user himself
       const { isPolitician } = this.props.user
-      if(isPolitician) {
-        let projects = await getProject(this.props.token)
-        console.log('projects',projects)
-        this.setState({
-          user: {
-            ...this.props.user, projects
-          }
-        })
-      } else {
+      let projects = await getProject(this.props.token)
+      console.log('projects',projects)
+      this.setState({
+        user: {
+          ...this.props.user, projects
+        }
+      })
+      if(!isPolitician) {
         // bookmark is already there, go for applications
         let applications = await getApplications(this.props.token)
         this.setState({
@@ -122,6 +118,7 @@ class UserPage extends React.Component {
                 {this.state.isUserHimself && (
                   <div>
                     <Button
+                      href="/editInfo"
                       style={style.editButton}
                       color="primary">
                        Edit Profile

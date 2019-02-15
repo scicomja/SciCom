@@ -20,6 +20,7 @@ import {
   closeProject,
   openProject,
   applyProject,
+  deleteProject,
   completeProject,
   toggleBookmarkProject
 } from '../../backend/user'
@@ -133,6 +134,21 @@ class ProjectPage extends React.Component {
     }
 
   }
+  async deleteProject() {
+    try {
+      const result = await deleteProject(
+        this.state.project,
+        this.props.token)
+      toast.success("Project deleted", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      })
+      window.location.reload()
+    } catch(err) {
+      toast("Error occured:" + err.message, {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
+    }
+  }
   getActionButtons() {
     // if you are student, you can apply or bookmark...
     const { isPolitician } = this.props.user
@@ -165,7 +181,23 @@ class ProjectPage extends React.Component {
     } else {
       // if you are politician and that you are owner,
       // you can modify or close the project
-      if(!isOwner || status == 'completed') return null
+      const deleteButton = (
+        <Button
+          style={style.actionButton}
+          block
+          size="md" color="danger"
+          onClick={this.deleteProject.bind(this)}>
+          Delete
+        </Button>
+      )
+      if(!isOwner || status == 'completed') {
+        return (
+          <div style={style.secondaryInfo}>
+            {deleteButton}
+          </div>
+        )
+      }
+
       return (
         <div style={style.secondaryInfo}>
           <Button
@@ -195,6 +227,7 @@ class ProjectPage extends React.Component {
               </Button>
             )
           }
+          {deleteButton}
         </div>
       )
     }
@@ -375,11 +408,13 @@ const style = {
   secondaryInfo: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap'
   },
   actionButton: {
     margin: 8,
-    width: '40%'
+    // width: '40%',
+    minWidth: '40%'
   },
   descriptionCard: {
     marginTop: 8

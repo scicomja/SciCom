@@ -26,6 +26,15 @@ export const authorizedPost = async (url, json, jwt) => {
   })
   return await response.json()
 }
+export const authorizedDelete = async (url, jwt) => {
+  const response = await fetch(url, {
+    method: 'delete',
+    headers: {
+      'Authorization': `Bearer ${jwt}`
+    },
+  })
+  return await response.json()
+}
 export const authorizedGet = async (url, jwt, params = {}) => {
   if(Object.keys(params).length > 0) {
     url = `${url}?${constructGetQuery(params)}`
@@ -43,6 +52,10 @@ export const authorizedGet = async (url, jwt, params = {}) => {
 
 export const getUser = async (username, token) => {
   return await authorizedGet(`${serverURL}/user/${username}`, token)
+}
+
+export const updateUserInfo = async (info, token) => {
+  return await authorizedPostMultipartForm(`${serverURL}/user/`, info, token)
 }
 
 export const getProject = async (token) => {
@@ -64,6 +77,12 @@ export const modifyProject = async (project, token) => {
   const { _id: id} = project
   if(!id) return
   return await authorizedPostMultipartForm(`${serverURL}/project/${id}`, project, token)
+}
+
+export const deleteProject = async (project, token) => {
+  const { _id: id} = project
+  if(!id) return
+  return await authorizedDelete(`${serverURL}/project/${id}`, token)
 }
 
 export const closeProject = async (project, token) => {

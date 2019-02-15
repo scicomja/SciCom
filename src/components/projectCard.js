@@ -14,7 +14,7 @@ import { withRouter } from 'react-router-dom'
 
 const ProjectCard = function(props) {
   const {
-    style,
+    style: customStyle = {},
     project, isOwner,
     color: customColor
   } = props
@@ -28,7 +28,7 @@ const ProjectCard = function(props) {
     salary,
     nature,
     from, to,
-    _id: id
+    _id: id,
   } = project
   if(!title || !creator) return null
   const getStatusChip = (status) => {
@@ -47,7 +47,7 @@ const ProjectCard = function(props) {
   return (
     <Card body inverse color={customColor || "secondary"}
       onClick={() => props.history.push(`/project/${id}`)}
-      style={{...style.container, ...style}}>
+      style={{...style.container, ...customStyle}}>
       <CardTitle>
         <div style={style.spread}>
           <div>
