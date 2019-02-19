@@ -123,6 +123,7 @@ class EditInfoPage extends React.Component {
           </Row>
           <Row>
             <Formik
+              enableReinitialize
               initialValues={initialValues}
               validationSchema={this.validationSchema}
             >
@@ -236,7 +237,7 @@ class EditInfoPage extends React.Component {
                     color="primary">
                     Update
                   </Button>
-                  <Persist name="personal-info" />
+
                 </Form>
               )
             }

@@ -32,7 +32,7 @@ export function* login({ username, password }) {
         type: LoginActions.SET_USER,
         user
       })
-      yield call(history.push, '/user')
+      yield call(history.push, '/home')
       window.location.reload()
     } catch(err) {
       console.log(err)
@@ -52,20 +52,6 @@ export function* register({ username, password, email, isPolitician}) {
     toast.error(error.message)
   } else {
     toast.success("You have registered an account successfully")
-
-    // yield put({
-    //   type: LoginActions.SET_TOKEN,
-    //   token
-    // })
-    // const user = yield call(getUser)
-    // yield put({
-    //   type: LoginActions.SET_USER,
-    //   user
-    // })
-    // finally, redirect to user's home page
-    // yield put(push('/user/'))
-    // yield call(history.push, '/user')
-    // window.location.reload()
   }
 }
 
