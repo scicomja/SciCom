@@ -5,6 +5,7 @@ import {
   Container, Row, Col
 } from 'reactstrap'
 import Avatar from 'react-avatar'
+import { avatarURL } from '../../utils/requests'
 import Icon from '../../components/icon'
 class CreatorCard extends React.Component {
   render() {
@@ -28,7 +29,12 @@ class CreatorCard extends React.Component {
           <Container>
             <Row>
               <Col md="2">
-                <Avatar size={32} round name={displayName} />
+                <Avatar
+                  round
+                  size={32}
+                  src={avatarURL({username})}
+                  name={displayName}
+                />
               </Col>
               <Col md="10">
                 <Row>

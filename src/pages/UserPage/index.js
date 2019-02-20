@@ -11,6 +11,7 @@ import {
 } from '../../backend/user'
 import { serverURL } from '../../constants'
 import { authorizedRequestGet } from '../../utils/requests'
+import { avatarURL } from '../../utils/requests'
 import ContentBox from '../../components/contentBox'
 import {
   Button,
@@ -44,7 +45,6 @@ class UserPage extends React.Component {
     }
   }
   async componentDidMount() {
-    console.log('index props',this.props)
     const { user_id = this.props.user.username } = this.props.match.params
     this.setState({ isUserHimself: user_id == this.props.user.username})
       try {
@@ -79,11 +79,8 @@ class UserPage extends React.Component {
   }
 
   headerBar(user) {
-    const {avatar, CV} = user
+    const {avatar, CV, username} = user
     const name = this.getName(user)
-    let avatarConfig
-    if(avatar) avatarConfig = {'src': avatar}
-    else avatarConfig = {'name': name}
 
     return (
       <div className="bg-secondary" style={style.coverPhoto}>
@@ -93,7 +90,8 @@ class UserPage extends React.Component {
               size={avatarSize}
               round
               style={style.avatar}
-              {...avatarConfig}
+              src={avatarURL({ username })}
+              name={name}
             />
           </div>
           <div style={style.primaryInfo}>
