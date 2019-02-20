@@ -50,6 +50,8 @@ class EditInfoPage extends React.Component {
         .matches(phoneRegex, "Phone number has invalid format")
         .required(),
       website: Yup.string(),
+      CV: Yup.mixed(),
+      avatar: Yup.mixed(),
       linkedIn: Yup.string(),
       city: Yup.string().required(),
       state: Yup.string()
@@ -191,11 +193,13 @@ class EditInfoPage extends React.Component {
                   </FormGroup>
                   <FormGroup row>
                     <Col>
-                      <Field
-                        label="CV" name="CV"
-                        component={ReactstrapInput}
-                        type="file"
-                      />
+                      <div className="form-group">
+                        <label for="CV">CV</label>
+                        <input type="file" name="CV"
+                          onChange={e => setFieldValue('CV',e.currentTarget.files[0])}
+                        />
+                      </div>
+
                     </Col>
                     <Col>
                       <Field

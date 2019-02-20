@@ -7,7 +7,9 @@ import {
   getProject,
   getApplications,
   getProjectsOfUser,
+  authorizedGetFile
 } from '../../backend/user'
+import { serverURL } from '../../constants'
 import { authorizedRequestGet } from '../../utils/requests'
 import ContentBox from '../../components/contentBox'
 import {
@@ -37,18 +39,19 @@ class UserPage extends React.Component {
     super(props)
     this.state = {
       user: null,
-      isUserHimself: true
+      isUserHimself: true,
+      projects: []
     }
   }
   async componentDidMount() {
-    const { user_id } = this.props.match.params
-    const { isPolitician } = this.props.user
-    if(user_id && user_id != this.props.user.username) {
-      this.setState({ isUserHimself: false})
+    console.log('index props',this.props)
+    const { user_id = this.props.user.username } = this.props.match.params
+    this.setState({ isUserHimself: user_id == this.props.user.username})
       try {
         let user = await getUser(user_id,this.props.token)
         if(!user) {
-          this.props.history.push('/')
+          // no such user, return to home page
+          this.props.history.push('/home')
           return
         }
         this.setState({
@@ -58,34 +61,9 @@ class UserPage extends React.Component {
         this.setState({
           user: {...this.state.user, projects}
         })
-        // TODO: this
-        // if(!isPolitician && user.isPolitician) {
-        //   let projects = await getProject()
-        // }
       } catch(err) {
-        this.props.history.push('/')
+        this.props.history.push('/home')
       }
-    } else {
-      // it's the user himself
-      const { isPolitician } = this.props.user
-      let projects = await getProject(this.props.token)
-      console.log('projects',projects)
-      this.setState({
-        user: {
-          ...this.props.user, projects
-        }
-      })
-      if(!isPolitician) {
-        // bookmark is already there, go for applications
-        let applications = await getApplications(this.props.token)
-        this.setState({
-          user: {
-            ...this.props.user, applications
-          }
-        })
-      }
-    }
-
   }
   getName(user) {
     const { firstName, lastName, username } = user
@@ -93,9 +71,15 @@ class UserPage extends React.Component {
     if(firstName && lastName) return `${firstName} ${lastName}`
     return firstName?firstName:lastName
   }
+  // download CV given the username
+  // authorized by the token of the current user
+  downloadCV({username}) {
+    const { token } = this.props
+    authorizedGetFile(`${serverURL}/user/${username}/CV.pdf`, token)
+  }
 
   headerBar(user) {
-    const {avatar} = user
+    const {avatar, CV} = user
     const name = this.getName(user)
     let avatarConfig
     if(avatar) avatarConfig = {'src': avatar}
@@ -125,6 +109,17 @@ class UserPage extends React.Component {
                    </Button>
                   </div>
                 )}
+                {
+                  CV && (
+                    <div>
+                      <Button
+                        onClick={() => this.downloadCV(user)}
+                        >
+                        <IconComponent name="download" /> CV
+                      </Button>
+                    </div>
+                  )
+                }
             </div>
             <div style={style.primaryInfoItem}>
               <h5 style={style.title}>{user.title}</h5>
@@ -138,7 +133,7 @@ class UserPage extends React.Component {
 
   contact(user) {
     const {
-      phone, email, website, linkedin
+      phone, email, website, linkedIn
     } = user
     const contactItem = (iconName, content) => (
       <div style={style.contactItem}>
@@ -166,10 +161,10 @@ class UserPage extends React.Component {
                 phone && contactItem(Icon["phone"], phone)
               }
               {
-                linkedin && contactItem(Icon["linkedin"], linkedin)
+                linkedIn && contactItem("linkedin", linkedIn)
               }
               {
-                website && contactItem(Icon["website"], website)
+                website && contactItem("globe", website)
               }
 
             </div>
@@ -216,7 +211,7 @@ class UserPage extends React.Component {
   render() {
     const user = this.state.user || this.props.user
     if(!user) {
-      this.props.history.push('/')
+      // this.props.history.push('/')
       return null
     }
     return (

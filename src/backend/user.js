@@ -1,6 +1,22 @@
 import { serverURL } from '../constants'
 import { constructGetQuery } from '../utils/requests'
-
+import * as _ from 'lodash'
+export const authorizedGetFile = async (url, jwt) => {
+  const response = await fetch(url, {
+    headers: {
+      'Authorization': `Bearer ${jwt}`
+    },
+  })
+  const blob = await response.blob()
+  // HACK: thats the fastest way to make it work...
+  const blobUrl = window.URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = blobUrl
+  a.download = _.last(url.split('/')) // get the last part of url as filename
+  document.body.appendChild(a) // we need to append the element to the dom -> otherwise it will not work in firefox
+  a.click()
+  a.remove()
+}
 export const authorizedPostMultipartForm = async (url, form, jwt) => {
   // prepare form data
   let formData = new FormData()
