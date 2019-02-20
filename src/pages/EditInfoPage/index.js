@@ -23,8 +23,12 @@ import {
   ReactstrapInput, ReactstrapSelect,
 } from "reactstrap-formik"
 import {
-  FormikInput
+  FormikInput,
+  fileToBase64
 } from '../../utils/Form'
+import {
+  avatarURL
+} from '../../utils/requests'
 import {
   germanStates
 } from '../../constants'
@@ -39,7 +43,9 @@ class EditInfoPage extends React.Component {
     super(props)
     // fetch and populate form
     this.state = {
-      initialValues: {}
+      initialValues: {},
+      // store the base64 of the uploaded (but not saved) avatar here
+      temporaryAvatar: null,
     }
     const phoneRegex =
       /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
@@ -66,7 +72,6 @@ class EditInfoPage extends React.Component {
     this.validationSchema = Yup.object().shape(this.rawSchema)
   }
   componentDidMount() {
-    console.log('user:', this.props.user)
     this.setState({
       initialValues: _.pick(
         this.props.user,
@@ -87,9 +92,8 @@ class EditInfoPage extends React.Component {
 
   }
   render() {
-    const { initialValues } = this.state
+    const { initialValues, temporaryAvatar } = this.state
     if(!initialValues) return null
-    console.log('initial state', initialValues)
     const { isPolitician, email, username, avatar } = this.props.user
 
     return (
@@ -108,7 +112,10 @@ class EditInfoPage extends React.Component {
             <Col md={2} style={style.nameComponent}>
               <Avatar size={96}
                 round
+                onClick={() => document.getElementById('avatar').click()}
+                src={temporaryAvatar || avatarURL({username})}
               />
+
             </Col>
             <Col style={style.nameComponent}>
               <Row>
@@ -136,6 +143,20 @@ class EditInfoPage extends React.Component {
                 setFieldValue, handleChange
               }) => (
                 <Form>
+                  <input
+                    id="avatar" name="avatar"
+                    type="file"
+                    style={{visibility: 'hidden'}}
+                    onChange={e => {
+                      const file = e.currentTarget.files[0]
+                      setFieldValue('avatar', file)
+                      fileToBase64(file).then(f => {
+                        this.setState({
+                          temporaryAvatar: f
+                        })
+                      })
+                    }}
+                  />
                   <FormGroup row>
                     <Col>
                       <Field

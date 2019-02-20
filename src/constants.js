@@ -1,7 +1,10 @@
 import * as Yup from 'yup'
 import moment from 'moment'
 
-export const serverURL = "http://localhost:3000"
+export const serverURL = (process.env.NODE_ENV == 'production')?
+  "https://api.scicom.travistang.rocks"
+  :
+  "http://localhost:3000"
 
 // server-side definition
 export const germanStates = [

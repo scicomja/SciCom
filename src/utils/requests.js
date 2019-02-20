@@ -1,5 +1,5 @@
 import { select } from 'redux-saga/effects'
-
+import { serverURL } from '../constants'
 export const constructGetQuery = query => {
   const esc = encodeURIComponent
   return Object.keys(query)
@@ -31,3 +31,5 @@ export function* authorizedRequestGet(url, params = {}) {
   })
   return yield response.json()
 }
+
+export const avatarURL = ({username}) => `${serverURL}/user/${username}/avatar`
