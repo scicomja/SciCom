@@ -44,8 +44,8 @@ export const authorizedPost = async (url, json, jwt) => {
   const response = await fetch(url, {
     method: 'post',
     headers: {
-      'Authorization': `Bearer ${jwt}`
-
+      'Authorization': `Bearer ${jwt}`,
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify(json)
   })

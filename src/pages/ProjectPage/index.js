@@ -102,7 +102,6 @@ class ProjectPage extends React.Component {
   }
   async submitApplicationWithAnswers(answers) {
     const { project } = this.state
-    alert(JSON.stringify(answers))
     try {
       applyProject({
         project,

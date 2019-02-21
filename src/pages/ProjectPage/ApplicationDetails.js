@@ -65,13 +65,13 @@ class ApplicationDetails extends React.Component {
   }
   answerComponent({ question, answer }) {
     return (
-      <Field
-        name={question}
-        label={question}
-        disabled
-        value={answer}
-        component={ReactstrapInput}
-      />
+      <div className="form-group">
+        <label for={question}>{question}</label>
+        <textarea
+          className="form-control"
+           value={answer} disabled>
+        </textarea>
+      </div>
     )
   }
   // use a different name so not to confuse with the backend functions
@@ -116,7 +116,7 @@ class ApplicationDetails extends React.Component {
                   </Button>
                   {' '}
                   <Button
-                    onReject={this.reject.bind(this)}
+                    onClick={this.reject.bind(this)}
                     color="danger">
                     <Icon name="remove" />Reject
                   </Button>
@@ -153,6 +153,7 @@ class ApplicationDetails extends React.Component {
             </Row>
             <Row>
               <Col>
+                <h4>Answers to questions</h4>
                 <Form>
                 {
                   Object.keys(answers).map(question => (
