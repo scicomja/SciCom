@@ -47,7 +47,7 @@ export const authorizedPost = async (url, json, jwt) => {
       'Authorization': `Bearer ${jwt}`,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(json)
+    body: JSON.stringify(json || {})
   })
   return await response.json()
 }
