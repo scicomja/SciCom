@@ -334,7 +334,7 @@ class ProjectPage extends React.Component {
           file && (
             <Button
               color="success"
-              href={`${serverURL}/project/${_id}/file`}
+              href={`${serverURL}/project/${_id}/${file}`}
             >
               <Icon name="download"/>{' '}
               Details
