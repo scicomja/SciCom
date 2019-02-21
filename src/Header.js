@@ -82,7 +82,7 @@ class Header extends Component {
             <NavLink href="/about">Über uns</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="/">Login</NavLink>
+            <NavLink href="/">Loginseite</NavLink>
           </NavItem>
         </Nav>
       )

@@ -68,7 +68,7 @@ class LoginPage extends Component {
           <Col>
             <div style={style.loginColumn}>
               {Locale.hasAnAccount.de}
-              <a onClick={() => this.login()}> {Locale.login.de} </a>
+              <a href="#" onClick={() => this.login()}> {Locale.login.de} </a>
             </div>
         </Col>
         </Row>

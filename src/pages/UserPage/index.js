@@ -173,6 +173,7 @@ class UserPage extends React.Component {
     if(!user) return null
     const { projects } = user
     if(!projects) return null
+    console.log('projects', projects)
     const completedProjectCount =
       projects.filter(p => p.status == 'completed').length
     const activeProjectCount =
