@@ -10,7 +10,8 @@ import {
   FormGroup,
   Input,
   Button,
-  Col, Label
+  Col, Label,
+  Card, CardBody
 } from 'reactstrap'
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css"
@@ -47,26 +48,27 @@ import moment from 'moment'
 
 import * as ModalActions from './actions/modal'
 
+/*
+  After some refactoring this component renders detail for projects,
+  or for rendering a form to create a new project
+*/
 class MainModal extends React.Component {
   constructor(props) {
     super(props)
-
+    this.state = {
+      editingQuestion: null
+    }
   }
 
   getHeader() {
     switch(this.props.mode) {
-      case ModalMode.SEARCH_PROJECT:
-        return "Search projects"
-      case ModalMode.SEARCH_USER:
-        return "Search users"
+
       case ModalMode.PROJECT_DETAILS:
         if (this.props.content) {
           return this.props.content.title
         } else {
           return 'Create a new project'
         }
-      case ModalMode.USER_DETAILS:
-        return "Update your profile"
       default:
         return ''
     }
@@ -84,29 +86,96 @@ class MainModal extends React.Component {
       to: null,
       nature: ProjectNature[0],
       salary: 0,
+      questions: []
     }
     const { from, to } = content
     const result = {
       ...content,
-      file: null,
       from: formatDate(from),
       to: formatDate(to)
     }
-    console.log('preparing to fill form with',result)
     return result
+  }
+  addQuestion({values, setFieldValue}) {
+    console.log('values', values)
+    const { editingQuestion: question } = this.state
+    if(!question) return
+    const key = 'questions' // lest it change later
+    setFieldValue(key,values[key].concat(question))
+    // clear added question
+    this.setState({ editingQuestion: null})
+  }
+  // remove questions with literally the same words
+  removeQuestion({question, values, setFieldValue}) {
+    setFieldValue('questions',
+      values.questions.filter(
+        q => q != question
+      )
+    )
+  }
+  // question is a string here, this renders a question
+  questionCard({
+    question,
+    index,
+    values, setFieldValue,
+    editing = false}) {
+    return (
+      <Card body inverse color="primary"
+        style={style.questionCard}
+        key={index}>
+        {
+          !editing && (
+            <div style={style.questionCardContent}>
+              <div style={{flex: 1}}>
+                {question}
+              </div>
+              <Button
+                color="danger"
+                onClick={() =>
+                  this.removeQuestion({
+                    question, values, setFieldValue
+                  })}
+              >
+                <Icon name="trash" />
+                </Button>
+            </div>
+          )
+        }
+        {
+          editing && (
+            <CardBody>
+              <input
+                placeholder="Question to ask the applicants..."
+                onChange={e => this.setState({
+                  editingQuestion: e.currentTarget.value
+                })}
+              />
+              <Button onClick={() => this.addQuestion({
+                  values, setFieldValue
+                })}>
+                Add
+              </Button>
+              <Button onClick={() => this.setState({
+                  editingQuestion: null
+                })}>
+                Cancel
+              </Button>
+            </CardBody>
+          )
+        }
+      </Card>
+    )
   }
   getForm() {
     const { mode, content } = this.props
     const isOwner = !!content && (content.creator && this.props.user._id == content.creator._id)
     const tomorrow = moment().add(1,'day').endOf('day')
-
+    const { editingQuestion } = this.state
     switch(mode) {
-      // mode for modifying user info
-      case ModalMode.USER_DETAILS:
-          return null
       case ModalMode.PROJECT_DETAILS:
           return (
             <Formik
+              enableReinitialize
               initialValues={this.prepareInitialValue(content)}
               validationSchema={Yup.object().shape({
                 title: Yup.string()
@@ -123,7 +192,8 @@ class MainModal extends React.Component {
                   }),
                 salary: Yup.number()
                   .min(0, "Salary must be greater than 0")
-                  .required("Invalid number")
+                  .required("Invalid number"),
+                questions: Yup.array().of(Yup.string())
               })}
               render={({
                 values,
@@ -134,20 +204,25 @@ class MainModal extends React.Component {
                 handleChange,
                 setFieldValue}) => (
                 <Form>
+                  {
+                    console.log('values', values)
+                  }
                   <Field name="title" label="Title" type="text"
                     component={ReactstrapInput}
                   />
-                <Field type="textarea"
+                  <Field type="textarea"
                       label="Description"
                       name="description"
                       component={ReactstrapInput}
                   />
-                  <Field
-                    label="File"
-                    type="file"
-                    name="file"
-                    autoComplete="off"
-                    component={ReactstrapInput}/>
+                  <div className="form-group">
+                    <label for="file">File</label>
+                    <input type="file" name="file"
+                      onChange={e => setFieldValue('file',
+                        e.currentTarget.files[0]
+                      )}
+                    />
+                  </div>
                   <FormGroup>
                     <Label for="nature"> Project Type </Label>
                       <Field
@@ -198,11 +273,51 @@ class MainModal extends React.Component {
                       name="salary"
                       component={ReactstrapInput}
                   />
-                  <Button
-                    disabled={isSubmitting || !_.isEmpty(errors) || !dirty || !isValid}
-                    type="submit" color="primary">
-                    Submit
-                  </Button>
+                    <Label>Questions</Label>
+
+                    <Col>
+                      {
+                        values.questions.map((question, index) => (
+                          this.questionCard({
+                            question, index,
+                            values, setFieldValue // for removeing questions
+                          })
+                        ))
+                      }
+                      {
+                        (editingQuestion != null) &&
+                        //Extra component for adding question
+                        this.questionCard({
+                          index: "question",
+                          values, setFieldValue,
+                          editing: true
+                        })
+                      }
+                    </Col>
+                    {
+                      // render "add question" button only when user is not adding
+                      (editingQuestion == null) &&
+                      (
+                        <Button
+                          block
+                          onClick={() => this.setState({
+                            editingQuestion: ""
+                          })}
+                          color="info">
+                          <Icon name="plus" />
+                          {' '}
+                          Add a question
+                        </Button>
+                      )
+                    }
+
+                    <Button
+                      disabled={isSubmitting || !_.isEmpty(errors) || !dirty || !isValid}
+                      type="submit" color="primary">
+                      Submit
+                    </Button>
+
+
                   {' '}
                   {
                     content && (
@@ -264,14 +379,23 @@ const validators = {
       })
       .required("From date is required"),
     to: Yup.date(),
-    // to: Yup.date().when("from", (from, schema) => (
-    //   Yup.date().min(from, "To date must be after From")
-    // )),
     salary: Yup.number()
       .min(0, "Salary must be greater than 0")
-      .required("Salary information is required.")
+      .required("Salary information is required."),
+    questions: Yup.array().of(Yup.string())
   }),
 
+}
+
+const style = {
+  questionCardContent: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'center'
+  },
+  questionCard: {
+    margin: 8
+  }
 }
 const mapStateToProps = state => ({
   ...state.modal,

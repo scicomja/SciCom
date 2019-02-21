@@ -30,6 +30,8 @@ import Icon from '../../components/icon'
 import * as ModalActions from '../../actions/modal'
 import { REFRESH_USER_INFO } from '../../actions/auth'
 import CreatorCard from './CreatorCard'
+import ApplicationDetailsPopup from './ApplicationDetails'
+import ApplyApplicationPopup from './ApplyApplicationPopup'
 import moment from 'moment'
 import * as _ from 'lodash'
 /*
@@ -47,6 +49,8 @@ class ProjectPage extends React.Component {
       project: null,
       isOwner: false,
       hasAppliedThis: false,
+      applicationDetails: null,
+      isAnsweringQuestion: false
     }
   }
 
@@ -96,9 +100,36 @@ class ProjectPage extends React.Component {
       })
     }
   }
-  async applyProject() {
+  async submitApplicationWithAnswers(answers) {
+    const { project } = this.state
+    alert(JSON.stringify(answers))
     try {
-      const result = await applyProject(this.state.project, this.props.token)
+      applyProject({
+        project,
+        token: this.props.token,
+        answers
+      }).then( res => window.location.reload())
+    } catch(err) {
+      toast.error(err.message)
+    }
+  }
+  async applyProject() {
+    const { project, hasAppliedThis } = this.state
+    try {
+      // un-apply doesn't need to take care of whether there are questions or not
+      if(hasAppliedThis) {
+        applyProject({project, token: this.props.token})
+          .then(_ => window.location.reload())
+        return
+      }
+      // create a popup to make the student answer the questions
+      // (in case there are any...)
+      if (project.questions && project.questions.length) {
+        this.openApplyApplicationPopup()
+        return
+      }
+      // otherwise simply trigger the project application
+      const result = await applyProject({project, token: this.props.token})
       if(result) {
         toast.success("You applied this project", {
           position: toast.POSITION.BOTTOM_RIGHT
@@ -326,9 +357,15 @@ class ProjectPage extends React.Component {
       </Card>
     )
   }
-
+  showApplicationDetails(application) {
+    this.setState({
+      applicationDetails: application
+    })
+  }
   applicationList(applications) {
-    return <ApplicationCard applications={applications} />
+    return <ApplicationCard
+      showApplicationDetails={this.showApplicationDetails.bind(this)}
+      applications={applications} />
   }
 
   getCreatorCard() {
@@ -338,9 +375,27 @@ class ProjectPage extends React.Component {
       <CreatorCard creator={project.creator} />
     )
   }
+  closeApplicationDetails() {
+    this.setState({
+      applicationDetails: null
+    })
+  }
+  openApplyApplicationPopup() {
+    this.setState({
+      isAnsweringQuestion: true
+    })
+  }
+  closeApplyApplicationPopup() {
+    this.setState({
+      isAnsweringQuestion: false
+    })
+  }
   render() {
     // extract info
-    const { project } = this.state
+    const {
+      project,
+      isAnsweringQuestion,
+      applicationDetails } = this.state
     if(!project) return null
     const {
       title,
@@ -351,9 +406,19 @@ class ProjectPage extends React.Component {
       salary,
       tags,
       applications } = project
-    // let tags = 'hahagagagahha'.split('').map(s => `tag-${s}`)
     return (
       <Container style={style.container}>
+        <ApplicationDetailsPopup
+          application={applicationDetails}
+          isOpen={!!applicationDetails}
+          onClose={this.closeApplicationDetails.bind(this)}
+        />
+        <ApplyApplicationPopup
+          project={project}
+          isOpen={isAnsweringQuestion}
+          onSubmit={this.submitApplicationWithAnswers.bind(this)}
+          onClose={this.closeApplyApplicationPopup.bind(this)}
+        />
         <Row>
           <Col md="8">
             <Row>

@@ -33,3 +33,4 @@ export function* authorizedRequestGet(url, params = {}) {
 }
 
 export const avatarURL = ({username}) => `${serverURL}/user/${username}/avatar`
+export const cvURL = ({username}) => `${serverURL}/user/${username}/CV.pdf`

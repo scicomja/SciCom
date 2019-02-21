@@ -9,7 +9,10 @@ import { avatarURL } from '../../utils/requests'
 import Icon from '../../components/icon'
 class CreatorCard extends React.Component {
   render() {
-    const {creator, history} = this.props
+    const {
+      creator, history,
+      cardTitle = "Creator"
+    } = this.props
     const { title, username } = creator
     const getName = ({ firstName, lastName, username}) => {
       if(!firstName && !lastName) return username
@@ -23,7 +26,7 @@ class CreatorCard extends React.Component {
         onClick={() => history.push(`/user/${username}`)}
         body>
         <CardTitle>
-          <Icon name="user"/> Creator
+          <Icon name="user"/> {cardTitle}
         </CardTitle>
         <CardText>
           <Container>

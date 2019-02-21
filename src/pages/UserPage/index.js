@@ -12,6 +12,7 @@ import {
 import { serverURL } from '../../constants'
 import { authorizedRequestGet } from '../../utils/requests'
 import { avatarURL } from '../../utils/requests'
+import { getName } from '../../utils/user'
 import ContentBox from '../../components/contentBox'
 import {
   Button,
@@ -65,12 +66,6 @@ class UserPage extends React.Component {
         this.props.history.push('/home')
       }
   }
-  getName(user) {
-    const { firstName, lastName, username } = user
-    if(!firstName && !lastName) return username
-    if(firstName && lastName) return `${firstName} ${lastName}`
-    return firstName?firstName:lastName
-  }
   // download CV given the username
   // authorized by the token of the current user
   downloadCV({username}) {
@@ -80,7 +75,7 @@ class UserPage extends React.Component {
 
   headerBar(user) {
     const {avatar, CV, username} = user
-    const name = this.getName(user)
+    const name = getName(user)
 
     return (
       <div className="bg-secondary" style={style.coverPhoto}>

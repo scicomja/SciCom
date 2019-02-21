@@ -20,7 +20,16 @@ export const authorizedGetFile = async (url, jwt) => {
 export const authorizedPostMultipartForm = async (url, form, jwt) => {
   // prepare form data
   let formData = new FormData()
-  Object.keys(form).forEach(field => formData.append(field, form[field]))
+  Object.keys(form).forEach(field => {
+    // deal with array fields
+    if(_.isArray(form[field])) {
+      form[field].forEach(ele =>
+        formData.append(field, ele)
+      )
+      return
+    }
+    formData.append(field, form[field])
+  })
 
   const response = await fetch(url, {
     method: 'post',
@@ -113,10 +122,10 @@ export const openProject = async (project, token) => {
   return await authorizedPost(`${serverURL}/project/open/${id}`, null, token)
 }
 
-export const applyProject = async (project, token) => {
+export const applyProject = async ({project, answers = null, token}) => {
   const { _id: id} = project
   if(!id) return
-  return await authorizedPost(`${serverURL}/project/apply/${id}`, null, token)
+  return await authorizedPost(`${serverURL}/project/apply/${id}`, { answers }, token)
 }
 
 export const toggleBookmarkProject = async (project, token) => {

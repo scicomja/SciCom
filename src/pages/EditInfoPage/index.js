@@ -16,7 +16,6 @@ import {
   Formik, Form, Field,
   ErrorMessage
 } from 'formik'
-import { Persist } from 'formik-persist'
 
 import ChipsInput, { Chip } from 'react-chips'
 import {
@@ -35,8 +34,8 @@ import {
 import {
   updateUserInfo
 } from '../../backend/user'
-import { toast } from 'react-toastify'
 import Avatar from 'react-avatar'
+import { toast } from 'react-toastify'
 
 class EditInfoPage extends React.Component {
   constructor(props) {
