@@ -32,5 +32,9 @@ export function* authorizedRequestGet(url, params = {}) {
   return yield response.json()
 }
 
-export const avatarURL = ({username}) => `${serverURL}/user/${username}/avatar`
+export const avatarURL = ({username}) => {
+  const url = `${serverURL}/user/${username}/avatar`
+  console.log(`avatar url:`, url)
+  return url
+}
 export const cvURL = ({username}) => `${serverURL}/user/${username}/CV.pdf`

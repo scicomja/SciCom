@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import Avatar from 'react-avatar'
+// import Avatar from 'react-avatar'
+import Avatar from '@material-ui/core/Avatar'
 import {
   getUser,
   getProject,
@@ -83,10 +84,10 @@ class UserPage extends React.Component {
           <div style={style.avatarWrapper}>
             <Avatar
               size={avatarSize}
+              style={{...style.avatar, width: avatarSize, height: avatarSize}}
               round
-              style={style.avatar}
               src={avatarURL({ username })}
-              name={name}
+              alt={name}
             />
           </div>
           <div style={style.primaryInfo}>

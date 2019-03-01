@@ -82,12 +82,8 @@ export const Icon = {
   state: 'pin'
 }
 
-export const ProjectNature = [
-  'internship',
-  'thesis',
-  'parttime',
-  'voluntary'
-]
+// alias
+export const ProjectNature = projectType
 
 export const SearchInitialValue = {
   [SearchMode.STUDENT]: {

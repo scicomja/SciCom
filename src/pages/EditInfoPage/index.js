@@ -34,7 +34,8 @@ import {
 import {
   updateUserInfo
 } from '../../backend/user'
-import Avatar from 'react-avatar'
+// import Avatar from 'react-avatar'
+import Avatar from '@material-ui/core/Avatar'
 import { toast } from 'react-toastify'
 
 class EditInfoPage extends React.Component {
@@ -109,7 +110,8 @@ class EditInfoPage extends React.Component {
           </Row>
           <Row style={style.basicContainer}>
             <Col md={2} style={style.nameComponent}>
-              <Avatar size={96}
+              <Avatar
+                style={{width: 96, height: 96}}
                 round
                 onClick={() => document.getElementById('avatar').click()}
                 src={temporaryAvatar || avatarURL({username})}
@@ -159,13 +161,13 @@ class EditInfoPage extends React.Component {
                   <FormGroup row>
                     <Col>
                       <Field
-                        name="firstName" label="First Name"
+                        name="firstName" label="First Name(*)"
                         type="text" component={ReactstrapInput}
                       />
                     </Col>
                     <Col>
                       <Field
-                        name="lastName" label="Last Name"
+                        name="lastName" label="Last Name(*)"
                         type="text" component={ReactstrapInput}
                       />
                     </Col>
@@ -173,7 +175,7 @@ class EditInfoPage extends React.Component {
                   <FormGroup row>
                     <Col>
                       <Field
-                        name="phone" label="Phone"
+                        name="phone" label="Phone(*)"
                         type="text"
                         component={ReactstrapInput}
                       />
@@ -196,7 +198,7 @@ class EditInfoPage extends React.Component {
                   <FormGroup row>
                     <Col>
                       <Field
-                        label="State" name="state"
+                        label="State(*)" name="state"
                         component={ReactstrapSelect}
                         inputprops={{
                           label: "State",
@@ -206,7 +208,7 @@ class EditInfoPage extends React.Component {
                     </Col>
                     <Col>
                       <Field
-                        name="city" label="City"
+                        name="city" label="City(*)"
                         type="text" component={ReactstrapInput}
                       />
                     </Col>
