@@ -80,8 +80,8 @@ const ProjectCard = function(props) {
 
 const style = {
   container: {
-    maxWidth: "40vw",
-    width: "40vw",
+    maxWidth: "35vw",
+    width: "35vw",
     margin: 16
   },
   spread: {

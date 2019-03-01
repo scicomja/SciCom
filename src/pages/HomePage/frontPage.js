@@ -61,15 +61,21 @@ export default class FrontPage extends React.Component {
       )
     }
     console.log('applications', applications)
-    return (
-      <div style={style.content}>
-        {applications.map(app => (
+    return applications.map(app => (
           <ApplicationCard
             application={app}
-          />
-        ))}
-      </div>
-    )
+          />)
+        )
+    // return (
+    //   <div style={style.content}>
+    //     {applications.map(app => (
+    //       <ApplicationCard
+    //         style={style.projectCard}
+    //         application={app}
+    //       />
+    //     ))}
+    //   </div>
+    // )
   }
 
   onGoingProjectsTab(projects) {
@@ -148,8 +154,5 @@ const style = {
     flexWrap: 'wrap',
     margin: 16
   },
-  projectCard: {
-    maxWidth: '40%',
-    margin: 16
-  }
+
 }

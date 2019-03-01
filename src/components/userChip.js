@@ -12,7 +12,12 @@ export default function({
   console.log(`avatar`, avatar, `username`, username)
   return (
     <div onClick={onClick} style={{...style.container, ...customStyle}}>
-      <Avatar style={style.avatar} round size={avatarSize || 16}
+      <Avatar style={{
+          ...style.avatar,
+          width: 16,
+          height: 16
+        }}
+        round 
         src={avatarURL({username})}
         alt={!avatar && getName(user)} />
       {getName(user)}

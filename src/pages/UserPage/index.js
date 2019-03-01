@@ -103,17 +103,6 @@ class UserPage extends React.Component {
                    </Button>
                   </div>
                 )}
-                {
-                  CV && (
-                    <div>
-                      <Button
-                        onClick={() => this.downloadCV(user)}
-                        >
-                        <IconComponent name="download" /> CV
-                      </Button>
-                    </div>
-                  )
-                }
             </div>
             <div style={style.primaryInfoItem}>
               <h5 style={style.title}>{user.title}</h5>

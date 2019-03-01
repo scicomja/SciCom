@@ -83,6 +83,10 @@ export const updateUserInfo = async (info, token) => {
   return await authorizedPostMultipartForm(`${serverURL}/user/`, info, token)
 }
 
+export const deleteAccount = async (token) => {
+  return await authorizedDelete(`${serverURL}/user/`, token)
+}
+
 export const getProject = async (token) => {
   return await authorizedGet(`${serverURL}/project`, token)
 }

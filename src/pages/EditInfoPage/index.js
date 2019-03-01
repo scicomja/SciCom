@@ -34,6 +34,7 @@ import {
 import {
   updateUserInfo
 } from '../../backend/user'
+import DeletePopup from './deletePopup'
 // import Avatar from 'react-avatar'
 import Avatar from '@material-ui/core/Avatar'
 import { toast } from 'react-toastify'
@@ -46,6 +47,7 @@ class EditInfoPage extends React.Component {
       initialValues: {},
       // store the base64 of the uploaded (but not saved) avatar here
       temporaryAvatar: null,
+      showDeletePopup: false
     }
     const phoneRegex =
       /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
@@ -92,12 +94,20 @@ class EditInfoPage extends React.Component {
 
   }
   render() {
-    const { initialValues, temporaryAvatar } = this.state
+    // bounce back to login page if such user doesn't exist
+    if(!this.props.user) {
+      window.location.reload('/')
+    }
+    const { initialValues, temporaryAvatar, showDeletePopup } = this.state
     if(!initialValues) return null
     const { isPolitician, email, username, avatar } = this.props.user
 
     return (
       <div style={style.container}>
+        <DeletePopup
+          visible={showDeletePopup}
+          onClose={this.hideAccountDeletePopup.bind(this)}
+        />
         <Container>
           <Row>
             <Col>
@@ -263,7 +273,13 @@ class EditInfoPage extends React.Component {
                     color="primary">
                     Update
                   </Button>
-
+                  <Button
+                    block
+                    color="danger"
+                    onClick={this.showAccountDeletePopup.bind(this)}
+                  >
+                    <Icon name="trash" /> Delete Account
+                  </Button>
                 </Form>
               )
             }
@@ -273,6 +289,17 @@ class EditInfoPage extends React.Component {
 
       </div>
     )
+  }
+  showAccountDeletePopup() {
+    this.setState({
+      showDeletePopup: true
+    })
+  }
+
+  hideAccountDeletePopup() {
+    this.setState({
+      showDeletePopup: false
+    })
   }
 }
 
