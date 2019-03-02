@@ -93,6 +93,7 @@ export const SearchInitialValue = {
     title: "",
     major: "",
     university: "",
+    tags: ""
   },
   [SearchMode.PROJECT]: {
     title: "",
@@ -124,7 +125,8 @@ export const SearchValidationSchema = {
     major: Yup.string()
       .min(3, "Search term is too short"),
     university: Yup.string()
-      .min(3, "Search term is too short")
+      .min(3, "Search term is too short"),
+    tags: Yup.string()
   }),
   [SearchMode.PROJECT]: Yup.object().shape({
     title: Yup.string()

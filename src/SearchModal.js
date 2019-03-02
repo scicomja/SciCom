@@ -49,7 +49,6 @@ class SearchModal extends React.Component {
     // DO NOT push to search page here: wait till the params are set
   }
   componentWillReceiveProps(newProps) {
-    console.log('current location', newProps)
     const {
       searchMode,
       searchParams,
@@ -115,6 +114,11 @@ class SearchModal extends React.Component {
                 />
               </Col>
             </FormGroup>
+            <Field type="text"
+              label="Tag"
+              name="tags"
+              component={ReactstrapInput}
+            />
             <FormGroup row>
               <Col>
                 <Label for="from"> From </Label>
@@ -252,6 +256,7 @@ class SearchModal extends React.Component {
         <ModalBody>
           {this.getNavs()}
           <Formik
+            enableReinitialize
             initialValues={searchParams[searchMode] || SearchInitialValue[searchMode]}
             validationSchema={SearchValidationSchema[searchMode]}
             render={this.getForm.bind(this)}
