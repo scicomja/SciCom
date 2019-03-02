@@ -10,13 +10,13 @@ import PropTypes from 'prop-types'
 import Icon from '../../components/icon'
 import { deleteAccount } from '../../backend/user'
 import { connect } from 'react-redux'
-import { SET_TOKEN } from '../../actions/auth'
+import { withRouter } from 'react-router-dom'
+import { LOGOUT } from '../../actions/auth'
 
 const mapStateToProps = state => state.auth
 const mapDispatchToProps = dispatch => ({
-  removeToken: dispatch({
-    type: SET_TOKEN,
-    token: null
+  logout: () => dispatch({
+    type: LOGOUT
   })
 })
 class DeletePopup extends React.Component {
@@ -25,14 +25,15 @@ class DeletePopup extends React.Component {
     visible: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
     token: PropTypes.string.isRequired,
-    removeToken: PropTypes.func.isRequired
+    logout: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired
   }
 
   deleteAccount() {
-    const { token, removeToken } = this.props
-    deleteAccount(this.props.token)
-      .then(removeToken)
-      .then(() => window.location.reload())
+    const { token, logout, history } = this.props
+    deleteAccount(token)
+      .then(logout())
+      // .then(() => history.push('/'))
   }
   render() {
     const { visible , onClose} = this.props
@@ -49,6 +50,7 @@ class DeletePopup extends React.Component {
         </ModalBody>
         <ModalFooter>
           <Button
+            href="/"
             onClick={this.deleteAccount.bind(this)}
             color="danger">
             <Icon name="trash" /> Delete account
@@ -64,4 +66,6 @@ class DeletePopup extends React.Component {
 }
 
 
-export default connect(mapStateToProps, null)(DeletePopup)
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(DeletePopup)
+)

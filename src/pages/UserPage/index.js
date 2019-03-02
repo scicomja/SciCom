@@ -161,9 +161,7 @@ class UserPage extends React.Component {
   getStatisticComponents() {
     const { user } = this.state
     if(!user) return null
-    const { projects } = user
-    if(!projects) return null
-    console.log('projects', projects)
+    const { projects = [] } = user
     const completedProjectCount =
       projects.filter(p => p.status == 'completed').length
     const activeProjectCount =
@@ -195,7 +193,8 @@ class UserPage extends React.Component {
   render() {
     const user = this.state.user || this.props.user
     if(!user) {
-      // this.props.history.push('/')
+
+      this.props.history.push('/')
       return null
     }
     return (

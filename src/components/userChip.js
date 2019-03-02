@@ -8,6 +8,7 @@ export default function({
   avatarSize,
   onClick,
   style: customStyle}) {
+  if(!user) return null
   const { username, avatar } = user
   console.log(`avatar`, avatar, `username`, username)
   return (
@@ -17,7 +18,7 @@ export default function({
           width: 16,
           height: 16
         }}
-        round 
+        round
         src={avatarURL({username})}
         alt={!avatar && getName(user)} />
       {getName(user)}

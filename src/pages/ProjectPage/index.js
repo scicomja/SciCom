@@ -395,7 +395,9 @@ class ProjectPage extends React.Component {
       project,
       isAnsweringQuestion,
       applicationDetails } = this.state
-    if(!project) return null
+    if(!project) {
+      return null
+    }
     const {
       title,
       description,
