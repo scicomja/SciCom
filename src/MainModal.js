@@ -14,6 +14,7 @@ import {
   Card, CardBody
 } from 'reactstrap'
 import DatePicker from 'react-datepicker'
+import ChipsInput, { Chip } from 'react-chips'
 import "react-datepicker/dist/react-datepicker.css"
 import {
   ReactstrapInput,
@@ -49,8 +50,7 @@ import moment from 'moment'
 import * as ModalActions from './actions/modal'
 
 /*
-  After some refactoring this component renders detail for projects,
-  or for rendering a form to create a new project
+  After some refactoring this component renders the project creation form only
 */
 class MainModal extends React.Component {
   constructor(props) {
@@ -86,10 +86,12 @@ class MainModal extends React.Component {
       to: null,
       nature: ProjectNature[0],
       salary: 0,
-      questions: []
+      questions: [],
+      tags: []
     }
     const { from, to } = content
     const result = {
+      tags: [], // to fill in the missing tags input for the previous records
       ...content,
       from: formatDate(from),
       to: formatDate(to)
@@ -97,7 +99,6 @@ class MainModal extends React.Component {
     return result
   }
   addQuestion({values, setFieldValue}) {
-    console.log('values', values)
     const { editingQuestion: question } = this.state
     if(!question) return
     const key = 'questions' // lest it change later
@@ -150,12 +151,16 @@ class MainModal extends React.Component {
                   editingQuestion: e.currentTarget.value
                 })}
               />
-              <Button onClick={() => this.addQuestion({
+              <Button
+                style={style.addQuestionComponent}
+                onClick={() => this.addQuestion({
                   values, setFieldValue
                 })}>
                 Add
               </Button>
-              <Button onClick={() => this.setState({
+              <Button
+                  style={style.addQuestionComponent}
+                  onClick={() => this.setState({
                   editingQuestion: null
                 })}>
                 Cancel
@@ -204,9 +209,6 @@ class MainModal extends React.Component {
                 handleChange,
                 setFieldValue}) => (
                 <Form>
-                  {
-                    console.log('values', values)
-                  }
                   <Field name="title" label="Title" type="text"
                     component={ReactstrapInput}
                   />
@@ -266,7 +268,18 @@ class MainModal extends React.Component {
                       <ErrorMessage name="to" />
                     </Col>
                   </FormGroup>
-
+                  <FormGroup row>
+                    <Col>
+                      <Label for="tags">Tags</Label>
+                        <Field
+                          label="Tags"
+                          name="tags"
+                          component={ChipsInput}
+                          value={values['tags']}
+                          onChange={(v) => setFieldValue('tags',v)}
+                        />
+                    </Col>
+                  </FormGroup>
                   <Field
                       label="Salary"
                       type="number"
@@ -395,6 +408,10 @@ const style = {
   },
   questionCard: {
     margin: 8
+  },
+  addQuestionComponent: {
+    marginLeft: 8,
+    marginRight: 8
   }
 }
 const mapStateToProps = state => ({
