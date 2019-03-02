@@ -24,7 +24,7 @@ const ProjectCard = function(props) {
     creator,
     status,
     description,
-    topic,
+    tags: topic,
     salary,
     nature,
     from, to,
@@ -66,7 +66,7 @@ const ProjectCard = function(props) {
         )
       }
       <CardText>
-        {topic.map(t => (<Badge>{t}</Badge>))}
+        {topic.map(t => (<Badge style={style.tagBadge} color="danger">{t}</Badge>))}
       </CardText>
       <CardText>
         <div>
@@ -87,6 +87,10 @@ const style = {
   spread: {
     display: 'flex',
     justifyContent: 'space-between'
+  },
+  tagBadge: {
+    marginLeft: 4,
+    marginRight: 4
   }
 }
 

@@ -32,6 +32,7 @@ import { REFRESH_USER_INFO } from '../../actions/auth'
 import CreatorCard from './CreatorCard'
 import ApplicationDetailsPopup from './ApplicationDetails'
 import ApplyApplicationPopup from './ApplyApplicationPopup'
+import ConfirmDeletePopup from './ConfirmDeletePopup'
 import moment from 'moment'
 import * as _ from 'lodash'
 /*
@@ -50,7 +51,8 @@ class ProjectPage extends React.Component {
       isOwner: false,
       hasAppliedThis: false,
       applicationDetails: null,
-      isAnsweringQuestion: false
+      isAnsweringQuestion: false,
+      isConfirmDeletePopupVisible: false
     }
   }
 
@@ -165,6 +167,7 @@ class ProjectPage extends React.Component {
 
   }
   async deleteProject() {
+    this.showConfirmDeletePopup()
     try {
       const result = await deleteProject(
         this.state.project,
@@ -216,7 +219,7 @@ class ProjectPage extends React.Component {
           style={style.actionButton}
           block
           size="md" color="danger"
-          onClick={this.deleteProject.bind(this)}>
+          onClick={this.showConfirmDeletePopup.bind(this)}>
           Delete
         </Button>
       )
@@ -389,12 +392,24 @@ class ProjectPage extends React.Component {
       isAnsweringQuestion: false
     })
   }
+  showConfirmDeletePopup() {
+    this.setState({
+      isConfirmDeletePopupVisible: true
+    })
+  }
+  hideConfirmDeletePopup() {
+    this.setState({
+      isConfirmDeletePopupVisible: false
+    })
+  }
   render() {
     // extract info
     const {
       project,
       isAnsweringQuestion,
+      isConfirmDeletePopupVisible,
       applicationDetails } = this.state
+    const { token } = this.props
     if(!project) {
       return null
     }
@@ -406,9 +421,16 @@ class ProjectPage extends React.Component {
       from, to,
       salary,
       tags,
+      _id: projectId,
       applications } = project
     return (
       <Container style={style.container}>
+        <ConfirmDeletePopup
+          project={projectId}
+          visible={isConfirmDeletePopupVisible}
+          token={token}
+          onClose={this.hideConfirmDeletePopup.bind(this)}
+        />
         <ApplicationDetailsPopup
           application={applicationDetails}
           isOpen={!!applicationDetails}
