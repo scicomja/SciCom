@@ -15,6 +15,8 @@ import {
   Card, CardBody
 } from 'reactstrap'
 import CreatorCard from './CreatorCard'
+import { toast } from 'react-toastify'
+import { delay } from '../../utils'
 import {
   getName
 } from '../../utils/user'
@@ -79,6 +81,8 @@ class ApplicationDetails extends React.Component {
   accept() {
     const { token, application } = this.props
     acceptApplication(application._id, token)
+      .then(result => toast("Please contact the student about the project"))
+      .then(_ => delay(2000))
       .then(result => window.location.reload())
   }
   reject() {
