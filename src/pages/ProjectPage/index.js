@@ -214,22 +214,8 @@ class ProjectPage extends React.Component {
     } else {
       // if you are politician and that you are owner,
       // you can modify or close the project
-      const deleteButton = (
-        <Button
-          style={style.actionButton}
-          block
-          size="md" color="danger"
-          onClick={this.showConfirmDeletePopup.bind(this)}>
-          Delete
-        </Button>
-      )
-      if(!isOwner || status == 'completed') {
-        return (
-          <div style={style.secondaryInfo}>
-            {deleteButton}
-          </div>
-        )
-      }
+      // but if you're politician and you're not the owner you dont have any actions
+      if (!isOwner) return null
 
       return (
         <div style={style.secondaryInfo}>
@@ -260,7 +246,13 @@ class ProjectPage extends React.Component {
               </Button>
             )
           }
-          {deleteButton}
+          <Button
+            style={style.actionButton}
+            block
+            size="md" color="danger"
+            onClick={this.showConfirmDeletePopup.bind(this)}>
+            Delete
+          </Button>
         </div>
       )
     }
