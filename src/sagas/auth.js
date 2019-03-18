@@ -1,4 +1,5 @@
 import { put, call, takeLatest } from 'redux-saga/effects'
+import { delay } from 'redux-saga'
 import { history } from '../App'
 import { serverURL } from '../constants'
 import { postJSON } from '../utils/requests'
@@ -51,7 +52,18 @@ export function* register({ username, password, email, isPolitician}) {
     })
     toast.error(error.message)
   } else {
-    toast.success("You have registered an account successfully")
+    toast.success(
+      "You have registered an account successfully",
+    {
+      autoClose: 2000,
+    })
+
+    // load to the home page of the newly-registered user
+    yield call(delay, 2000)
+    yield put({
+      type: LoginActions.LOGIN,
+      username, password
+    })
   }
 }
 

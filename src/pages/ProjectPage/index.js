@@ -79,7 +79,6 @@ class ProjectPage extends React.Component {
         hasAppliedThis: !!applications.filter(app => app.project._id == project._id).length
       })
     } catch(err) {
-      console.log(err)
       this.props.history.push('/')
     }
   }
