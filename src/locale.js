@@ -10,8 +10,8 @@ export const login = {
       de: "Register as a politician"
     },
     PHD: {
-      en: "Register as an PHD Student",
-      de: "Register as an PHD Student"
+      en: "Register as a student",
+      de: "Register as a student"
     },
     hasAnAccount: {
       en: "Already have an account?",

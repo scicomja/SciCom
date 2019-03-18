@@ -65,12 +65,28 @@ class LoginPage extends Component {
           </Col>
         </Row>
         <Row>
+          <Col></Col>
           <Col>
-            <div style={style.loginColumn}>
-              {Locale.hasAnAccount.de}
-              <a href="#" onClick={() => this.login()}> {Locale.login.de} </a>
+            <div style={style.loginContainer}>
+              <div style={style.loginColumn}>
+                {Locale.hasAnAccount.de}
+              </div>
+              <Button
+                block
+                color="primary"
+                style={style.loginButton}
+                href="#"
+                onClick={() => this.login()}>
+                {Locale.login.de}
+              </Button>
             </div>
-        </Col>
+          </Col>
+          <Col></Col>
+        </Row>
+        <Row>
+          <Col style={style.buttonContainer}>
+
+          </Col>
         </Row>
       </Container>
       </div>
@@ -82,6 +98,15 @@ const style = {
   loginColumn: {
     textAlign: 'center',
     marginTop: 32
+  },
+  loginContainer: {
+    flexDirection: 'column',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  loginButton: {
+    // marginLeft: 16
   },
   container: {
   }
