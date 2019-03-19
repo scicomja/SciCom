@@ -68,7 +68,8 @@ class ApplicationCard extends React.Component {
 
 const style = {
   container: {
-    marginTop: 16
+    marginTop: 16,
+    cursor: 'pointer'
   }
 }
 const mapStateToProps = state => ({

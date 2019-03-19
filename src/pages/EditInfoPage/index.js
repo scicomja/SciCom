@@ -10,7 +10,7 @@ import * as AuthActions from '../../actions/auth'
 import {
   Container, Row, Col, Button,
   FormGroup,
-  Label,
+  Label, Input
 } from 'reactstrap'
 import {
   Formik, Form, Field,
@@ -36,7 +36,7 @@ import {
 } from '../../backend/user'
 import DeletePopup from './deletePopup'
 // import Avatar from 'react-avatar'
-import Avatar from '@material-ui/core/Avatar'
+import Avatar from '../../components/Avatar'
 import { toast } from 'react-toastify'
 
 class EditInfoPage extends React.Component {
@@ -119,14 +119,14 @@ class EditInfoPage extends React.Component {
             </Col>
           </Row>
           <Row style={style.basicContainer}>
-            <Col md={2} style={style.nameComponent}>
+            <Col md={2} style={{...style.nameComponent, ...style.avatarComponent}}>
               <Avatar
-                style={{width: 96, height: 96}}
-                round
+                size={72}
+                user={this.props.user}
                 onClick={() => document.getElementById('avatar').click()}
-                src={temporaryAvatar || avatarURL({username})}
+                src={temporaryAvatar}
               />
-
+              <p>Click to edit</p>
             </Col>
             <Col style={style.nameComponent}>
               <Row>
@@ -316,6 +316,12 @@ const style = {
   nameComponent: {
     // display: 'flex',
     // textAlign: 'center'
+  },
+  avatarComponent: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 }
 const mapStateToProps = state => ({

@@ -307,7 +307,7 @@ class ProjectPage extends React.Component {
             <ListGroupItem
               className={listItemClassName}
             >
-              <Icon name="tag" /> Tags
+              <Icon name="tag" /> Topics
               <div style={style.secondaryInfo}>
               <h5>
                 <b>

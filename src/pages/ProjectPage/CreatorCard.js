@@ -4,8 +4,7 @@ import {
   Card, CardTitle, CardText,
   Container, Row, Col
 } from 'reactstrap'
-// import Avatar from 'react-avatar'
-import Avatar from '@material-ui/core/Avatar'
+import Avatar from '../../components/Avatar'
 import { avatarURL } from '../../utils/requests'
 import Icon from '../../components/icon'
 class CreatorCard extends React.Component {
@@ -34,10 +33,8 @@ class CreatorCard extends React.Component {
             <Row>
               <Col md="2">
                 <Avatar
-                  round
                   size={32}
-                  src={avatarURL({username})}
-                  alt={displayName}
+                  user={creator}
                 />
               </Col>
               <Col md="10">

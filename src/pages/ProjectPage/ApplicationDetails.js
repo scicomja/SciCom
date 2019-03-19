@@ -26,8 +26,7 @@ import {
 } from '../../backend/user'
 import { avatarURL, cvURL } from '../../utils/requests'
 import Icon from '../../components/icon'
-// import Avatar from 'react-avatar'
-import Avatar from '@material-ui/core/Avatar'
+import Avatar from '../../components/Avatar'
 import { Field, Form } from 'formik'
 import {
   ReactstrapInput
@@ -44,11 +43,15 @@ class ApplicationDetails extends React.Component {
     const displayName = getName(applicant)
     return (
       <div style={style.applicantCard}>
+        {
+          /*
           <Avatar
-            src={avatarURL(applicant)}
-            alt={displayName}
+            user={applicant}
             onClick={() => history.push(`/user/${username}`)}
           />
+          */
+        }
+
           <div style={{flex: 1, marginLeft: 8}}>
             {displayName}
           </div>
