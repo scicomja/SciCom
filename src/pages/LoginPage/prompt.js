@@ -2,7 +2,8 @@ import React from 'react'
 import {
   Alert,
   Modal, ModalHeader, ModalBody, ModalFooter,
-  Button
+  Button,
+  FormGroup, Form, Label, Input, FormText, FormFeedback
 } from 'reactstrap'
 import { login as Locale, common as CommonLocale } from '../../locale'
 import { Mode } from '../../constants'
@@ -11,8 +12,22 @@ import { connect } from 'react-redux'
 import * as Actions from '../../actions/auth'
 import { withRouter } from 'react-router-dom'
 import _ from 'lodash'
+import {
+  Formik, Field, ErrorMessage
+} from 'formik'
+import * as Yup from 'yup'
+
 
 class Prompt extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      isSubmitting: false,
+      // values of the form
+      values: {}
+    }
+  }
   getModeString() {
     switch(this.props.mode) {
       case Mode.REGISTER_PHD:
@@ -29,46 +44,118 @@ class Prompt extends React.Component {
   loginOrRegisterString() {
     return this.isLogin()?Locale.login.de:Locale.register.de
   }
-  getFields() {
-    let fields = [
-      {
-        type: 'username',
-        fieldName: 'username',
-        placeholder: 'username'
-      },
-      {
-        type: 'email',
-        fieldName: 'email',
-        placeholder: 'email'
-      },
-      {
-        type: 'password',
-        fieldName: 'password',
-        placeholder: 'password'
+  getInitialFormValues() {
+    if(this.isLogin()) {
+      return {
+        username: "",
+        password: ""
       }
-    ]
-    if(this.isLogin()) {
-      // no email required for this login
-      fields = fields.filter(f => f.type !== 'email')
+    } else {
+      return {
+        username: "",
+        password: "",
+        email: "",
+        confirmPassword: ""
+      }
     }
-    return fields
   }
-  getForm() {
-    const fields = this.getFields()
-    const { form } = CreateForm(fields)
-    return form
-  }
-  submit() {
-    const fields = this.getFields()
-    const { getFormValues } = CreateForm(fields)
-    const formValues = getFormValues()
+
+  getValidationSchema() {
     if(this.isLogin()) {
-      this.props.login(formValues)
+      return Yup.object().shape({
+        username: Yup.string().required(),
+        password: Yup.string().required()
+      })
+    } else {
+      return Yup.object().shape({
+        username: Yup.string().required(),
+        password: Yup.string().required(),
+        email: Yup.string().email("Invalid email").required(),
+        confirmPassword: Yup.string()
+          .oneOf([Yup.ref('password'), null], "Password does not match")
+          .required()
+      })
+    }
+  }
+  getFields() {
+    if(this.isLogin()) {
+      return [
+        {
+          type: 'text',
+          fieldName: 'username',
+          placeholder: 'username'
+        },
+        {
+          type: 'password',
+          fieldName: 'password',
+          placeholder: 'password'
+        }
+      ]
+    } else {
+      return [
+        {
+          type: 'text',
+          fieldName: 'username',
+          placeholder: 'username'
+        },
+        {
+          type: 'email',
+          fieldName: 'email',
+          placeholder: 'email'
+        },
+        {
+          type: 'password',
+          fieldName: 'password',
+          placeholder: 'password'
+        },
+        {
+          type: 'password',
+          label: 'Confirm Password',
+          fieldName: 'confirmPassword',
+          placeholder: 'Confirm Password'
+        }
+      ]
+    }
+  }
+  handleFormChange(values ) {
+    console.log(`form change`, values)
+    this.setState({ values })
+  }
+  getForm({
+    values, errors, setFieldValue, dirty, handleChange, handleSubmit
+  }) {
+    const fields = this.getFields()
+    // const { form } = CreateForm(fields)
+    // return form
+    return (
+      <Form onSubmit={handleSubmit}>
+        {
+          fields.map(({type, fieldName, placeholder, label}) => (
+            <FormGroup>
+              <Label for={fieldName}>{label || _.startCase(fieldName)}</Label>
+              <Input
+                onChange={handleChange}
+                placeholder={placeholder}
+                tag={Field}
+                name={fieldName}
+                type={type}
+                invalid={errors && errors[fieldName]} />
+              <ErrorMessage name={fieldName} />
+            </FormGroup>
+          ))
+        }
+      </Form>
+    )
+  }
+  submit(values, { setSubmitting }) {
+    console.log(`submit values`, values)
+    if(this.isLogin()) {
+      this.props.login(values)
     } else {
       const isPolitician = this.props.mode === Mode.REGISTER_POLITICIAN
       // we are registering
       const payload = {
-        ...formValues,
+        ...values,
         isPolitician
       }
      const result = this.props.register(payload)
@@ -90,17 +177,37 @@ class Prompt extends React.Component {
   }
   render() {
     return (
-      <Modal isOpen={this.props.mode} toggle={this.toggle.bind(this)}>
-        <ModalHeader toggle={this.toggle.bind(this)}>{this.getModeString()}</ModalHeader>
-        <ModalBody>
-          {this.getAlert()}
-          {this.getForm()}
-        </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={() => this.submit()}>{this.loginOrRegisterString()}</Button>{' '}
-          <Button color="secondary" onClick={this.toggle.bind(this)}>{CommonLocale.cancel.de}</Button>
-        </ModalFooter>
-      </Modal>
+      <Formik
+          initialValues={this.getInitialFormValues()}
+          validationSchema={this.getValidationSchema()}
+          onSubmit={this.submit.bind(this)}
+      >
+        {
+          ({ submitForm, ...props}) => (
+            <Modal isOpen={this.props.mode} toggle={this.toggle.bind(this)}>
+              <ModalHeader toggle={this.toggle.bind(this)}>{this.getModeString()}</ModalHeader>
+              <ModalBody>
+                {this.getAlert()}
+                {this.getForm(props)}
+              </ModalBody>
+              <ModalFooter>
+                <Button color="primary"
+                  type="submit"
+                  onClick={submitForm}
+                  disabled={!props.dirty || !_.isEmpty(props.errors) || this.state.isSubmitting}
+                >
+                  {this.loginOrRegisterString()}
+                </Button>
+                {' '}
+                <Button color="secondary" onClick={this.toggle.bind(this)}>
+                  {CommonLocale.cancel.de}
+                </Button>
+              </ModalFooter>
+            </Modal>
+          )
+        }
+      </Formik>
+
 
     )
   }

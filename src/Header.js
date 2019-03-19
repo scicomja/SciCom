@@ -36,7 +36,7 @@ class Header extends Component {
     ), (
       <NavItem>
         <NavLink href="/home">
-          <Icon name="home" />
+          <Icon name="home" />{' '} Home
         </NavLink>
       </NavItem>
     )]
