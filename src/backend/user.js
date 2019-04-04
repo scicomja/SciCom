@@ -75,6 +75,11 @@ export const authorizedGet = async (url, jwt, params = {}) => {
   return await response.json()
 }
 
+export const changePassword = async (info, token) => {
+  return await authorizedPost(
+    `${serverURL}/auth/changePassword`, info, token
+  )
+}
 export const getUser = async (username, token) => {
   return await authorizedGet(`${serverURL}/user/${username}`, token)
 }

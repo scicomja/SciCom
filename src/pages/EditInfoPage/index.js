@@ -16,13 +16,12 @@ import {
   Formik, Form, Field,
   ErrorMessage
 } from 'formik'
-
+import ChangePasswordPopup from './changePasswordPopup'
 import ChipsInput, { Chip } from 'react-chips'
 import {
   ReactstrapInput, ReactstrapSelect,
 } from "reactstrap-formik"
 import {
-  FormikInput,
   fileToBase64
 } from '../../utils/Form'
 import {
@@ -47,7 +46,8 @@ class EditInfoPage extends React.Component {
       initialValues: {},
       // store the base64 of the uploaded (but not saved) avatar here
       temporaryAvatar: null,
-      showDeletePopup: false
+      showDeletePopup: false,
+      showChangePasswordPopup: false
     }
     const phoneRegex =
       /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
@@ -93,12 +93,26 @@ class EditInfoPage extends React.Component {
     }
 
   }
+  onEditPassword() {
+    this.setState({
+      showChangePasswordPopup: true
+    })
+  }
+  onCancelEditPassword() {
+    this.setState({
+      showChangePasswordPopup: false
+    })
+  }
   render() {
     // bounce back to login page if such user doesn't exist
     if(!this.props.user) {
       window.location.reload('/')
     }
-    const { initialValues, temporaryAvatar, showDeletePopup } = this.state
+    const {
+      initialValues, temporaryAvatar,
+      showChangePasswordPopup,
+      showDeletePopup
+    } = this.state
     if(!initialValues) return null
     const { isPolitician, email, username, avatar } = this.props.user
 
@@ -107,6 +121,10 @@ class EditInfoPage extends React.Component {
         <DeletePopup
           visible={showDeletePopup}
           onClose={this.hideAccountDeletePopup.bind(this)}
+        />
+        <ChangePasswordPopup
+          visible={showChangePasswordPopup}
+          onClose={this.onCancelEditPassword.bind(this)}
         />
         <Container>
           <Row>
@@ -137,6 +155,15 @@ class EditInfoPage extends React.Component {
               <Row>
                 <Col>
                   {email}
+                </Col>
+              </Row>
+            </Col>
+            <Col style={style.editPasswordColumn}>
+              <Row>
+                <Col>
+                  <Button onClick={this.onEditPassword.bind(this)}>
+                    Change Password
+                  </Button>
                 </Col>
               </Row>
             </Col>

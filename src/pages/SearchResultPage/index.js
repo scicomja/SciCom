@@ -18,6 +18,7 @@ import {
   searchUser
 } from '../../backend/search'
 import Icon from '../../components/icon'
+import Avatar from '../../components/Avatar'
 import * as SearchActions from '../../actions/search'
 
 class SearchResultPage extends React.Component {
