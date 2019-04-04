@@ -43,18 +43,13 @@ class ApplicationDetails extends React.Component {
     const displayName = getName(applicant)
     return (
       <div style={style.applicantCard}>
-        {
-          /*
-          <Avatar
-            user={applicant}
-            onClick={() => history.push(`/user/${username}`)}
-          />
-          */
-        }
+        <Avatar
+          user={applicant}
+        />
 
-          <div style={{flex: 1, marginLeft: 8}}>
-            {displayName}
-          </div>
+        <div style={{flex: 1, marginLeft: 8}}>
+          {displayName}
+        </div>
         {
           CV && (
             <Button

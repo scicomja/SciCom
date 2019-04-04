@@ -1,6 +1,6 @@
 import React from 'react'
 // import Avatar from 'react-avatar'
-import Avatar from '@material-ui/core/Avatar'
+import Avatar from './Avatar'
 import { avatarURL } from '../utils/requests'
 import { getName } from '../utils/user'
 export default function({
@@ -13,14 +13,7 @@ export default function({
   console.log(`avatar`, avatar, `username`, username)
   return (
     <div onClick={onClick} style={{...style.container, ...customStyle}}>
-      <Avatar style={{
-          ...style.avatar,
-          width: 16,
-          height: 16
-        }}
-        round
-        src={avatarURL({username})}
-        alt={!avatar && getName(user)} />
+      <Avatar user={user} size={avatarSize}/>
       {getName(user)}
     </div>
   )

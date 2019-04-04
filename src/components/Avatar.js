@@ -27,7 +27,7 @@ function AvatarComponent({
       style={{...customStyle, width: size, height: size}}
       onClick={onClick || (() => history.push(`/user/${username}`))}
       src={
-        src || (avatar?avatarURL(username):defaultIconPath)
+        src || (avatar?avatarURL({username}):defaultIconPath)
       }
       {...props}
     />

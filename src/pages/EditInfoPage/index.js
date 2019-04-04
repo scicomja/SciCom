@@ -161,8 +161,23 @@ class EditInfoPage extends React.Component {
             <Col style={style.editPasswordColumn}>
               <Row>
                 <Col>
-                  <Button onClick={this.onEditPassword.bind(this)}>
+                  <Button
+                    block
+                    style={style.changePasswordButton}
+                    onClick={this.onEditPassword.bind(this)}>
                     Change Password
+                  </Button>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col>
+                  <Button
+                    block
+                    color="danger"
+                    onClick={this.showAccountDeletePopup.bind(this)}
+                  >
+                    <Icon name="trash" /> Delete Account
                   </Button>
                 </Col>
               </Row>
@@ -300,13 +315,6 @@ class EditInfoPage extends React.Component {
                     color="primary">
                     Update
                   </Button>
-                  <Button
-                    block
-                    color="danger"
-                    onClick={this.showAccountDeletePopup.bind(this)}
-                  >
-                    <Icon name="trash" /> Delete Account
-                  </Button>
                 </Form>
               )
             }
@@ -331,6 +339,9 @@ class EditInfoPage extends React.Component {
 }
 
 const style = {
+  changePasswordButton: {
+    marginBottom: 8
+  },
   container: {
     margin: 16
   },
