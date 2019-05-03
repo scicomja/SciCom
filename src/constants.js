@@ -2,7 +2,7 @@ import * as Yup from 'yup'
 import moment from 'moment'
 
 export const serverURL = (process.env.NODE_ENV == 'production')?
-  "https://api.scicom.travistang.rocks"
+  "https://api.scicom.sci-com.org"
   :
   "http://localhost:3000"
 

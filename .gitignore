@@ -10,6 +10,7 @@
 
 # production
 /build
+scicom-*/
 
 # misc
 .DS_Store
@@ -17,8 +18,19 @@
 .env.development.local
 .env.test.local
 .env.production.local
+deploy
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 *backup*
+
+# no docker-compose: to be done directly on server
+docker-compose.yml
+
+# all archives
+*.tar
+
+# documents
+*.pdf
+
