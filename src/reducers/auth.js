@@ -22,9 +22,9 @@ export default function authReducer(state = initialState, action) {
 		case AuthActions.UPDATE_USER_INFO:
 			return { ...state, user: { ...state.user, ...info } }
 		case AuthActions.TO_EMAIL_VERIFICATION_MODE:
-			return { ...state, isVerifyingEmail: true }
+			return { ...state, isVerifyingEmail: true, error: null }
 		case AuthActions.LEAVE_EMAIL_VERIFICATION_MODE:
-			return { ...state, isVerifyingEmail: false }
+			return { ...state, isVerifyingEmail: false, error: null }
 		default:
 			return state
 	}

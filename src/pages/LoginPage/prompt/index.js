@@ -7,12 +7,12 @@ import {
 	ModalFooter,
 	Button,
 	FormGroup,
-	Form,
 	Label,
 	Input,
 	FormText,
 	FormFeedback
 } from "reactstrap"
+import * as Form from "./Form"
 import { login as Locale, common as CommonLocale } from "locale"
 import { Mode } from "../../../constants"
 import { CreateForm } from "utils/Form"
@@ -42,63 +42,23 @@ class Prompt extends React.Component {
 		return this.props.mode === Mode.LOGIN
 	}
 
-	getInitialFormValues() {
-		if (this.isLogin()) {
-			return {
-				username: "",
-				password: ""
-			}
-		} else {
-			return {
-				username: "",
-				password: "",
-				email: "",
-				confirmPassword: ""
-			}
-		}
-	}
-
-	getValidationSchema() {
-		if (this.isLogin()) {
-			return Yup.object().shape({
-				username: Yup.string().required(),
-				password: Yup.string().required()
-			})
-		} else {
-			return Yup.object().shape({
-				username: Yup.string().required(),
-				password: Yup.string().required(),
-				email: Yup.string()
-					.email("Invalid email")
-					.required(),
-				confirmPassword: Yup.string()
-					.oneOf([Yup.ref("password"), null], "Password does not match")
-					.required()
-			})
-		}
-	}
-
 	handleFormChange(values) {
 		this.setState({ values })
 	}
 
 	submit(values, { setSubmitting }) {
-		if (this.isLogin()) {
-			this.props.login(values)
-		} else {
-			const isPolitician = this.props.mode === Mode.REGISTER_POLITICIAN
-			// we are registering
-			const payload = {
-				...values,
-				isPolitician
-			}
-			// mark down the email address for email verification
-			const { email } = values
-			console.log("email in pending:", email)
-			this.setState({ pendingEmailAddress: email })
-
-			const result = this.props.register(payload)
+		const isPolitician = this.props.mode === Mode.REGISTER_POLITICIAN
+		// we are registering
+		const payload = {
+			...values,
+			isPolitician
 		}
+		// mark down the email address for email verification
+		const { email } = values
+		console.log("email in pending:", email)
+		this.setState({ pendingEmailAddress: email })
+
+		const result = this.props.register(payload)
 	}
 
 	toggle() {
@@ -110,7 +70,6 @@ class Prompt extends React.Component {
 	*/
 	verify(code) {
 		const { pendingEmailAddress: email } = this.state
-		alert(email)
 		this.props.verifyEmail({
 			email,
 			token: code
@@ -120,8 +79,8 @@ class Prompt extends React.Component {
 		const { isVerifyingEmail } = this.props
 		return (
 			<Formik
-				initialValues={this.getInitialFormValues()}
-				validationSchema={this.getValidationSchema()}
+				initialValues={Form.initialValues}
+				validationSchema={Form.validationSchema}
 				onSubmit={this.submit.bind(this)}>
 				{({ submitForm, ...props }) => (
 					<Modal isOpen={this.props.mode} toggle={this.toggle.bind(this)}>
@@ -130,6 +89,7 @@ class Prompt extends React.Component {
 								verify={this.verify.bind(this)}
 								onReturnToRegistration={this.props.onReturnToRegistration}
 								toggle={this.toggle.bind(this)}
+								error={this.props.error}
 							/>
 						) : (
 							<RegisterForm

@@ -79,7 +79,7 @@ export function* verifyEmail({ email, token }) {
 		}
 	)
 	// if there are tokens returned, that means the verification process is completed.
-	if (token) {
+	if (loginToken) {
 		toast.success(
 			"You have completed the registration, you will be redirected to the home page...",
 			{

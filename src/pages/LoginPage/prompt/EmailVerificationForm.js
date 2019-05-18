@@ -16,7 +16,8 @@ import { Formik, Field, ErrorMessage } from "formik"
 export default class EmailVerificationForm extends React.Component {
 	static propTypes = {
 		toggle: PropTypes.func.isRequired,
-		onReturnToRegistration: PropTypes.func.isRequired
+		onReturnToRegistration: PropTypes.func.isRequired,
+		error: PropTypes.string
 	}
 
 	constructor(props) {
@@ -31,7 +32,7 @@ export default class EmailVerificationForm extends React.Component {
 		this.setState({ verificationCode: verificationCode })
 	}
 	render() {
-		const { toggle, onReturnToRegistration, verify } = this.props
+		const { toggle, onReturnToRegistration, verify, error } = this.props
 		const { verificationCode } = this.state
 
 		return (
@@ -43,6 +44,11 @@ export default class EmailVerificationForm extends React.Component {
 						Enter the code in the email address we have sent you to complete the
 						registration.
 					</p>
+					{error && (
+						<Alert color="danger">
+							Verification failed. Please check your token and try again.
+						</Alert>
+					)}
 					<FormGroup horizontal>
 						<Label for="code"> Verification Code: </Label>
 						<Input

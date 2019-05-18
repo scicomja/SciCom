@@ -1,118 +1,91 @@
-import React, { Component } from 'react';
-import {
-  Jumbotron, Button,
-  Container, Row, Col,
-} from 'reactstrap'
-import LoginCard from './LoginCard'
-import {login as Locale} from '../../locale'
-import { Mode } from '../../constants'
-import Prompt from './prompt'
-import { withRouter } from 'react-router-dom'
-import { connect } from 'react-redux'
+import React, { Component } from "react"
+import { Jumbotron, Button, Container, Row, Col } from "reactstrap"
+import { login as Locale } from "../../locale"
+import * as Actions from "actions/auth"
+
+import { Mode } from "../../constants"
+import Prompt from "./prompt"
+import { withRouter } from "react-router-dom"
+import { connect } from "react-redux"
+import RegisterCard from "./RegisterCard"
+import LoginForm from "./LoginForm/index.js"
 
 class LoginPage extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      mode: null
-    }
-  }
-  register(asPolitician) {
-    this.setState({
-      mode: asPolitician?Mode.REGISTER_POLITICIAN:Mode.REGISTER_PHD
-    })
-  }
-  login() {
-    this.setState({
-      mode: Mode.LOGIN
-    })
-  }
+	constructor(props) {
+		super(props)
+		this.state = {
+			mode: null
+		}
+	}
+	register(asPolitician) {
+		this.setState({
+			mode: asPolitician ? Mode.REGISTER_POLITICIAN : Mode.REGISTER_PHD
+		})
+	}
 
-  normalMode() {
-    this.setState({
-      mode: null
-    })
-  }
-  render () {
-    // redirect to user page when he has logged in
-    if(this.props.user) {
-      this.props.history.push('/user')
-      return null
-    }
-    return (
-      <div className="page center">
-      {/* This prompt is for login AND register */}
-      <Prompt
-        toggle={() => this.setState({mode: null})}
-        mode={this.state.mode} />
-      <Container>
-        <Row>
-          <Col>
-            <LoginCard
-              text={Locale.politician.de}
-              buttonText={Locale.register.de}
-              onClick={() => this.register(true)}
-              isPolitician={true}
-            />
-          </Col>
-          <Col>
-            <LoginCard
-              text={Locale.PHD.de}
-              buttonText={Locale.register.de}
-              onClick={() => this.register(false)}
-              isPolitician={false}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col></Col>
-          <Col>
-            <div style={style.loginContainer}>
-              <div style={style.loginColumn}>
-                {Locale.hasAnAccount.de}
-              </div>
-              <Button
-                block
-                color="primary"
-                style={style.loginButton}
-                href="#"
-                onClick={() => this.login()}>
-                {Locale.login.de}
-              </Button>
-            </div>
-          </Col>
-          <Col></Col>
-        </Row>
-        <Row>
-          <Col style={style.buttonContainer}>
-
-          </Col>
-        </Row>
-      </Container>
-      </div>
-    )
-  }
+	render() {
+		// redirect to user page when he has logged in
+		if (this.props.user) {
+			this.props.history.push("/user")
+			return null
+		}
+		return (
+			<div className="page center">
+				{/* This prompt is for login AND register */}
+				<Prompt
+					toggle={() => this.setState({ mode: null })}
+					mode={this.state.mode}
+				/>
+				<Container>
+					<Row>
+						<Col>
+							<LoginForm error={this.props.error} onLogin={this.props.login} />
+						</Col>
+						<Col>
+							<RegisterCard
+								onRegisterPolitician={() => this.register(true)}
+								onRegisterStudent={() => this.register(false)}
+							/>
+						</Col>
+					</Row>
+				</Container>
+			</div>
+		)
+	}
 }
 
 const style = {
-  loginColumn: {
-    textAlign: 'center',
-    marginTop: 32
-  },
-  loginContainer: {
-    flexDirection: 'column',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  loginButton: {
-    // marginLeft: 16
-  },
-  container: {
-  }
+	loginColumn: {
+		textAlign: "center",
+		marginTop: 32
+	},
+	loginContainer: {
+		flexDirection: "column",
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center"
+	},
+	loginButton: {
+		// marginLeft: 16
+	},
+	container: {}
 }
 
 const mapStateToProps = state => ({
-  user: state.auth.user
+	user: state.auth.user,
+	error: state.auth.error
 })
-export default withRouter(connect(mapStateToProps, null)(LoginPage))
+
+const mapDispatchToProps = dispatch => ({
+	login: credentials =>
+		dispatch({
+			type: Actions.LOGIN,
+			...credentials
+		})
+})
+export default withRouter(
+	connect(
+		mapStateToProps,
+		mapDispatchToProps
+	)(LoginPage)
+)
