@@ -38,10 +38,6 @@ class Prompt extends React.Component {
 		}
 	}
 
-	isLogin() {
-		return this.props.mode === Mode.LOGIN
-	}
-
 	handleFormChange(values) {
 		this.setState({ values })
 	}
@@ -93,7 +89,6 @@ class Prompt extends React.Component {
 							/>
 						) : (
 							<RegisterForm
-								isLogin={this.isLogin.bind(this)}
 								isSubmitting={this.state.isSubmitting}
 								formikProps={props}
 								submitForm={submitForm}

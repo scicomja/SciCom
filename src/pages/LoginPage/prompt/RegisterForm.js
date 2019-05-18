@@ -25,17 +25,12 @@ export default class RegisterForm extends React.Component {
 		toggle: PropTypes.func.isRequired,
 		error: PropTypes.object.isRequired,
 		submitForm: PropTypes.func.isRequired,
-		formikProps: PropTypes.object.isRequired,
-		isLogin: PropTypes.func.isRequired
+		formikProps: PropTypes.object.isRequired
 	}
 	constructor(props) {
 		super(props)
+	}
 
-		this.isLogin = props.isLogin
-	}
-	loginOrRegisterString() {
-		return this.isLogin() ? Locale.login.de : Locale.register.de
-	}
 	getModeString() {
 		switch (this.props.mode) {
 			case Mode.REGISTER_PHD:
@@ -47,50 +42,30 @@ export default class RegisterForm extends React.Component {
 		}
 	}
 
-	getAlert() {
-		const { error } = this.props
-		if (!error) return null
-		return <Alert color="danger">{error}</Alert>
-	}
 	getFields() {
-		if (this.isLogin()) {
-			return [
-				{
-					type: "text",
-					fieldName: "username",
-					placeholder: "username"
-				},
-				{
-					type: "password",
-					fieldName: "password",
-					placeholder: "password"
-				}
-			]
-		} else {
-			return [
-				{
-					type: "text",
-					fieldName: "username",
-					placeholder: "username"
-				},
-				{
-					type: "email",
-					fieldName: "email",
-					placeholder: "email"
-				},
-				{
-					type: "password",
-					fieldName: "password",
-					placeholder: "password"
-				},
-				{
-					type: "password",
-					label: "Confirm Password",
-					fieldName: "confirmPassword",
-					placeholder: "Confirm Password"
-				}
-			]
-		}
+		return [
+			{
+				type: "text",
+				fieldName: "username",
+				placeholder: "username"
+			},
+			{
+				type: "email",
+				fieldName: "email",
+				placeholder: "email"
+			},
+			{
+				type: "password",
+				fieldName: "password",
+				placeholder: "password"
+			},
+			{
+				type: "password",
+				label: "Confirm Password",
+				fieldName: "confirmPassword",
+				placeholder: "Confirm Password"
+			}
+		]
 	}
 	getForm({
 		values,
@@ -123,12 +98,19 @@ export default class RegisterForm extends React.Component {
 		)
 	}
 	render() {
-		const { isSubmitting, submitForm, mode, toggle, formikProps } = this.props
+		const {
+			isSubmitting,
+			submitForm,
+			mode,
+			toggle,
+			formikProps,
+			error
+		} = this.props
 		return (
 			<div>
 				<ModalHeader toggle={toggle}>{this.getModeString()}</ModalHeader>
 				<ModalBody>
-					{this.getAlert()}
+					{error && <Alert color="danger">{error}</Alert>}
 					{this.getForm(formikProps)}
 				</ModalBody>
 				<ModalFooter>
@@ -141,7 +123,7 @@ export default class RegisterForm extends React.Component {
 							!_.isEmpty(formikProps.errors) ||
 							isSubmitting
 						}>
-						{this.loginOrRegisterString()}
+						Register
 					</Button>{" "}
 					<Button color="secondary" onClick={toggle}>
 						{CommonLocale.cancel.de}

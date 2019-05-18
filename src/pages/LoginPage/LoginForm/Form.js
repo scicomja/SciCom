@@ -40,6 +40,6 @@ export function FormGroup({
 
 const style = {
 	formGroup: {
-		// flex: 1
+		width: "100%"
 	}
 }
