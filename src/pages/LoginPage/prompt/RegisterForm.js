@@ -76,8 +76,6 @@ export default class RegisterForm extends React.Component {
 		handleSubmit
 	}) {
 		const fields = this.getFields()
-		// const { form } = CreateForm(fields)
-		// return form
 		return (
 			<Form onSubmit={handleSubmit}>
 				{fields.map(({ type, fieldName, placeholder, label }) => (
@@ -115,7 +113,6 @@ export default class RegisterForm extends React.Component {
 				</ModalBody>
 				<ModalFooter>
 					<Button
-						color="primary"
 						type="submit"
 						onClick={submitForm}
 						disabled={
@@ -125,7 +122,7 @@ export default class RegisterForm extends React.Component {
 						}>
 						Register
 					</Button>{" "}
-					<Button color="secondary" onClick={toggle}>
+					<Button color="link" onClick={toggle}>
 						{CommonLocale.cancel.de}
 					</Button>
 				</ModalFooter>

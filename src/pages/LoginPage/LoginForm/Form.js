@@ -24,7 +24,6 @@ export function FormGroup({
 }) {
 	return (
 		<ReactstrapFormGroup style={style.formGroup}>
-			<Label for={name}>{label || _.startCase(name)}</Label>
 			<Input
 				onChange={handleChange}
 				placeholder={placeholder}

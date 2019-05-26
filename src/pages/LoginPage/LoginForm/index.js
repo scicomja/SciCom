@@ -70,7 +70,6 @@ export default class LoginForm extends React.Component {
 									</div>
 									<Button
 										block
-										color="primary"
 										style={style.loginButton}
 										href="#"
 										onClick={() => this.props.onLogin(formikProps.values)}>
@@ -105,7 +104,8 @@ const style = {
 		flex: 1,
 		display: "flex",
 		flexDirection: "column",
-		alignItems: "flex-start"
+		justifyContent: "center",
+		alignItems: "center"
 	},
 	card: {
 		height: 400,
