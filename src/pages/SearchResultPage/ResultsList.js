@@ -41,7 +41,7 @@ const style = {
 	},
 	resultsContainer: {
 		display: "flex",
-		flexDirection: "row"
+		flexDirection: "column"
 	},
 	headerRow: {
 		display: "flex",
