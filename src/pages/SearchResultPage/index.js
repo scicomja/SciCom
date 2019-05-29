@@ -38,37 +38,17 @@ class SearchResultPage extends React.Component {
 			total: 0
 		}
 	}
-	async reloadSearchConfig({ searchMode, searchParams }) {
-		this.setState(
-			{
-				searchMode,
-				searchParams
-			},
-			async () => {
-				await this.goToPage(1)
-			}
-		)
-		// then prepare the payload
-		// copy the values, retrieve the right payload
-		// await this.goToPage(1)
-	}
-	/*
-    Explanation here:
-      - When user searches, the form value stays in form.
-      - When "Search" button in search modal is clicked, the form values will be stored in redux.
-      - To prevent this component from changing while the user changes the mode,
-        The redux states will be copied to the local state of this component.
-        And the component is rendered according to the state instead of the props.
-        Therefore "componentDidMount" copies the props to states by using "reloadSearchConfig",
-      - Actual search (API call) is done in "reload search config"
-      - When user starts to searchAgain, "componentDidMount" will not be called twice.
-        But when he clicks submit new props will be received,
-        Therefore reloading is also done in "componentWillReceiveProps"
 
-  */
 	componentDidMount() {
 		// start the searching here
 		this.goToPage(1)
+	}
+
+	async componentDidUpdate(prevProps, prevState, snapshot) {
+		const { form: prevForm } = prevProps
+		if (!_.isEqual(this.props.form, prevForm)) {
+			await this.goToPage(1)
+		}
 	}
 	// this is needed as the page is not gonna reload when new search param comes
 
