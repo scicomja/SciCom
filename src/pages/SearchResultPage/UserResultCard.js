@@ -50,10 +50,6 @@ const style = {
 		height: 96,
 		width: "100%",
 		marginTop: 8,
-		marginBottom: 8,
-		// shadows
-		"-webkit-box-shadow": "6px 2px 13px 0px rgba(0,0,0,0.75)",
-		"-moz-box-shadow": "6px 2px 13px 0px rgba(0,0,0,0.75)",
-		"box-shadow": "6px 2px 1px 0px rgba(0,0,0,0.75)"
+		marginBottom: 8
 	}
 }
