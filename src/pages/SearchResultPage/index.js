@@ -145,7 +145,7 @@ class SearchResultPage extends React.Component {
 	}
 
 	render() {
-		const { form: { searchTerm, salary, date } = {} } = this.props
+		const { history, form: { searchTerm, salary, date } = {} } = this.props
 		const {
 			results: { users: userResults = [], projects: projectResults = [] }
 		} = this.state
@@ -157,13 +157,19 @@ class SearchResultPage extends React.Component {
 				<div style={style.innerContainer}>
 					<ResultsList title="Users" icon="user">
 						{userResults.map(user => (
-							<UserResultCard user={user} />
+							<UserResultCard
+								onClick={() => history.push(`/user/${user.username}`)}
+								user={user}
+							/>
 						))}
 					</ResultsList>
 
 					<ResultsList title="Projects" icon="gear">
 						{projectResults.map(project => (
-							<ProjectResultCard project={project} />
+							<ProjectResultCard
+								project={project}
+								onClick={() => history.push(`/project/${project._id}`)}
+							/>
 						))}
 					</ResultsList>
 				</div>

@@ -1,5 +1,5 @@
 import React from "react"
-import * as moment from "moment"
+import { formatDate } from "../../utils"
 
 export default class ProjectResultCard extends React.Component {
 	constructor(props) {
@@ -21,11 +21,9 @@ export default class ProjectResultCard extends React.Component {
 		}
 	}
 
-	formatDate(date) {
-		return moment(date, "DD.MM.YYYY")
-	}
 	render() {
 		const { project, onClick } = this.props
+		// alert(`project ${JSON.stringify(project)}`)
 		return (
 			<div
 				style={{ ...style.container, ...this.extraStyle() }}
@@ -34,9 +32,9 @@ export default class ProjectResultCard extends React.Component {
 				onMouseOver={() => this.setState({ isHovering: true })}>
 				<h5 style={style.name}>{project.title}</h5>
 				<p>
-					{`${project.type}, ${this.formatDate(
-						project.from
-					)} - ${this.formatDate(project.to)}`}
+					{`${project.nature}, ${formatDate(project.from)} - ${formatDate(
+						project.to
+					)}`}
 				</p>
 			</div>
 		)
