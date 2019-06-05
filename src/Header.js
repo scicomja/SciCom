@@ -59,9 +59,6 @@ class Header extends Component {
 					<NavItem>
 						<NavLink href="/about">Über uns</NavLink>
 					</NavItem>
-					<NavItem>
-						<NavLink href="/">Loginseite</NavLink>
-					</NavItem>
 				</Nav>
 			)
 		}
@@ -77,6 +74,7 @@ class Header extends Component {
 }
 const style = {
 	header: {
+		flex: 1,
 		backgroundColor: colors.primary
 	}
 }

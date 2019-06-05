@@ -21,6 +21,8 @@ import ProjectPage from "./pages/ProjectPage"
 import { withRouter } from "react-router-dom"
 import { createBrowserHistory } from "history"
 
+import Footer from "./Footer"
+
 import { PersistGate } from "redux-persist/integration/react"
 const { store, persistor } = configureStore()
 
@@ -46,15 +48,18 @@ class App extends Component {
 					<MainModal />
 					<SearchModal />
 					<ToastContainer />
-					<Switch>
-						<Route path="/home" component={HomePage} />
-						<Route path="/editInfo" component={EditInfoPage} />
-						<Route path="/about" component={AboutPage} />
-						<Route path="/user/:user_id?" component={UserPage} />
-						<Route path="/project/:project_id" component={ProjectPage} />
-						<Route path="/search" component={SearchResultPage} />
-						<Route path="/" component={LoginPage} />
-					</Switch>
+					<div className="MainContent">
+						<Switch>
+							<Route path="/home" component={HomePage} />
+							<Route path="/editInfo" component={EditInfoPage} />
+							<Route path="/about" component={AboutPage} />
+							<Route path="/user/:user_id?" component={UserPage} />
+							<Route path="/project/:project_id" component={ProjectPage} />
+							<Route path="/search" component={SearchResultPage} />
+							<Route path="/" component={LoginPage} />
+						</Switch>
+					</div>
+					<Footer />
 				</div>
 			</Router>
 		)

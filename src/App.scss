@@ -1,9 +1,43 @@
 @import url("https://bootswatch.com/4/cosmo/bootstrap.min.css");
 
-.App {
+$theme-colors: (
+  "primary": rgb(4, 52, 88),
+  "dark": rgb(4, 52, 88)
+);
+
+body, #root {
+  // min-height: 100vh;
   height: 100vh;
 }
-.center {
+.App {
+  // height: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.Header {
+  flex: 1;
+}
+.MainContent {
+  flex: 6;
+}
+
+.Footer {
+  $color: map-get($theme-colors, primary);
+  flex: 1.2;
+  background-color: $color;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .FooterContainer {
+    a {
+      // text-decoration: underline;
+      color: 'white' !important;
+    }
+  }
+}
+
+center {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -22,11 +56,6 @@ li.nav-item {
 nav.navbar.navbar-expand-md.navbar-dark.bg-dark {
   background-color: rgb(4, 52, 88) !important;
 }
-
-$theme-colors: (
-  "primary": rgb(4, 52, 88),
-  "dark": rgb(4, 52, 88)
-);
 
 // the button styles
 .btn-secondary {
