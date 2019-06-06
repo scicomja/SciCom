@@ -95,6 +95,11 @@ export default class RegisterForm extends React.Component {
 			</Form>
 		)
 	}
+	handleKeyDown(e) {
+		if (e.key === "Enter") {
+			this.props.submitForm()
+		}
+	}
 	render() {
 		const {
 			isSubmitting,
@@ -105,7 +110,7 @@ export default class RegisterForm extends React.Component {
 			error
 		} = this.props
 		return (
-			<div>
+			<div onKeyDown={this.handleKeyDown.bind(this)}>
 				<ModalHeader toggle={toggle}>{this.getModeString()}</ModalHeader>
 				<ModalBody>
 					{error && <Alert color="danger">{error}</Alert>}

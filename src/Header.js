@@ -18,6 +18,7 @@ import {
 	ModalFooter
 } from "reactstrap"
 
+import logo from "./logo.png"
 import * as ModalActions from "./actions/modal"
 import * as SearchActions from "./actions/search"
 import { ModalMode, SearchMode, colors } from "./constants"
@@ -25,6 +26,13 @@ import { LOGOUT } from "./actions/auth"
 import Icon from "./components/icon"
 
 class Header extends Component {
+	constructor(props) {
+		super(props)
+
+		this.state = {
+			isCollapsed: true
+		}
+	}
 	getSearchNavItems() {
 		if (!this.props.user) return null
 		const { isPolitician } = this.props.user
@@ -66,8 +74,18 @@ class Header extends Component {
 	render() {
 		return (
 			<Navbar color="dark" style={style.header} dark expand="md">
-				<NavbarBrand href="/">SciCom</NavbarBrand>
-				{this.getNavItem()}
+				<NavbarBrand href="/">
+					<img src={logo} alt="SciCom" style={style.logo} />
+				</NavbarBrand>
+				<NavbarToggler
+					onClick={() =>
+						this.setState({ isCollapsed: !this.state.isCollapsed })
+					}
+					className="mr-2"
+				/>
+				<Collapse navbar isOpen={!this.state.isCollapsed}>
+					{this.getNavItem()}
+				</Collapse>
 			</Navbar>
 		)
 	}
@@ -75,7 +93,12 @@ class Header extends Component {
 const style = {
 	header: {
 		flex: 1,
+		minHeight: "13vh",
 		backgroundColor: colors.primary
+	},
+	logo: {
+		maxHeight: "100%",
+		maxWidth: 168
 	}
 }
 const mapStateToProps = state => ({

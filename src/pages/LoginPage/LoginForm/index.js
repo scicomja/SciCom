@@ -35,7 +35,7 @@ export default class LoginForm extends React.Component {
 
 	render() {
 		return (
-			<div className="center">
+			<div className="center LoginRegisterBox">
 				<ForgotPasswordPrompt
 					isOpen={this.state.isForgotPasswordPromptOpen}
 					toggle={this.toggleForgorPasswordPrompt.bind(this)}

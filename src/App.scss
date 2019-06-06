@@ -16,14 +16,23 @@ body, #root {
   flex-direction: column;
 }
 .Header {
+  min-height: 13vh;
   flex: 1;
 }
 .MainContent {
+  min-height: 73vh;
   flex: 6;
 }
 
+.LoginRegisterBox {
+  // TODO: complete this stylesheet for the two boxes responsiveness
+  flex: 1
+}
+
+
 .Footer {
   $color: map-get($theme-colors, primary);
+  min-height: 14vh;
   flex: 1.2;
   background-color: $color;
   display: flex;
