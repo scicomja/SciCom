@@ -36,12 +36,12 @@ class LoginPage extends Component {
 					toggle={() => this.setState({ mode: null })}
 					mode={this.state.mode}
 				/>
-				<Container>
+				<Container style={style.container}>
 					<Row>
-						<Col>
+						<Col style={style.fill}>
 							<LoginForm error={this.props.error} onLogin={this.props.login} />
 						</Col>
-						<Col>
+						<Col style={style.fill}>
 							<RegisterCard
 								onRegisterPolitician={() => this.register(true)}
 								onRegisterStudent={() => this.register(false)}
@@ -55,6 +55,10 @@ class LoginPage extends Component {
 }
 
 const style = {
+	fill: {
+		height: "100%",
+		display: "flex"
+	},
 	loginColumn: {
 		textAlign: "center",
 		marginTop: 32
@@ -68,7 +72,11 @@ const style = {
 	loginButton: {
 		// marginLeft: 16
 	},
-	container: {}
+	container: {
+		display: "flex",
+		justifyContent: "space-around",
+		alignItems: "center"
+	}
 }
 
 const mapStateToProps = state => ({
