@@ -21,6 +21,8 @@ import ProjectPage from "./pages/ProjectPage"
 import { withRouter } from "react-router-dom"
 import { createBrowserHistory } from "history"
 
+import Favicon from "react-favicon"
+
 import Footer from "./Footer"
 
 import { PersistGate } from "redux-persist/integration/react"
@@ -44,6 +46,7 @@ class App extends Component {
 		return (
 			<Router history={history}>
 				<div className="App">
+					<Favicon url="./favicon.ico" />
 					<Header user={this.props.auth.user} mode={this.props.mode} />
 					<MainModal />
 					<SearchModal />
