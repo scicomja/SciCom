@@ -13,7 +13,7 @@ export function* getUser() {
 	return user
 }
 // a routine for preparing the token and acquiring user object from the server. As well as redirecting user to his homepage.
-function* markLogin(token) {
+function* markLogin(token, redirectPath = null) {
 	try {
 		yield put({
 			type: LoginActions.SET_TOKEN,
@@ -25,7 +25,7 @@ function* markLogin(token) {
 			type: LoginActions.SET_USER,
 			user
 		})
-		yield call(history.push, "/home")
+		yield call(history.push, redirectPath || "/home")
 		window.location.reload()
 	} catch (err) {
 		console.log(err)
@@ -87,7 +87,7 @@ export function* verifyEmail({ email, token }) {
 			}
 		)
 		yield call(delay, 2000)
-		yield call(markLogin, loginToken)
+		yield call(markLogin, loginToken, "/editInfo") // force the user to go editInfo page right after register
 	} else {
 		yield put({
 			type: LoginActions.SET_AUTH_ERROR,
