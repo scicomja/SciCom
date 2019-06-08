@@ -25,7 +25,7 @@ import {
 	SearchInitialValue,
 	germanStates,
 	projectStatus,
-	projectType
+	projectTypeDict
 } from "./constants"
 
 import { ReactstrapInput, ReactstrapSelect } from "reactstrap-formik"
@@ -45,9 +45,10 @@ class SearchModal extends React.Component {
 		super(props)
 
 		this.state = {
+			isProjectNatureDropdownOpen: false,
 			isSalaryDropdownOpen: false
 		}
-
+		this.toggleProjectNatureDropDown = () => this.setState({isProjectNatureDropdownOpen: !this.state.isProjectNatureDropdownOpen})
 		this.toggleSalaryDropDown = () => this.setState({isSalaryDropdownOpen: !this.state.isSalaryDropdownOpen})
 	}
 	search(values) {
@@ -87,6 +88,31 @@ class SearchModal extends React.Component {
 										type="text"
 									/>
 								</FormGroup>
+
+								<FormGroup>
+									<Label for="type">Project nature</Label>
+
+									<Dropdown isOpen={this.state.isProjectNatureDropdownOpen} toggle={this.toggleProjectNatureDropDown}>
+										<DropdownToggle caret>
+											{values.type?projectTypeDict[values.type]:"-- Choose an option --"}
+										</DropdownToggle>
+										<DropdownMenu>
+											<DropdownItem onClick={() => setFieldValue('type', null)}>
+												-- Choose an option --
+											</DropdownItem>
+											{
+												Object.keys(projectTypeDict).map(value => (
+													<DropdownItem onClick={() => setFieldValue('type', value)}>
+														{projectTypeDict[value]}
+													</DropdownItem>
+												))
+											}
+										</DropdownMenu>
+
+									</Dropdown>
+
+								</FormGroup>
+
 								<FormGroup>
 									<Label for="salary">Salary</Label>
 

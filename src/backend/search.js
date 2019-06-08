@@ -1,5 +1,5 @@
 import { authorizedGet, authorizedPost } from "./user"
-import { serverURL } from "../constants"
+import { serverURL, projectType } from "../constants"
 import * as Yup from "yup"
 
 export const salaryOptions = {
@@ -11,28 +11,16 @@ export const salaryOptions = {
 export const initialValues = {
 	searchTerm: "",
 	salary: null,
-	date: new Date()
+	date: new Date(),
+	type: null,
 }
 
 export const validationSchema = Yup.object().shape({
 	searchTerm: Yup.string(),
 	salary: Yup.string().oneOf(Object.keys(salaryOptions)),
-	date: Yup.date()
+	date: Yup.date(),
+	type: Yup.string().oneOf(projectType)
 })
-export const searchUser = async (params, token, page = 1) => {
-	return await authorizedGet(`${serverURL}/user/`, token, {
-		...params,
-		page
-	})
-}
-
-export const searchProject = async (params, token, page = 1) => {
-	console.log("search with payload", params)
-	return await authorizedGet(`${serverURL}/project/`, token, {
-		...params,
-		page
-	})
-}
 
 export const search = async (form, token, page = 1) => {
 	return await authorizedPost(`${serverURL}/search`, { ...form }, token)
