@@ -2,15 +2,21 @@ import { authorizedGet, authorizedPost } from "./user"
 import { serverURL } from "../constants"
 import * as Yup from "yup"
 
+export const salaryOptions = {
+ 	"REQUIRED": "Required",
+ 	"NOT_REQUIRED": "Not Required",
+	"DOES_NOT_MATTER": "Does not matter"
+}
+
 export const initialValues = {
 	searchTerm: "",
-	salary: 0,
+	salary: null,
 	date: new Date()
 }
 
 export const validationSchema = Yup.object().shape({
 	searchTerm: Yup.string(),
-	salary: Yup.number(),
+	salary: Yup.string().oneOf(Object.keys(salaryOptions)),
 	date: Yup.date()
 })
 export const searchUser = async (params, token, page = 1) => {
