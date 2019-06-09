@@ -96,6 +96,7 @@ export function* verifyEmail({ email, token }) {
 	}
 }
 
+
 export function* refreshUserInfo() {
 	const user = yield call(getUser)
 	yield put({

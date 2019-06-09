@@ -159,3 +159,23 @@ export const rejectApplication = async (appId, token) => {
 export const completeProject = async (projectId, token) => {
   return await authorizedPost(`${serverURL}/project/complete/${projectId}`, null, token)
 }
+
+export const requestResetPasswordVerificationCode = async (email) => {
+  return await fetch(`${serverURL}/auth/resetPassword`, {
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({email})
+  })
+}
+
+export const verifyAndResetPassword = async ({email, token, password}) => {
+  return await fetch(`${serverURL}/auth/setPassword`, {
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ email, token, password })
+  })
+}
