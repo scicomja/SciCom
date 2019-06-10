@@ -20,7 +20,7 @@ import UserPage from "./pages/UserPage"
 import ProjectPage from "./pages/ProjectPage"
 import { withRouter } from "react-router-dom"
 import { createBrowserHistory } from "history"
-
+import EditInfoGuard from './EditInfoGuard'
 import Favicon from "react-favicon"
 
 import Footer from "./Footer"
@@ -53,12 +53,12 @@ class App extends Component {
 					<ToastContainer />
 					<div className="MainContent">
 						<Switch>
-							<Route path="/home" component={HomePage} />
+							<Route path="/home" component={EditInfoGuard(HomePage)} />
 							<Route path="/editInfo" component={EditInfoPage} />
 							<Route path="/about" component={AboutPage} />
-							<Route path="/user/:user_id?" component={UserPage} />
-							<Route path="/project/:project_id" component={ProjectPage} />
-							<Route path="/search" component={SearchResultPage} />
+							<Route path="/user/:user_id?" component={EditInfoGuard(UserPage)} />
+							<Route path="/project/:project_id" component={EditInfoGuard(ProjectPage)} />
+							<Route path="/search" component={EditInfoGuard(SearchResultPage)} />
 							<Route path="/" component={LoginPage} />
 						</Switch>
 					</div>
