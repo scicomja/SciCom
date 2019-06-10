@@ -43,24 +43,28 @@ class ApplicationDetails extends React.Component {
     const displayName = getName(applicant)
     return (
       <div style={style.applicantCard}>
-        <Avatar
-          user={applicant}
-        />
+        Applicant
+        <div style={style.applicantCardInner}>
+          <Avatar
+            user={applicant}
+          />
 
-        <div style={{flex: 1, marginLeft: 8}}>
-          {displayName}
+          <div style={{flex: 1, marginLeft: 8}}>
+            {displayName}
+          </div>
+          {
+            CV && (
+              <Button
+                  href={cvURL(applicant)}
+                >
+                <Icon name="download" />
+                {' '}
+                CV
+              </Button>
+            )
+          }
         </div>
-        {
-          CV && (
-            <Button
-                href={cvURL(applicant)}
-              >
-              <Icon name="download" />
-              {' '}
-              CV
-            </Button>
-          )
-        }
+
       </div>
     )
   }
@@ -154,20 +158,24 @@ class ApplicationDetails extends React.Component {
                 {this.applicantCard(applicant)}
               </Col>
             </Row>
-            <Row>
-              <Col>
-                <h4>Answers to questions</h4>
-                <Form>
-                {
-                  Object.keys(answers).map(question => (
-                    this.answerComponent({
-                      question, answer: answers[question]
-                    })
-                  ))
-                }
-                </Form>
-              </Col>
-            </Row>
+            {
+              Object.keys(answers).length > 0 && (
+                <Row>
+                  <Col>
+                    <h4>Answers to questions</h4>
+                    <Form>
+                    {
+                      Object.keys(answers).map(question => (
+                        this.answerComponent({
+                          question, answer: answers[question]
+                        })
+                      ))
+                    }
+                    </Form>
+                  </Col>
+                </Row>
+              )
+            }
           </Container>
         </ModalBody>
       </Modal>
@@ -186,8 +194,18 @@ export default withRouter(
 const style = {
   applicantCard: {
     display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    flexDirection: 'column',
+    padding: 16,
+    margin: 16,
+    // justifyContent: 'flex-end',
+    // alignItems: 'center',
+    backgroundColor: 'rgb(128,128,128)',
+    color: 'white'
+  },
+  applicantCardInner: {
+    display: 'flex',
+    flexDirection: 'row',
+    margin: 8
   },
   header: {
     display: 'flex',
