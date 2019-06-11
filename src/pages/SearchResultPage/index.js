@@ -25,7 +25,7 @@ import * as SearchActions from "../../actions/search"
 import { toast } from "react-toastify"
 
 import ResultsList from "./ResultsList"
-import ProjectResultCard from "./ProjectResultCard"
+import ProjectResultCard from "../../components/ProjectResultCard"
 import UserResultCard from "./UserResultCard"
 
 class SearchResultPage extends React.Component {

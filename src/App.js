@@ -53,7 +53,7 @@ class App extends Component {
 					<ToastContainer />
 					<div className="MainContent">
 						<Switch>
-							<Route path="/home" component={EditInfoGuard(HomePage)} />
+							<Route path="/user" component={EditInfoGuard(HomePage)} />
 							<Route path="/editInfo" component={EditInfoPage} />
 							<Route path="/about" component={AboutPage} />
 							<Route path="/user/:user_id?" component={EditInfoGuard(UserPage)} />

@@ -35,7 +35,7 @@ const style = {
   },
   content: {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'flex-start',
     flexWrap: 'wrap',
     margin: 16

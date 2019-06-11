@@ -83,15 +83,21 @@ class ApplicationDetails extends React.Component {
   accept() {
     const { token, application } = this.props
     acceptApplication(application._id, token)
-      .then(result => toast("Please contact the student about the project"))
-      .then(_ => delay(2000))
-      .then(result => window.location.reload())
+      .then(() => this.notifyAcceptRejectResult(true))
   }
   reject() {
     const { token, application } = this.props
     rejectApplication(application._id, token)
-      .then(result => window.location.reload())
+      .then(() => this.notifyAcceptRejectResult(false))
   }
+  notifyAcceptRejectResult(accept = true) {
+    const time = 2000
+    toast(`The application has been ${accept?"accepted":"rejected"}.`, {
+      autoClose: time
+    })
+    setTimeout(() => window.location.reload(), time)
+  }
+
   render() {
     const {
       isOpen, onClose,

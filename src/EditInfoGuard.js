@@ -9,7 +9,7 @@ const EditInfoGuard = (WrappedComponent) => {
       const { children, user, history } = this.props
 
       if(!user || !user.firstName || !user.lastName) {
-        history.push('/editInfo')
+        history.push('/editInfo?block=true')
       }
       return <WrappedComponent {...this.props} />
     }

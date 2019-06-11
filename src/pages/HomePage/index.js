@@ -2,6 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import CenterNotice from '../../components/centerNotice'
+import UserInfo from './UserInfo'
 import {
   Button,
   Container, Row, Col
@@ -48,39 +49,20 @@ class HomePage extends React.Component {
   }
   render() {
     const { extendedUser: user } = this.state
-    console.log('home for user', user)
     return (
       <div style={style.container}>
         <Container>
-          <Row>
-            <Col>
-              <h1>
-                <Icon name="home"/>
-                {' '}
-                Home
-              </h1>
-            </Col>
-            {
-              user.isPolitician && (
-                <Col style={style.createProjectContainer}>
-                  <Button
-                    color="primary"
-                    onClick={this.props.createProject}
-                  >
-                    Create Projects
-                  </Button>
-                </Col>
-              )
-            }
-          </Row>
-          <Row>
-            <Col>
-              <FrontPage
-                user={user}
-                isUserHimself={true}
-              />
-            </Col>
-          </Row>
+
+          <UserInfo
+            user={user}
+            onCreateProject={this.props.createProject}
+            onEditInfo={null}
+          />
+          <FrontPage
+            user={user}
+            isUserHimself={true}
+          />
+
         </Container>
       </div>
     )
