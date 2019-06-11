@@ -39,6 +39,15 @@ export const projectType = [
 	"voluntary",
 	"quick-question"
 ]
+
+export const projectTypeDict = {
+	"internship": "Internship",
+	"thesis": "Thesis",
+	"parttime" : "Part time",
+	"voluntary" : "Voluntary work",
+	"quick-question": "Quick question"
+}
+
 export const applicationStatus = ["pending", "accepted", "rejected"]
 
 export const Mode = {

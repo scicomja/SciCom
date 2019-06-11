@@ -1,6 +1,5 @@
 import React from "react"
 import PropTypes from "prop-types"
-import ProjectResultCard from "./ProjectResultCard"
 import UserResultCard from "./UserResultCard"
 import Icon from "../../components/icon"
 import CenterNotice from "../../components/centerNotice"

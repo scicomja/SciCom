@@ -10,7 +10,8 @@ import * as AuthActions from '../../actions/auth'
 import {
   Container, Row, Col, Button,
   FormGroup,
-  Label, Input
+  Label, Input,
+  Alert
 } from 'reactstrap'
 import {
   Formik, Form, Field,
@@ -57,14 +58,25 @@ class EditInfoPage extends React.Component {
       phone: Yup.string()
         .matches(phoneRegex, "Phone number has invalid format")
         .required(),
+      workingPhone: Yup.string()
+        .matches(phoneRegex, "Phone number has invalid format"),
+      party: Yup.string(),
+      duty: Yup.string(),
+
+
       website: Yup.string(),
       CV: Yup.mixed(),
       avatar: Yup.mixed(),
       linkedIn: Yup.string(),
+
       city: Yup.string().required(),
       state: Yup.string()
         .oneOf(germanStates)
         .required(),
+      PLZ: Yup.string()
+        .matches(/^\d{5}$/, "PLZ should be 5 digits")
+        .required(),
+
       title: Yup.string(),
       major: Yup.array().of(Yup.string()),
       university: Yup.string(),
@@ -104,6 +116,7 @@ class EditInfoPage extends React.Component {
     })
   }
   render() {
+    console.dir(this.props.location)
     // bounce back to login page if such user doesn't exist
     if(!this.props.user) {
       window.location.reload('/')
@@ -136,6 +149,11 @@ class EditInfoPage extends React.Component {
               </h1>
             </Col>
           </Row>
+          {
+            (this.props.location.search.indexOf("blocked") > -1) && (
+              <Alert color="danger"> You must fill in your personal information before using Sci-com.org </Alert>
+            )
+          }
           <Row style={style.basicContainer}>
             <Col md={2} style={{...style.nameComponent, ...style.avatarComponent}}>
               <Avatar
@@ -264,6 +282,12 @@ class EditInfoPage extends React.Component {
                         type="text" component={ReactstrapInput}
                       />
                     </Col>
+                    <Col>
+                      <Field
+                        name="PLZ" label="PLZ(*)"
+                        type="text" component={ReactstrapInput}
+                      />
+                    </Col>
                   </FormGroup>
                   <FormGroup row>
                     <Col>
@@ -273,7 +297,6 @@ class EditInfoPage extends React.Component {
                           onChange={e => setFieldValue('CV',e.currentTarget.files[0])}
                         />
                       </div>
-
                     </Col>
                     <Col>
                       <Field
@@ -284,7 +307,7 @@ class EditInfoPage extends React.Component {
                     </Col>
                   </FormGroup>
                   {
-                    !isPolitician && (
+                    (!isPolitician) ? (
                       <FormGroup row>
                         <Col>
                           <Label for="major">Major</Label>
@@ -301,6 +324,41 @@ class EditInfoPage extends React.Component {
                         <Col>
                           <Field label="University"
                             name="university"
+                            component={ReactstrapInput}
+                            type="text"
+                          />
+                        </Col>
+                        <Col>
+                          <Field
+                            label="Semester"
+                            name="semester"
+                            component={ReactstrapInput}
+                            type="text"
+                          />
+                        </Col>
+                      </FormGroup>
+                    ):(
+                      <FormGroup row>
+                        <Col>
+                          <Field
+                            label="Party"
+                            name="party"
+                            component={ReactstrapInput}
+                            type="text"
+                          />
+                        </Col>
+                        <Col>
+                          <Field
+                            label="Political Position"
+                            name="position"
+                            component={ReactstrapInput}
+                            type="text"
+                          />
+                        </Col>
+                        <Col>
+                          <Field
+                            label="Job Duty"
+                            name="duty"
                             component={ReactstrapInput}
                             type="text"
                           />

@@ -24,7 +24,7 @@ const ProjectCard = function(props) {
     creator,
     status,
     description,
-    tags: topic,
+    tags: topic = [],
     salary,
     nature,
     from, to,

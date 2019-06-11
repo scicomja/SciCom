@@ -5,7 +5,8 @@ import {
   Card, Button, CardTitle, CardText,
   Row, Col, Container
 } from 'reactstrap'
-import ProjectCard from '../../components/projectCard'
+// import ProjectCard from '../../components/projectCard'
+import ProjectCard from '../../components/ProjectResultCard'
 import UserChip from '../../components/userChip'
 import Icon from '../../components/icon'
 import ApplicationCard from './applicationCard'
@@ -60,7 +61,6 @@ export default class FrontPage extends React.Component {
         <CenterNotice title="No applications found" />
       )
     }
-    console.log('applications', applications)
     return applications.map(app => (
           <ApplicationCard
             application={app}

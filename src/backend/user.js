@@ -159,10 +159,23 @@ export const rejectApplication = async (appId, token) => {
 export const completeProject = async (projectId, token) => {
   return await authorizedPost(`${serverURL}/project/complete/${projectId}`, null, token)
 }
-export const searchProject = async (searchParams, token) => {
-  return await authorizedGet(`${serverURL}/project`, token, searchParams)
+
+export const requestResetPasswordVerificationCode = async (email) => {
+  return await fetch(`${serverURL}/auth/resetPassword`, {
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({email})
+  })
 }
 
-export const searchUser = async (searchParams, token) => {
-  return await authorizedGet(`${serverURL}/user`, token, searchParams)
+export const verifyAndResetPassword = async ({email, token, password}) => {
+  return await fetch(`${serverURL}/auth/setPassword`, {
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ email, token, password })
+  })
 }
