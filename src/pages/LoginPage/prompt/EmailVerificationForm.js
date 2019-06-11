@@ -27,6 +27,11 @@ export default class EmailVerificationForm extends React.Component {
 			verificationCode: ""
 		}
 	}
+	handleKeyDown(e) {
+		if (e.key === "Enter") {
+			this.props.verify(this.state.verificationCode)
+		}
+	}
 	onCodeChange(e) {
 		const verificationCode = document.getElementById("code").value
 		this.setState({ verificationCode: verificationCode })
@@ -37,7 +42,9 @@ export default class EmailVerificationForm extends React.Component {
 
 		return (
 			<div>
-				<ModalHeader toggle={toggle}>Verify your email address</ModalHeader>
+				<ModalHeader onKeyDown={this.handleKeyDown.bind(this)} toggle={toggle}>
+					Verify your email address
+				</ModalHeader>
 
 				<ModalBody>
 					<p>
