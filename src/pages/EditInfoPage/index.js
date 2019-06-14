@@ -133,7 +133,7 @@ class EditInfoPage extends React.Component {
 							</h1>
 						</Col>
 					</Row>
-					{this.props.location.search.indexOf("blocked") > -1 && (
+					{this.props.location.search.indexOf("block") > -1 && (
 						<Alert color="danger">
 							{" "}
 							You must fill in your personal information before using
