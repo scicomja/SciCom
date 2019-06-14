@@ -52,30 +52,6 @@ class SearchResultPage extends React.Component {
 	}
 	// this is needed as the page is not gonna reload when new search param comes
 
-	getSearchCriteriaCard() {
-		const { searchAgain } = this.props
-		// get the suitable params for this search
-		return null
-		// return (
-		// 	<Card inverse color="secondary" style={style.filterCard}>
-		// 		<CardTitle>
-		// 			<Icon name="filter" /> Filters
-		// 		</CardTitle>
-		// 		<CardText>
-		// 			<div style={style.filterContainer}>
-		// 				{Object.keys(searchParams)
-		// 					.filter(p => !!searchParams[p])
-		// 					.map(p => filterItem(p, searchParams[p]))}
-		// 			</div>
-		// 		</CardText>
-		// 		<Col md="4">
-		// 			<Button onClick={() => searchAgain(searchParams)} color="primary">
-		// 				<Icon name="search" /> Search Again
-		// 			</Button>
-		// 		</Col>
-		// 	</Card>
-		// )
-	}
 	async goToPage(n) {
 		const { token, form } = this.props
 		const { page } = this.state
@@ -153,7 +129,6 @@ class SearchResultPage extends React.Component {
 		return (
 			<div style={style.container}>
 				<h3 style={style.header}>Suchergebnisse für "{searchTerm}"</h3>
-				{this.getSearchCriteriaCard()}
 				<div style={style.innerContainer}>
 					<ResultsList title="Users" icon="user">
 						{userResults.map(user => (
@@ -167,6 +142,7 @@ class SearchResultPage extends React.Component {
 					<ResultsList title="Projects" icon="gear">
 						{projectResults.map(project => (
 							<ProjectResultCard
+								highlight={searchTerm}
 								project={project}
 								onClick={() => history.push(`/project/${project._id}`)}
 							/>

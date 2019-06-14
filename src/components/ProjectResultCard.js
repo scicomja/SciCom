@@ -1,5 +1,6 @@
 import React from "react"
 import { formatDate } from "../utils"
+import Highlighter from "react-highlight-words"
 
 export default class ProjectResultCard extends React.Component {
 	constructor(props) {
@@ -22,7 +23,7 @@ export default class ProjectResultCard extends React.Component {
 	}
 
 	render() {
-		const { project, onClick } = this.props
+		const { project, onClick, highlight } = this.props
 		// alert(`project ${JSON.stringify(project)}`)
 		return (
 			<div
@@ -30,7 +31,18 @@ export default class ProjectResultCard extends React.Component {
 				onClick={onClick}
 				onMouseLeave={() => this.setState({ isHovering: false })}
 				onMouseOver={() => this.setState({ isHovering: true })}>
-				<h5 style={style.name}>{project.title}</h5>
+				{highlight ? (
+					<Highlighter
+						style={style.name}
+						searchWords={[highlight]}
+						autoEscape={true}
+						highlightStyle={style.highlight}
+						textToHighlight={project.title}
+					/>
+				) : (
+					<h5 style={style.name}>{project.title}</h5>
+				)}
+
 				<p>
 					{`${project.nature}, ${formatDate(project.from)} - ${formatDate(
 						project.to
@@ -45,7 +57,10 @@ const style = {
 	name: {
 		fontWeight: "bold"
 	},
-
+	highlight: {
+		backgroundColor: "rgb(4,52,88)",
+		color: "white"
+	},
 	lowerRow: {},
 	container: {
 		backgroundColor: "rgb(187,187,189)",
