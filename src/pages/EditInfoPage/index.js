@@ -275,7 +275,7 @@ class EditInfoPage extends React.Component {
 												name="state"
 												component={ReactstrapSelect}
 												inputprops={{
-													label: "State",
+													label: "State(*)",
 													options: germanStates
 												}}
 											/>
