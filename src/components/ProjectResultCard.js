@@ -58,7 +58,7 @@ const style = {
 		fontWeight: "bold"
 	},
 	highlight: {
-		backgroundColor: "rgb(4,52,88)",
+		backgroundColor: "rgba(4,52,88, 0.8)",
 		color: "white"
 	},
 	lowerRow: {},

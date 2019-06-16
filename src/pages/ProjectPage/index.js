@@ -193,7 +193,7 @@ class ProjectPage extends React.Component {
 		const { hasAppliedThis, isOwner } = this.state
 		if (!isPolitician) {
 			return (
-				<div style={style.secondaryInfo}>
+				<div style={style.actionButtonGroup}>
 					<Button
 						style={style.actionButton}
 						block
@@ -286,26 +286,32 @@ class ProjectPage extends React.Component {
 		)
 	}
 	infoCard({ _id, salary, nature, topic, tags, file }) {
-		const color = "primary"
-		const listItemClassName = `text-white bg-${color} justify-content-between`
+		const color = "rgb(4,52,88)"
+		const listItemClassName = `text-white justify-content-between`
 		return (
-			<Card body inverse color={color}>
+			<Card style={style.infoCard} body inverse color={color}>
 				<CardTitle>
 					<Icon name="info" /> <b>About</b>
 				</CardTitle>
 				<CardText>
-					<ListGroup flush>
-						<ListGroupItem className={listItemClassName}>
+					<ListGroup flush style={{ backgroundColor: color }}>
+						<ListGroupItem
+							className={listItemClassName}
+							style={{ backgroundColor: color }}>
 							<Icon name="money" /> Salary
 							<h5 className="text-success">
 								<b>{salary}€</b>
 							</h5>
 						</ListGroupItem>
-						<ListGroupItem className={listItemClassName}>
+						<ListGroupItem
+							className={listItemClassName}
+							style={{ backgroundColor: color }}>
 							<Icon name="question" /> Type
 							<h5>{_.startCase(nature)}</h5>
 						</ListGroupItem>
-						<ListGroupItem className={listItemClassName}>
+						<ListGroupItem
+							className={listItemClassName}
+							style={{ backgroundColor: color }}>
 							<Icon name="tag" /> Topics
 							<div style={style.secondaryInfo}>
 								<h5>
@@ -432,7 +438,7 @@ class ProjectPage extends React.Component {
 					onClose={this.closeApplyApplicationPopup.bind(this)}
 				/>
 				<Row>
-					<Col md="8">
+					<Col>
 						<Row>
 							<Col>
 								<h1>
@@ -449,11 +455,11 @@ class ProjectPage extends React.Component {
 						<Row>
 							<Col>{this.getActionButtons()}</Col>
 						</Row>
+						<Row>{this.infoCard(project)}</Row>
 						<Row>
 							<Col>{this.getCreatorCard()}</Col>
 						</Row>
 					</Col>
-					<Col md="4">{this.infoCard(project)}</Col>
 				</Row>
 				<Row>
 					<Col>{this.descriptionCard(description)}</Col>
@@ -470,7 +476,13 @@ class ProjectPage extends React.Component {
 
 const style = {
 	container: {
-		marginTop: 16
+		marginTop: 16,
+		marginBottom: 16
+	},
+	actionButtonGroup: {
+		display: "flex",
+		flexDirection: "row",
+		justifyContent: "space-between"
 	},
 	secondaryInfo: {
 		display: "flex",
@@ -480,8 +492,15 @@ const style = {
 	},
 	actionButton: {
 		margin: 8,
+		flex: 1
 		// width: '40%',
-		minWidth: "40%"
+		// minWidth: "40%"
+	},
+	infoCard: {
+		marginLeft: 16,
+		marginRight: 16,
+		backgroundColor: "rgb(4,52,88)",
+		color: "white"
 	},
 	descriptionCard: {
 		marginTop: 8
