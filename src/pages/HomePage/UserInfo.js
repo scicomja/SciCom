@@ -37,18 +37,10 @@ export default class UserInfo extends React.Component {
 		)
 	}
 	getUserInfoFieldNames() {
-		// const { isPolitician } = this.props.user
-		// let fields = 'email,phone,state,city,PLZ'
-		//
-		// if(isPolitician) {
-		//   fields += ",workingPhone,party,position,duty"
-		// } else {
-		//   fields += ",semester"
-		// }
 		return this.fields.split(",")
 	}
 	render() {
-		const { user } = this.props
+		const { user, isUserHimself } = this.props
 		// alert(JSON.stringify(user))
 		return (
 			<div style={style.container}>
@@ -57,15 +49,18 @@ export default class UserInfo extends React.Component {
 					<Col style={style.nameColumn}>
 						<Row>
 							<div style={style.name}>{getName(user)}</div>
+							<div style={style.title}>{user.title}</div>
 						</Row>
 						<Row>
-							<a style={style.editInfoLink} href="/editInfo">
-								<Icon name="edit" />
-								Profil bearbeiten
-							</a>
+							{isUserHimself && (
+								<a style={style.editInfoLink} href="/editInfo">
+									<Icon name="edit" />
+									Profil bearbeiten
+								</a>
+							)}
 						</Row>
 					</Col>
-					{user.isPolitician && (
+					{user.isPolitician && isUserHimself && (
 						<Col style={style.createProjectContainer}>
 							<Button
 								block
@@ -129,7 +124,12 @@ const style = {
 		fontWeight: "bold",
 		textTransform: "capitalize"
 	},
-
+	title: {
+		display: "flex",
+		marginLeft: 16,
+		justifyContent: "center",
+		fontSize: 20
+	},
 	infoDetail: {
 		textOverflow: "ellipsis"
 	}

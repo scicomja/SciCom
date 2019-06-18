@@ -38,6 +38,7 @@ class EditInfoPage extends React.Component {
 			initialValues: {},
 			// store the base64 of the uploaded (but not saved) avatar here
 			temporaryAvatar: null,
+			errorMessage: null,
 			showDeletePopup: false,
 			showChangePasswordPopup: false
 		}
@@ -83,6 +84,12 @@ class EditInfoPage extends React.Component {
 	async updateInfo(values) {
 		try {
 			const result = await updateUserInfo(values, this.props.token)
+			if (result.error) {
+				this.setState({
+					errorMessage: result.error
+				})
+				return
+			}
 			// update the sotre
 			this.props.updateInfo(result)
 			this.props.history.push("/")
@@ -101,7 +108,6 @@ class EditInfoPage extends React.Component {
 		})
 	}
 	render() {
-		console.dir(this.props.location)
 		// bounce back to login page if such user doesn't exist
 		if (!this.props.user) {
 			window.location.reload("/")
@@ -110,7 +116,9 @@ class EditInfoPage extends React.Component {
 			initialValues,
 			temporaryAvatar,
 			showChangePasswordPopup,
-			showDeletePopup
+			showDeletePopup,
+
+			errorMessage
 		} = this.state
 		if (!initialValues) return null
 		const { isPolitician, email, username, avatar } = this.props.user
@@ -125,6 +133,11 @@ class EditInfoPage extends React.Component {
 					visible={showChangePasswordPopup}
 					onClose={this.onCancelEditPassword.bind(this)}
 				/>
+				{errorMessage && (
+					<Alert color="danger">
+						Cannot update profile. Please check the format of your CV
+					</Alert>
+				)}
 				<Container>
 					<Row>
 						<Col>

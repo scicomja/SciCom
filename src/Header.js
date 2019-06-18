@@ -47,6 +47,9 @@ class Header extends Component {
 			const { username } = this.props.user
 			return (
 				<Nav className="ml-auto" navbar>
+					<NavItem>
+						<NavLink href="/about">Über uns</NavLink>
+					</NavItem>
 					{this.getSearchNavItems()}
 					<NavItem>
 						<NavLink href="/user"> {username} </NavLink>

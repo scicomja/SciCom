@@ -51,14 +51,25 @@ class FrontPage extends React.Component {
 			return <CenterNotice title="No bookmarks found" />
 		}
 		return bookmarks.map(p => (
-			<ProjectCard project={p} key={p._id} isOwner={false} />
+			<ProjectCard
+				project={p}
+				key={p._id}
+				onClick={() => this.props.history.push(`/project/${p._id}`)}
+				isOwner={false}
+			/>
 		))
 	}
 	applicationTab(applications) {
 		if (!applications || !applications.length) {
 			return <CenterNotice title="No applications found" />
 		}
-		return applications.map(app => <ApplicationCard application={app} />)
+		return applications.map(app => (
+			<ProjectCard
+				onClick={() => this.props.history.push(`/project/${app.project._id}`)}
+				project={app.project}
+				key={app.project._id}
+			/>
+		))
 	}
 
 	onGoingProjectsTab(projects) {
