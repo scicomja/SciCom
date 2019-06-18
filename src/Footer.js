@@ -1,5 +1,6 @@
 import React from "react"
 import { withRouter } from "react-router"
+import footer from "./footer.png"
 
 const style = {
 	block: {
@@ -12,6 +13,15 @@ const style = {
 		justifyContent: "center",
 		flexDirection: "column",
 		color: "white"
+	},
+	footerContainer: {
+		margin: 16,
+		display: "flex",
+		flexDirection: "row",
+		justifyContent: "flex-end"
+	},
+	logo: {
+		height: 96
 	}
 }
 export default class Footer extends React.Component {
@@ -27,7 +37,9 @@ export default class Footer extends React.Component {
 						<a href="#">Nutzungsbedingungen</a>
 					</div>
 				</div>
-				<div style={style.block} />
+				<div style={{ ...style.block, ...style.footerContainer }}>
+					<img src={footer} style={style.logo} />
+				</div>
 			</div>
 		)
 	}

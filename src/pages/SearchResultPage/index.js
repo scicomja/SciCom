@@ -63,37 +63,6 @@ class SearchResultPage extends React.Component {
 		}
 	}
 
-	getPaginationComponent() {
-		return null
-		// const { results, total, page } = this.state
-		// if (!results || !results.length || total <= 1) return null
-		// console.log("get pagination", results, total, page)
-		// let listOfN = []
-		// for (let i = 1; i <= total; i++) listOfN.push(i)
-		// return (
-		// 	<Pagination>
-		// 		<PaginationItem previous disabled={page == 1}>
-		// 			<PaginationLink
-		// 				onClick={() => this.goToPage(page - 1)}
-		// 				previous
-		// 				href="#"
-		// 			/>
-		// 		</PaginationItem>
-		// 		{listOfN.map(n => (
-		// 			<PaginationItem onClick={() => this.goToPage(n)} active={n == page}>
-		// 				<PaginationLink href="#">{n}</PaginationLink>
-		// 			</PaginationItem>
-		// 		))}
-		// 		<PaginationItem disabled={page == total}>
-		// 			<PaginationLink
-		// 				next
-		// 				href="#"
-		// 				onClick={() => this.goToPage(page + 1)}
-		// 			/>
-		// 		</PaginationItem>
-		// 	</Pagination>
-		// )
-	}
 	getSearchResultContainer() {
 		const { results, searchMode } = this.state
 		const { history } = this.props

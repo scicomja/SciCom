@@ -24,7 +24,6 @@ export default class ProjectResultCard extends React.Component {
 
 	render() {
 		const { project, onClick, highlight } = this.props
-		// alert(`project ${JSON.stringify(project)}`)
 		return (
 			<div
 				style={{ ...style.container, ...this.extraStyle() }}
