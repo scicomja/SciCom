@@ -1,5 +1,17 @@
 import React from "react"
 export default class AboutPage extends React.Component {
+	listBlock(title, list, useH4 = false) {
+		return (
+			<div>
+				{useH4 ? <h4>{title}</h4> : <h5>{title}</h5>}
+				<ul>
+					{list.map(item => (
+						<li key={item}>{item}</li>
+					))}
+				</ul>
+			</div>
+		)
+	}
 	render() {
 		return (
 			<div className="center" style={style.container}>
@@ -30,42 +42,36 @@ export default class AboutPage extends React.Component {
 					student-assistant jobs. Search functions are integrated to enable both
 					parties to develop a personal contact in case of mutual interest.
 				</p>
-				<h4>The Team</h4>
-				<ul>
-					<li>Barbara Gleißl</li>
-					<li>Sebastian Leicher</li>
-					<li>Himanshu Panandikar</li>
-					<li>Sabrina Schwarzmeier</li>
-					<li>Sebastian Siegel</li>
-					<li>Patrick Strobl</li>
-					<li>Maryam Tatari</li>
-					<li>Victoria Treßel</li>
-				</ul>
+				{this.listBlock(
+					"The Team",
+					[
+						"Barbara Gleißl",
+						"Sebastian Leicher",
+						"Himanshu Panandikar",
+						"Sabrina Schwarzmeier",
+						"Sebastian Siegel",
+						"Patrick Strobl",
+						"Maryam Tatari",
+						"Victoria Treßel"
+					],
+					true
+				)}
 				<h4>With Support From</h4>
-				<h5>Tutors</h5>
-				<ul>
-					<li>Alexander Biederer</li>
-					<li>Matthias Lehner</li>
-					<li>Xenia Priebe</li>
-				</ul>
-
-				<h5>Mentors</h5>
-				<ul>
-					<li>Alexander Biederer</li>
-					<li>Matthias Lehner</li>
-					<li>Xenia Priebe</li>
-				</ul>
-
-				<h5>Coder</h5>
-				<ul>
-					<li>Travis Tang</li>
-				</ul>
-
-				<h5>TUM: Junge Akademie Office</h5>
-				<ul>
-					<li>Peter Finger</li>
-					<li>Maria Hannecker</li>
-				</ul>
+				{this.listBlock("Tutors", [
+					"Alexander Biederer",
+					"Matthias Lehner",
+					"Xenia Priebe"
+				])}
+				{this.listBlock("Mentors", [
+					"Alexander Biederer",
+					"Matthias Lehner",
+					"Xenia Priebe"
+				])}
+				{this.listBlock("Code", ["Travis Tang"])}
+				{this.listBlock("TUM: Junge Akademie Office", [
+					"Peter Finger",
+					"Maria Hannecker"
+				])}
 			</div>
 		)
 	}
