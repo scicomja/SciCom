@@ -59,15 +59,15 @@ export default class AboutPage extends React.Component {
 				<h4>With Support From</h4>
 				{this.listBlock("Tutors", [
 					"Alexander Biederer",
-					"Matthias Lehner",
+					"Dr. Matthias Lehner",
 					"Xenia Priebe"
 				])}
 				{this.listBlock("Mentors", [
-					"Alexander Biederer",
-					"Matthias Lehner",
-					"Xenia Priebe"
+					"Dr. Florian Röhrbein",
+					"Prof. Dr. -Ing. Martin Buss",
+					"Prof. Dr. Klaus Mainzer"
 				])}
-				{this.listBlock("Code", ["Travis Tang"])}
+				{this.listBlock("Website Developer", ["Travis Tang"])}
 				{this.listBlock("TUM: Junge Akademie Office", [
 					"Peter Finger",
 					"Maria Hannecker"

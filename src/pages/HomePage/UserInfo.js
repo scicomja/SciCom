@@ -44,7 +44,7 @@ export default class UserInfo extends React.Component {
 		const { user, isUserHimself } = this.props
 		// alert(JSON.stringify(user))
 		return (
-			<div style={style.container}>
+			<div className="UserInfo" style={style.container}>
 				<Row>
 					<Avatar size={96} user={user} />
 					<Col style={style.nameColumn}>
@@ -142,7 +142,7 @@ const style = {
 		minWidth: "50%",
 		flexGrow: 1,
 		padding: 16,
-		fontSize: 26,
+		fontSize: "calc(14px + 1.5vw)",
 		flexDirection: "row",
 		justifyContent: "space-between"
 	},
