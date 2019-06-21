@@ -14,6 +14,7 @@ import AboutPage from "./pages/AboutPage"
 import HomePage from "./pages/HomePage"
 import EditInfoPage from "./pages/EditInfoPage"
 import ImpressumPage from "./pages/ImpressumPage"
+import NewsPage from "./pages/NewsPage"
 
 import SearchModal from "./SearchModal"
 import { Provider, connect } from "react-redux"
@@ -71,6 +72,7 @@ class App extends Component {
 								path="/search"
 								component={EditInfoGuard(SearchResultPage)}
 							/>
+							<Route path="/latest" component={EditInfoGuard(NewsPage)} />
 							<Route path="/" component={LoginPage} />
 						</Switch>
 					</div>

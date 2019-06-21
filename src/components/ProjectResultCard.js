@@ -1,6 +1,8 @@
 import React from "react"
 import { formatDate } from "../utils"
 import Highlighter from "react-highlight-words"
+import Icon from "../components/icon"
+import * as moment from "moment"
 
 export default class ProjectResultCard extends React.Component {
 	constructor(props) {
@@ -22,8 +24,28 @@ export default class ProjectResultCard extends React.Component {
 		}
 	}
 
+	timeDifferences(time) {
+		const targetTime = moment(time)
+		const now = moment()
+		const diff = moment.duration(now.diff(targetTime))
+		const formatNumber = num => Math.round(num)
+		if (diff.asMonths() > 1) {
+			return `vor ${Math.round(diff.asMonths())} Monaten`
+		}
+		if (diff.asDays() > 1) {
+			return `vor ${Math.round(diff.asDays())} Tage`
+		}
+		if (diff.asHours() > 1) {
+			return `vor ${Math.round(diff.asHours())} Stunden`
+		}
+		if (diff.asMinutes() > 1) {
+			return `vor ${Math.round(diff.asMinutes())} Minuten`
+		}
+		return "Recently"
+	}
+
 	render() {
-		const { project, onClick, highlight } = this.props
+		const { project, onClick, highlight, isShowingLatest } = this.props
 		return (
 			<div
 				style={{ ...style.container, ...this.extraStyle() }}
@@ -41,12 +63,17 @@ export default class ProjectResultCard extends React.Component {
 				) : (
 					<h5 style={style.name}>{project.title}</h5>
 				)}
-
-				<p>
-					{`${project.nature}, ${formatDate(project.from)} - ${formatDate(
-						project.to
-					)}`}
-				</p>
+				{isShowingLatest ? (
+					<p>
+						<Icon name="refresh" /> {this.timeDifferences(project.createdAt)}
+					</p>
+				) : (
+					<p>
+						{`${project.nature}, ${formatDate(project.from)} - ${formatDate(
+							project.to
+						)}`}
+					</p>
+				)}
 			</div>
 		)
 	}

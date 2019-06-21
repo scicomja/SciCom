@@ -21,7 +21,8 @@ const style = {
 		justifyContent: "flex-end"
 	},
 	logo: {
-		width: 128
+		width: "25vh",
+		height: "10vh"
 	}
 }
 export default class Footer extends React.Component {

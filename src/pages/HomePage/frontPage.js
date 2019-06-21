@@ -21,7 +21,6 @@ import UserChip from "../../components/userChip"
 import Icon from "../../components/icon"
 import ApplicationCard from "./applicationCard"
 import classnames from "classnames"
-import { getProject, getApplications } from "../../backend/user"
 import Section from "./Section"
 
 class FrontPage extends React.Component {
@@ -48,7 +47,8 @@ class FrontPage extends React.Component {
 	// studnets' components
 	bookmarkTab(bookmarks) {
 		if (!bookmarks || !bookmarks.length) {
-			return <CenterNotice title="No bookmarks found" />
+			// return <CenterNotice title="No bookmarks found" />
+			return null
 		}
 		return bookmarks.map(p => (
 			<ProjectCard
@@ -61,7 +61,8 @@ class FrontPage extends React.Component {
 	}
 	applicationTab(applications) {
 		if (!applications || !applications.length) {
-			return <CenterNotice title="No applications found" />
+			// return <CenterNotice title="No applications found" />
+			return null
 		}
 		return applications.map(app => (
 			<ProjectCard

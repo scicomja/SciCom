@@ -136,8 +136,11 @@ const style = {
 	},
 	editInfoLink: {},
 	infoDetailContainer: {
-		minWidth: "50%",
+		// minWidth: "50vw",
+		// maxWidth: "100vw",
 		display: "flex",
+		minWidth: "50%",
+		flexGrow: 1,
 		padding: 16,
 		fontSize: 26,
 		flexDirection: "row",

@@ -78,7 +78,7 @@ class Header extends Component {
 	render() {
 		return (
 			<Navbar color="dark" style={style.header} dark expand="md">
-				<NavbarBrand href="/">
+				<NavbarBrand href="/latest">
 					<img src={logo} alt="SciCom" style={style.logo} />
 				</NavbarBrand>
 				<NavbarToggler
