@@ -156,12 +156,12 @@ class ProjectPage extends React.Component {
 				this.state.project,
 				this.props.token
 			)
-			let message = "Bookmark removed"
-			if (!result.length) {
-				message = "Bookmark added"
-			}
+			// let message = "Bookmark removed"
+			// if (!result.length) {
+			// 	message = "Bookmark added"
+			// }
 			// we bookmarked it!
-			toast.success(message, {
+			toast.success("changes saved", {
 				position: toast.POSITION.BOTTOM_RIGHT
 				// onClose: window.location.reload
 			})

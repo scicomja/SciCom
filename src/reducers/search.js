@@ -1,6 +1,5 @@
 import * as SearchActions from "../actions/search"
 import { initialValues } from "../backend/search"
-import { SearchMode } from "../constants"
 const initialState = {
 	isModalOpen: false,
 	searchForm: initialValues

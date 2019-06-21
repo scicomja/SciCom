@@ -16,7 +16,6 @@ import {
 import CenterNotice from "../../components/centerNotice"
 import ProjectCard from "../../components/projectCard"
 import UserChip from "../../components/userChip"
-import { SearchMode } from "../../constants"
 import { search } from "../../backend/search"
 import Icon from "../../components/icon"
 import Avatar from "../../components/Avatar"
@@ -60,32 +59,6 @@ class SearchResultPage extends React.Component {
 			this.setState({ results, page: n })
 		} catch (err) {
 			toast.error("Error occurred while performing search.")
-		}
-	}
-
-	getSearchResultContainer() {
-		const { results, searchMode } = this.state
-		const { history } = this.props
-
-		if (searchMode == SearchMode.PROJECT) {
-			return results.map(proj => <ProjectCard project={proj} />)
-		} else {
-			// users' search result
-			return results.map(user => (
-				<Card
-					inverse
-					body
-					style={style.userCard}
-					onClick={() => history.push(`/user/${user.username}`)}
-					color="secondary">
-					<CardTitle>
-						<Icon name="user" /> {user.username}
-					</CardTitle>
-					<CardText>
-						<UserChip user={user} />
-					</CardText>
-				</Card>
-			))
 		}
 	}
 

@@ -21,7 +21,7 @@ import {
 import logo from "./logo.png"
 import * as ModalActions from "./actions/modal"
 import * as SearchActions from "./actions/search"
-import { ModalMode, SearchMode, colors } from "./constants"
+import { ModalMode, colors } from "./constants"
 import { LOGOUT } from "./actions/auth"
 import Icon from "./components/icon"
 
@@ -47,9 +47,6 @@ class Header extends Component {
 			const { username } = this.props.user
 			return (
 				<Nav className="ml-auto" navbar>
-					<NavItem>
-						<NavLink href="/about">Über uns</NavLink>
-					</NavItem>
 					{this.getSearchNavItems()}
 					<NavItem>
 						<NavLink href="/user"> {username} </NavLink>
@@ -59,6 +56,10 @@ class Header extends Component {
 							{" "}
 							Logout{" "}
 						</NavLink>
+					</NavItem>
+
+					<NavItem>
+						<NavLink href="/about">Über uns</NavLink>
 					</NavItem>
 				</Nav>
 			)
@@ -114,18 +115,7 @@ const mapDispatchToProps = dispatch => ({
 		}),
 	searchProjects: () =>
 		dispatch({
-			type: SearchActions.OPEN_SEARCH_MODAL,
-			mode: SearchMode.PROJECT
-		}),
-	searchStudents: () =>
-		dispatch({
-			type: SearchActions.OPEN_SEARCH_MODAL,
-			mode: SearchMode.STUDENT
-		}),
-	searchPoliticians: () =>
-		dispatch({
-			type: SearchActions.OPEN_SEARCH_MODAL,
-			mode: SearchMode.POLITICIAN
+			type: SearchActions.OPEN_SEARCH_MODAL
 		}),
 	createProject: () =>
 		dispatch({

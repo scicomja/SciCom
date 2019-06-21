@@ -4,6 +4,7 @@ import PropTypes from "prop-types"
 import Avatar from "../../components/Avatar"
 import Icon from "../../components/icon"
 import { getName } from "../../utils/user"
+import { cvURL } from "../../backend/user"
 
 export default class UserInfo extends React.Component {
 	static propTypes = {
@@ -62,12 +63,26 @@ export default class UserInfo extends React.Component {
 					</Col>
 					{user.isPolitician && isUserHimself && (
 						<Col style={style.createProjectContainer}>
-							<Button
-								block
-								color="primary"
-								onClick={this.props.onCreateProject}>
-								Create Projects
-							</Button>
+							<Row style={style.createProjectButtonContainer}>
+								<Col>
+									<Button
+										block
+										color="primary"
+										onClick={this.props.onCreateProject}>
+										Create Projects
+									</Button>
+								</Col>
+							</Row>
+							<Row style={style.createProjectButtonContainer}>
+								<Col>
+									<Button
+										block
+										color="primary"
+										onClick={this.props.onCreateQuickQuestion}>
+										Create quick questions
+									</Button>
+								</Col>
+							</Row>
 						</Col>
 					)}
 				</Row>
@@ -79,6 +94,11 @@ export default class UserInfo extends React.Component {
 								value: user[info]
 							})
 						)}
+						{user.CV &&
+							this.infoDetailRow({
+								name: "CV",
+								value: <a href={cvURL(user)}> Download </a>
+							})}
 					</div>
 				</Row>
 			</div>
@@ -105,11 +125,8 @@ const style = {
 	name: {
 		fontSize: 48
 	},
-	createProjectContainer: {
-		display: "flex",
-		flexDirection: "row",
-		justifyContent: "flex-end",
-		alignItems: "center"
+	createProjectButtonContainer: {
+		margin: 16
 	},
 	editInfoLink: {},
 	infoDetailContainer: {

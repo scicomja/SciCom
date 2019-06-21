@@ -41,10 +41,10 @@ export const projectType = [
 ]
 
 export const projectTypeDict = {
-	"internship": "Internship",
-	"thesis": "Thesis",
-	"parttime" : "Part time",
-	"voluntary" : "Voluntary work",
+	internship: "Internship",
+	thesis: "Thesis",
+	parttime: "Part time",
+	voluntary: "Voluntary work",
 	"quick-question": "Quick question"
 }
 
@@ -56,17 +56,10 @@ export const Mode = {
 	LOGIN: "LOGIN"
 }
 
-export const SearchMode = {
-	STUDENT: "STUDENT",
-	POLITICIAN: "POLITICIAN",
-	PROJECT: "PROJECT"
-}
 export const ModalMode = {
-	SEARCH_PROJECT: "SEARCH_PROJECT",
-	SEARCH_USER: "SEARCH_USER",
-
 	// when one creates / modifies / view project
 	PROJECT_DETAILS: "PROJECT_DETAILS",
+	QUICK_QUESTIONS: "QUICK_QUESTIONS",
 	// only when user updates their profile
 	USER_DETAILS: "USER_DETAILS"
 }
@@ -88,61 +81,6 @@ export const Icon = {
 
 // alias
 export const ProjectNature = projectType
-
-export const SearchInitialValue = {
-	[SearchMode.STUDENT]: {
-		name: "",
-		city: "",
-		state: "",
-		title: "",
-		major: "",
-		university: "",
-		tags: ""
-	},
-	[SearchMode.PROJECT]: {
-		title: "",
-		city: "",
-		state: "",
-		title: "",
-		major: "",
-		salary: 0,
-		from: null
-	},
-	[SearchMode.POLITICIAN]: {
-		title: "",
-		city: "",
-		state: "",
-		title: "",
-		position: ""
-	}
-}
-export const SearchValidationSchema = {
-	[SearchMode.STUDENT]: Yup.object().shape({
-		name: Yup.string().min(3, "Search name is too short"),
-		city: Yup.string().min(3, "Search term is too short"),
-		state: Yup.string().oneOf(germanStates),
-		title: Yup.string().min(3, "Search term is too short"),
-		major: Yup.string().min(3, "Search term is too short"),
-		university: Yup.string().min(3, "Search term is too short"),
-		tags: Yup.string()
-	}),
-	[SearchMode.PROJECT]: Yup.object().shape({
-		title: Yup.string().min(3, "Search name is too short"),
-		status: Yup.string().oneOf(projectStatus),
-		nature: Yup.string().oneOf(projectType),
-		topic: Yup.string().min(3, "Search name is too short"),
-		city: Yup.string().min(3, "Search term is too short"),
-		state: Yup.string().oneOf(germanStates),
-		salary: Yup.number().min(0, "Salary must be greater than 0")
-	}),
-	[SearchMode.POLITICIAN]: Yup.object().shape({
-		name: Yup.string().min(3, "Search name is too short"),
-		city: Yup.string().min(3, "Search term is too short"),
-		state: Yup.string().oneOf(germanStates),
-		title: Yup.string().min(3, "Search term is too short"),
-		position: Yup.string().min(3, "Search term is too short")
-	})
-}
 
 export const ProjectSearchPayloadValidator = Yup.object().shape({
 	name: Yup.string()

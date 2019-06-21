@@ -7,7 +7,7 @@ import { Button, Container, Row, Col } from "reactstrap"
 import Section from "./Section"
 import FrontPage from "./frontPage"
 import { getProject, getApplications, getUser } from "../../backend/user"
-import { CREATE_PROJECT } from "../../actions/modal"
+import { CREATE_PROJECT, CREATE_QUICK_QUESTION } from "../../actions/modal"
 import Icon from "../../components/icon"
 
 class HomePage extends React.Component {
@@ -64,6 +64,7 @@ class HomePage extends React.Component {
 					<UserInfo
 						user={user}
 						onCreateProject={this.props.createProject}
+						onCreateQuickQuestion={this.props.createQuickQuestion}
 						isUserHimself={isUserHimself}
 					/>
 					<FrontPage user={user} isUserHimself={isUserHimself} />
@@ -89,6 +90,10 @@ const mapDispatchToProps = dispatch => ({
 	createProject: () =>
 		dispatch({
 			type: CREATE_PROJECT
+		}),
+	createQuickQuestion: () =>
+		dispatch({
+			type: CREATE_QUICK_QUESTION
 		})
 })
 export default withRouter(

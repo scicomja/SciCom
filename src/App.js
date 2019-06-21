@@ -13,6 +13,8 @@ import LoginPage from "./pages/LoginPage"
 import AboutPage from "./pages/AboutPage"
 import HomePage from "./pages/HomePage"
 import EditInfoPage from "./pages/EditInfoPage"
+import ImpressumPage from "./pages/ImpressumPage"
+
 import SearchModal from "./SearchModal"
 import { Provider, connect } from "react-redux"
 import configureStore from "./store"
@@ -56,6 +58,7 @@ class App extends Component {
 							<Route exact path="/user" component={EditInfoGuard(HomePage)} />
 							<Route path="/editInfo" component={EditInfoPage} />
 							<Route path="/about" component={AboutPage} />
+							<Route path="/impressum" component={ImpressumPage} />
 							<Route
 								path="/user/:user_id"
 								component={EditInfoGuard(HomePage)}

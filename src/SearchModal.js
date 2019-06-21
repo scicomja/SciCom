@@ -15,14 +15,14 @@ import {
 	NavLink,
 	Label,
 	Input,
-	Dropdown, DropdownToggle, DropdownMenu, DropdownItem
+	Dropdown,
+	DropdownToggle,
+	DropdownMenu,
+	DropdownItem
 } from "reactstrap"
 import DatePicker from "react-datepicker"
 import {
 	ModalMode,
-	SearchMode,
-	SearchValidationSchema,
-	SearchInitialValue,
 	germanStates,
 	projectStatus,
 	projectTypeDict
@@ -33,7 +33,11 @@ import { ReactstrapInput, ReactstrapSelect } from "reactstrap-formik"
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import classnames from "classnames"
 import { withRouter } from "react-router-dom"
-import { initialValues, validationSchema, salaryOptions } from "./backend/search"
+import {
+	initialValues,
+	validationSchema,
+	salaryOptions
+} from "./backend/search"
 import Icon from "./components/icon"
 import * as Yup from "yup"
 import * as SearchActions from "./actions/search"
@@ -48,8 +52,12 @@ class SearchModal extends React.Component {
 			isProjectNatureDropdownOpen: false,
 			isSalaryDropdownOpen: false
 		}
-		this.toggleProjectNatureDropDown = () => this.setState({isProjectNatureDropdownOpen: !this.state.isProjectNatureDropdownOpen})
-		this.toggleSalaryDropDown = () => this.setState({isSalaryDropdownOpen: !this.state.isSalaryDropdownOpen})
+		this.toggleProjectNatureDropDown = () =>
+			this.setState({
+				isProjectNatureDropdownOpen: !this.state.isProjectNatureDropdownOpen
+			})
+		this.toggleSalaryDropDown = () =>
+			this.setState({ isSalaryDropdownOpen: !this.state.isSalaryDropdownOpen })
 	}
 	search(values) {
 		// TODO: submit search here...
@@ -92,49 +100,52 @@ class SearchModal extends React.Component {
 								<FormGroup>
 									<Label for="type">Project nature</Label>
 
-									<Dropdown isOpen={this.state.isProjectNatureDropdownOpen} toggle={this.toggleProjectNatureDropDown}>
+									<Dropdown
+										isOpen={this.state.isProjectNatureDropdownOpen}
+										toggle={this.toggleProjectNatureDropDown}>
 										<DropdownToggle caret>
-											{values.type?projectTypeDict[values.type]:"-- Choose an option --"}
+											{values.type
+												? projectTypeDict[values.type]
+												: "-- Choose an option --"}
 										</DropdownToggle>
 										<DropdownMenu>
-											<DropdownItem onClick={() => setFieldValue('type', null)}>
+											<DropdownItem onClick={() => setFieldValue("type", null)}>
 												-- Choose an option --
 											</DropdownItem>
-											{
-												Object.keys(projectTypeDict).map(value => (
-													<DropdownItem onClick={() => setFieldValue('type', value)}>
-														{projectTypeDict[value]}
-													</DropdownItem>
-												))
-											}
+											{Object.keys(projectTypeDict).map(value => (
+												<DropdownItem
+													onClick={() => setFieldValue("type", value)}>
+													{projectTypeDict[value]}
+												</DropdownItem>
+											))}
 										</DropdownMenu>
-
 									</Dropdown>
-
 								</FormGroup>
 
 								<FormGroup>
 									<Label for="salary">Salary</Label>
 
-									<Dropdown isOpen={this.state.isSalaryDropdownOpen} toggle={this.toggleSalaryDropDown}>
+									<Dropdown
+										isOpen={this.state.isSalaryDropdownOpen}
+										toggle={this.toggleSalaryDropDown}>
 										<DropdownToggle caret>
-											{values.salary?salaryOptions[values.salary]:"-- Choose an option --"}
+											{values.salary
+												? salaryOptions[values.salary]
+												: "-- Choose an option --"}
 										</DropdownToggle>
 										<DropdownMenu>
-											<DropdownItem onClick={() => setFieldValue('salary', null)}>
+											<DropdownItem
+												onClick={() => setFieldValue("salary", null)}>
 												-- Choose an option --
 											</DropdownItem>
-											{
-												Object.keys(salaryOptions).map(value => (
-													<DropdownItem onClick={() => setFieldValue('salary', value)}>
-														{salaryOptions[value]}
-													</DropdownItem>
-												))
-											}
+											{Object.keys(salaryOptions).map(value => (
+												<DropdownItem
+													onClick={() => setFieldValue("salary", value)}>
+													{salaryOptions[value]}
+												</DropdownItem>
+											))}
 										</DropdownMenu>
-
 									</Dropdown>
-
 								</FormGroup>
 								<FormGroup>
 									<Label for="date">Project Date </Label>

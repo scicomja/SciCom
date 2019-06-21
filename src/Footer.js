@@ -21,7 +21,7 @@ const style = {
 		justifyContent: "flex-end"
 	},
 	logo: {
-		height: 96
+		width: 128
 	}
 }
 export default class Footer extends React.Component {
@@ -33,7 +33,7 @@ export default class Footer extends React.Component {
 				<div style={{ ...style.block, ...style.centerBlock }}>
 					2019 sci-com.org®
 					<div className="FooterContainer">
-						<a href="#">Impressum</a> | <a href="#">Datenschutz</a> |{" "}
+						<a href="/impressum">Impressum</a> | <a href="#">Datenschutz</a> |{" "}
 						<a href="#">Nutzungsbedingungen</a>
 					</div>
 				</div>
