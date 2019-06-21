@@ -41,7 +41,7 @@ export default class LoginForm extends React.Component {
 					toggle={this.toggleForgorPasswordPrompt.bind(this)}
 				/>
 
-				<Card style={style.card}>
+				<Card className="LoginRegisterCard">
 					<CardBody style={style.container}>
 						{this.props.error && (
 							<Alert color="danger">{this.props.error}</Alert>

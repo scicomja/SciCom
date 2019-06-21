@@ -37,7 +37,7 @@ class LoginPage extends Component {
 					mode={this.state.mode}
 				/>
 				<Container style={style.container}>
-					<Row>
+					<Row className="LoginRegisterRow">
 						<Col style={style.fill}>
 							<LoginForm error={this.props.error} onLogin={this.props.login} />
 						</Col>
@@ -56,8 +56,9 @@ class LoginPage extends Component {
 
 const style = {
 	fill: {
-		height: "100%",
-		display: "flex"
+		minWidth: 300,
+		display: "flex",
+		flex: 1
 	},
 	loginColumn: {
 		textAlign: "center",

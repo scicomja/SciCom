@@ -22,6 +22,8 @@ body, #root {
 .MainContent {
   min-height: 73vh;
   flex: 6;
+  display: flex;
+  justify-content: center;
 }
 
 a.nav-link {
@@ -32,12 +34,24 @@ a.nav-link {
   // TODO: complete this stylesheet for the two boxes responsiveness
   flex: 1;
   margin: 32px;
-  height: '100%';
+  // height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.LoginRegisterRow {
+  flex: 1;
+  display: flex;
+  min-height: 70vh;
+  // overflow: scroll;
+}
+.LoginRegisterCard {
+  flex: 1;
+  height: 100%;
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
 
 .Footer {
   $color: map-get($theme-colors, primary);
@@ -62,9 +76,10 @@ center {
 }
 
 .page {
-  height: 100%;
+  // height: 100%;
   display: flex;
-  width: 100%;
+  // width: 100%;
+  flex: 1;
 }
 
 li.nav-item {

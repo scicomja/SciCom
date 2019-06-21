@@ -18,7 +18,7 @@ export default class RegisterCard extends React.Component {
 	render() {
 		return (
 			<div className="center LoginRegisterBox">
-				<Card style={style.card}>
+				<Card className="LoginRegisterCard">
 					<CardTitle style={style.title}>Register</CardTitle>
 					<div style={style.buttonContainer}>
 						<Button
