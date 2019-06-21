@@ -47,7 +47,10 @@ const style = {
 		display: "flex",
 		justifyContent: "center",
 		alignItems: "center",
-		flex: 1
+		flex: 1,
+		margin: 8,
+		marginLeft: 16,
+		marginRight: 16
 	},
 	button: {
 		// flex: 1
