@@ -123,9 +123,9 @@ const style = {
 		padding: 16,
 		flexDirection: "row",
 		cursor: "pointer",
-		height: 132,
+		minHeight: 132,
 		width: "100%",
 		marginTop: 8,
-		marginBottom: 16
+		marginBottom: "10vh"
 	}
 }
