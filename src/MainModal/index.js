@@ -30,11 +30,16 @@ import {
 } from "../constants"
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import { createProject, modifyProject } from "../backend/user"
-import { initialValues, validationSchema } from "../backend/project"
+import {
+	initialValues,
+	validationSchema,
+	qualificationOptions
+} from "../backend/project"
 import { FormikInput } from "../utils/Form"
 import QuestionCard from "./QuestionCard"
 import QuickQuestionForm from "./QuickQuestionForm"
 import Icon from "../components/icon"
+import CheckboxWithOthers from "../components/CheckboxWithOthers"
 
 import * as Yup from "yup"
 import * as _ from "lodash"
@@ -234,6 +239,11 @@ class MainModal extends React.Component {
 							type="number"
 							name="salary"
 							component={ReactstrapInput}
+						/>
+						<CheckboxWithOthers
+							label="Qualification"
+							onValueChange={v => console.log(v)}
+							options={qualificationOptions}
 						/>
 						<Label id="question-label">
 							Questions

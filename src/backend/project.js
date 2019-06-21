@@ -63,3 +63,9 @@ export const quickQuestionValidationSchema = Yup.object().shape({
 		.min(8, "Title is too short")
 		.required("Title is required")
 })
+
+export const qualificationOptions = {
+	Bachelor: "Bachelor",
+	Master: "Master",
+	Keine: "Keine"
+}
