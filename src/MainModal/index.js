@@ -33,7 +33,7 @@ import { createProject, modifyProject } from "../backend/user"
 import { initialValues, validationSchema } from "../backend/project"
 import { FormikInput } from "../utils/Form"
 import QuestionCard from "./QuestionCard"
-
+import QuickQuestionForm from "./QuickQuestionForm"
 import Icon from "../components/icon"
 
 import * as Yup from "yup"
@@ -57,16 +57,11 @@ class MainModal extends React.Component {
 	}
 
 	getHeader() {
-		switch (this.props.mode) {
-			case ModalMode.PROJECT_DETAILS:
-				if (this.props.content) {
-					return this.props.content.title
-				} else {
-					return "Create a new project"
-				}
-			default:
-				return ""
-		}
+		const { mode, content } = this.props
+		if (content) return content.title // if it is editing something, the title should be used as header
+		return mode == ModalMode.PROJECT_DETAILS
+			? "Create a new project"
+			: "Create a quick question"
 	}
 
 	addQuestion({ values, setFieldValue }) {
@@ -334,9 +329,41 @@ class MainModal extends React.Component {
 	}
 
 	getQuickQuestionForm() {
-		return null
+		return (
+			<QuickQuestionForm
+				content={this.props.content}
+				onSubmit={this.submitQuickQuestion.bind(this)}
+			/>
+		)
 	}
+	async submitQuickQuestion(values) {
+		// fill out the missing info
+		// copy the values out to prevent any unexpected modifications
+		const { token, content } = this.props
+		let finalForm = Object.assign({}, values)
 
+		finalForm.questions = ["Your answer?"]
+		finalForm.nature = "quick-question"
+
+		let project
+		if (!content) {
+			finalForm.status = "open"
+			project = await createProject(finalForm, token)
+		} else {
+			finalForm._id = content._id
+			project = await modifyProject(finalForm, token)
+		}
+
+		if (project.error) {
+			this.setState({
+				errorMessage: project.error
+			})
+		} else {
+			this.props.close()
+			window.location.reload()
+		}
+		// submit the final form
+	}
 	render() {
 		const { content, mode, close } = this.props
 		const { errorMessage } = this.state

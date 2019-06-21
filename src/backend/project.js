@@ -49,3 +49,17 @@ export const validationSchema = Yup.object().shape({
 		.required("Invalid number"),
 	questions: Yup.array().of(Yup.string())
 })
+
+export const quickQuestionInitalValues = content => {
+	if (!content) {
+		return { title: "", description: "" }
+	} else {
+		return content
+	}
+}
+
+export const quickQuestionValidationSchema = Yup.object().shape({
+	title: Yup.string()
+		.min(8, "Title is too short")
+		.required("Title is required")
+})
