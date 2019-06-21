@@ -33,7 +33,7 @@ export default class ProjectResultCard extends React.Component {
 				{highlight ? (
 					<Highlighter
 						style={style.name}
-						searchWords={[highlight]}
+						searchWords={highlight.split(" ")}
 						autoEscape={true}
 						highlightStyle={style.highlight}
 						textToHighlight={project.title}

@@ -98,7 +98,8 @@ class SearchResultPage extends React.Component {
 
 const style = {
 	container: {
-		margin: 16
+		margin: 16,
+		flex: 1
 	},
 	header: {
 		textAlign: "center"
