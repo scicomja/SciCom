@@ -37,7 +37,7 @@ class NewsPage extends React.Component {
 const style = {
 	container: {
 		flex: 1,
-		padding: 16
+		padding: 32
 	}
 }
 
