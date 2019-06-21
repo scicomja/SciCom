@@ -110,11 +110,14 @@ const style = {
 	infoDetailMainContainer: {
 		display: "flex",
 		flexWrap: "wrap",
-		width: "100%"
+		width: "100%",
+		paddingTop: 64,
+		paddingBottom: 32
 	},
 	nameColumn: {
 		paddingLeft: 32,
-
+		minWidth: 256,
+		flex: 1,
 		display: "flex",
 		flexDirection: "column",
 		justifyContent: "space-between"
@@ -127,6 +130,9 @@ const style = {
 	},
 	createProjectButtonContainer: {
 		margin: 16
+	},
+	createProjectContainer: {
+		flex: 1
 	},
 	editInfoLink: {},
 	infoDetailContainer: {
