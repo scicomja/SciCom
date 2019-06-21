@@ -175,7 +175,7 @@ class MainModal extends React.Component {
 								component={ReactstrapSelect}
 								inputprops={{
 									name: "nature",
-									options: ProjectNature
+									options: ProjectNature.slice(0, ProjectNature.length - 1) // no quick-question here
 								}}
 							/>
 						</FormGroup>
@@ -362,8 +362,8 @@ class MainModal extends React.Component {
 			this.props.close()
 			window.location.reload()
 		}
-		// submit the final form
 	}
+
 	render() {
 		const { content, mode, close } = this.props
 		const { errorMessage } = this.state

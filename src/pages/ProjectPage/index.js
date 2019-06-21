@@ -269,7 +269,7 @@ class ProjectPage extends React.Component {
 		await completeProject(id, token)
 		window.location.reload()
 	}
-	statusAndDate(status, from, to) {
+	statusAndDate(status, from, to, isQuickQuestion = true) {
 		return (
 			<div style={style.secondaryInfo}>
 				<h5>
@@ -279,13 +279,16 @@ class ProjectPage extends React.Component {
 				<h5>
 					<b>
 						<Icon name="calendar" /> {formatDate(from)}
-						{(to && ` - ${formatDate(to)}`) || "Indefinite"}
+						{!isQuickQuestion &&
+							((to && ` - ${formatDate(to)}`) || "Indefinite")}
 					</b>
 				</h5>
 			</div>
 		)
 	}
 	infoCard({ _id, salary, nature, topic, tags, file }) {
+		if (nature == "quick-question") return null // no info card for quick question
+
 		const color = "rgb(4,52,88)"
 		const listItemClassName = `text-white justify-content-between`
 		return (
@@ -357,6 +360,7 @@ class ProjectPage extends React.Component {
 	applicationList(applications) {
 		return (
 			<ApplicationCard
+				isQuickQuestion={this.state.project.nature == "quick-question"}
 				showApplicationDetails={this.showApplicationDetails.bind(this)}
 				applications={applications}
 			/>
@@ -418,6 +422,9 @@ class ProjectPage extends React.Component {
 			_id: projectId,
 			applications
 		} = project
+
+		const isQuickQuestion = nature == "quick-question"
+
 		return (
 			<Container style={style.container}>
 				<ConfirmDeletePopup
@@ -449,7 +456,12 @@ class ProjectPage extends React.Component {
 						<Row>
 							<Col>
 								{/* Status and Date */}
-								{this.statusAndDate(status, from, to)}
+								{this.statusAndDate(
+									status,
+									from,
+									to,
+									nature == "quick-question"
+								)}
 							</Col>
 						</Row>
 						<Row>
@@ -516,7 +528,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 	editProject: project =>
 		dispatch({
-			type: ModalActions.MODIFY_PROJECT,
+			type:
+				project.nature == "quick-question"
+					? ModalActions.MODIFY_QUICK_QUESTIONS
+					: ModalActions.MODIFY_PROJECT,
 			content: project
 		}),
 	refreshUserInfo: () =>

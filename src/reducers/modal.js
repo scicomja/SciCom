@@ -36,6 +36,13 @@ export default function modalReducer(state = initialState, action) {
 				mode: ModalMode.PROJECT_DETAILS,
 				content
 			}
+		case ModalActions.MODIFY_QUICK_QUESTIONS:
+			return {
+				...state,
+				mode: ModalMode.QUICK_QUESTIONS,
+				content
+			}
+
 		default:
 			return state
 	}
