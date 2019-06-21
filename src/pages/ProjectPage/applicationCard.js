@@ -54,7 +54,7 @@ class ApplicationCard extends React.Component {
 			<Card body inverse color="secondary" style={style.container}>
 				<CardTitle>
 					<Icon name="edit" />
-					{isQuickQuestion ? "Answers" : "Quick question"}
+					{isQuickQuestion ? "Answers" : "Applications"}
 				</CardTitle>
 				<CardText>
 					{!applications || !applications.length

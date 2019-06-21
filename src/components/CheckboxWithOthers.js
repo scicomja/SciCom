@@ -62,6 +62,7 @@ export default class CheckboxWithOthers extends React.Component {
 				{this.optionRow("Sonstiges", availableValues.length)}
 				{selectedIndex >= availableValues.length && (
 					<Input
+						placeholder="Please specify..."
 						type="text"
 						value={value}
 						onChange={e => this.onInputChange(e.currentTarget.value)}

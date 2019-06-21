@@ -286,11 +286,32 @@ class ProjectPage extends React.Component {
 			</div>
 		)
 	}
-	infoCard({ _id, salary, nature, topic, tags, file }) {
+	infoCard({
+		_id,
+		salary,
+		nature,
+		topic,
+		tags,
+		file,
+		location,
+		partyMembership,
+		qualification,
+		workingHours = 0
+	}) {
 		if (nature == "quick-question") return null // no info card for quick question
 
 		const color = "rgb(4,52,88)"
 		const listItemClassName = `text-white justify-content-between`
+		const listItem = (icon, title, text, textStyle = "") => (
+			<ListGroupItem
+				className={listItemClassName}
+				style={{ backgroundColor: color }}>
+				<Icon name={icon} /> {title}
+				<h5 className={textStyle}>
+					<b>{text}</b>
+				</h5>
+			</ListGroupItem>
+		)
 		return (
 			<Card style={style.infoCard} body inverse color={color}>
 				<CardTitle>
@@ -298,24 +319,30 @@ class ProjectPage extends React.Component {
 				</CardTitle>
 				<CardText>
 					<ListGroup flush style={{ backgroundColor: color }}>
-						<ListGroupItem
-							className={listItemClassName}
-							style={{ backgroundColor: color }}>
-							<Icon name="money" /> Salary
-							<h5 className="text-success">
-								<b>{salary}€</b>
-							</h5>
-						</ListGroupItem>
-						<ListGroupItem
-							className={listItemClassName}
-							style={{ backgroundColor: color }}>
-							<Icon name="question" /> Type
-							<h5>{_.startCase(nature)}</h5>
-						</ListGroupItem>
-						<ListGroupItem
-							className={listItemClassName}
-							style={{ backgroundColor: color }}>
-							<Icon name="tag" /> Topics
+						{listItem("money", "Salary", `${salary}€ / Monat`, "text-success")}
+						{listItem(
+							"loading",
+							"Working Hours",
+							`${workingHours} Stunden / Woche`,
+							"text-warning"
+						)}
+						{listItem("map-pin", "Location", location)}
+						{listItem(
+							"male",
+							"Expected Qualification",
+							qualification,
+							"text-danger"
+						)}
+						{listItem(
+							"bank",
+							"Required Political Party Membership",
+							partyMembership,
+							"text-danger"
+						)}
+						{listItem("question", "Project Type", _.startCase(nature))}
+						{listItem(
+							"tag",
+							"Topics",
 							<div style={style.secondaryInfo}>
 								<h5>
 									<b>
@@ -331,7 +358,7 @@ class ProjectPage extends React.Component {
 									</b>
 								</h5>
 							</div>
-						</ListGroupItem>
+						)}
 					</ListGroup>
 				</CardText>
 				{file && (

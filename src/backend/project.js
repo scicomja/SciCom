@@ -47,6 +47,14 @@ export const validationSchema = Yup.object().shape({
 	salary: Yup.number()
 		.min(0, "Salary must be greater than 0")
 		.required("Invalid number"),
+
+	workingHours: Yup.number()
+		.min(0, "working hours must be greater than 0")
+		.required("Invalid number"),
+	qualification: Yup.string(),
+	partyMembership: Yup.string(),
+	location: Yup.string(),
+
 	questions: Yup.array().of(Yup.string())
 })
 
@@ -65,7 +73,7 @@ export const quickQuestionValidationSchema = Yup.object().shape({
 })
 
 export const qualificationOptions = {
+	Keine: "Keine",
 	Bachelor: "Bachelor",
-	Master: "Master",
-	Keine: "Keine"
+	Master: "Master"
 }

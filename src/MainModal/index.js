@@ -234,17 +234,50 @@ class MainModal extends React.Component {
 								/>
 							</Col>
 						</FormGroup>
-						<Field
-							label="Salary (€ per month)"
-							type="number"
-							name="salary"
-							component={ReactstrapInput}
-						/>
+						<FormGroup row>
+							<Col>
+								<Field
+									label="Salary (€ per month)"
+									type="number"
+									name="salary"
+									component={ReactstrapInput}
+								/>
+							</Col>
+							<Col>
+								<Field
+									label="Working Hours (per week)"
+									type="number"
+									name="workingHours"
+									component={ReactstrapInput}
+								/>
+							</Col>
+						</FormGroup>
+
 						<CheckboxWithOthers
-							label="Qualification"
-							onValueChange={v => console.log(v)}
+							label="Expected Qualification"
+							onValueChange={v => setFieldValue("qualification", v)}
 							options={qualificationOptions}
 						/>
+						<FormGroup row>
+							<Col>
+								<Field
+									label="Political Party Membership"
+									name="partyMembership"
+									type="text"
+									component={ReactstrapInput}
+								/>
+							</Col>
+						</FormGroup>
+						<FormGroup row>
+							<Col>
+								<Field
+									label="Location"
+									name="location"
+									type="text"
+									component={ReactstrapInput}
+								/>
+							</Col>
+						</FormGroup>
 						<Label id="question-label">
 							Questions
 							<Icon name="question" />
