@@ -111,7 +111,7 @@ const style = {
 		display: "flex",
 		flexWrap: "wrap",
 		flexDirection: "row",
-		width: "75%"
+		width: "50%"
 	},
 	detailCell: {
 		minWidth: "50%",
