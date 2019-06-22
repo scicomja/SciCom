@@ -279,14 +279,7 @@ class EditInfoPage extends React.Component {
 												/>
 											</div>
 										</Col>
-										<Col>
-											<Field
-												label="Title"
-												name="title"
-												component={ReactstrapInput}
-												type="text"
-											/>
-										</Col>
+										{this.textInput("Title", "title")}
 									</FormGroup>
 									{!isPolitician ? (
 										<FormGroup row>
@@ -300,49 +293,14 @@ class EditInfoPage extends React.Component {
 													onChange={v => setFieldValue("major", v)}
 												/>
 											</Col>
-											<Col>
-												<Field
-													label="University"
-													name="university"
-													component={ReactstrapInput}
-													type="text"
-												/>
-											</Col>
-											<Col>
-												<Field
-													label="Semester"
-													name="semester"
-													component={ReactstrapInput}
-													type="text"
-												/>
-											</Col>
+											{this.textInput("University", "university")}
+											{this.textInput("Semester", "semester")}
 										</FormGroup>
 									) : (
 										<FormGroup row>
-											<Col>
-												<Field
-													label="Party"
-													name="party"
-													component={ReactstrapInput}
-													type="text"
-												/>
-											</Col>
-											<Col>
-												<Field
-													label="Political Position"
-													name="position"
-													component={ReactstrapInput}
-													type="text"
-												/>
-											</Col>
-											<Col>
-												<Field
-													label="Job Duty"
-													name="duty"
-													component={ReactstrapInput}
-													type="text"
-												/>
-											</Col>
+											{this.textInput("Party", "party")}
+											{this.textInput("Political Position", "position")}
+											{this.textInput("Job Duty", "duty")}
 										</FormGroup>
 									)}
 									<Button

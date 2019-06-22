@@ -16,7 +16,7 @@ export default class UserInfo extends React.Component {
 		super(props)
 
 		const { isPolitician } = props.user
-		this.fields = "email,phone,state,city,PLZ"
+		this.fields = "email,phone,state,city,PLZ,website,linkedIn"
 		if (isPolitician) {
 			this.fields += ",workingPhone,party,position,duty"
 		} else {
