@@ -107,6 +107,18 @@ class EditInfoPage extends React.Component {
 			showChangePasswordPopup: false
 		})
 	}
+	textInput(label, name) {
+		return (
+			<Col>
+				<Field
+					name={name}
+					label={label}
+					type="text"
+					component={ReactstrapInput}
+				/>
+			</Col>
+		)
+	}
 	render() {
 		// bounce back to login page if such user doesn't exist
 		if (!this.props.user) {
@@ -228,58 +240,16 @@ class EditInfoPage extends React.Component {
 										}}
 									/>
 									<FormGroup row>
-										<Col>
-											<Field
-												name="firstName"
-												label="First Name(*)"
-												type="text"
-												component={ReactstrapInput}
-											/>
-										</Col>
-										<Col>
-											<Field
-												name="lastName"
-												label="Last Name(*)"
-												type="text"
-												component={ReactstrapInput}
-											/>
-										</Col>
+										{this.textInput("First Name(*)", "firstName")}
+										{this.textInput("Last Name(*)", "lastName")}
 									</FormGroup>
 									<FormGroup row>
-										<Col>
-											<Field
-												name="phone"
-												label="Phone(*)"
-												type="text"
-												component={ReactstrapInput}
-											/>
-										</Col>
-										{isPolitician && (
-											<Col>
-												<Field
-													name="workingPhone"
-													label="Working Phone"
-													type="text"
-													component={ReactstrapInput}
-												/>
-											</Col>
-										)}
-										<Col>
-											<Field
-												name="website"
-												label="Website"
-												type="text"
-												component={ReactstrapInput}
-											/>
-										</Col>
-										<Col>
-											<Field
-												name="linkedIn"
-												label="LinkedIn"
-												type="text"
-												component={ReactstrapInput}
-											/>
-										</Col>
+										{this.textInput("Phone(*)", "phone")}
+										{isPolitician &&
+											this.textInput("Working Phone", "workingPhone")}
+
+										{this.textInput("Website", "website")}
+										{this.textInput("LinkedIn", "linkedIn")}
 									</FormGroup>
 									<FormGroup row>
 										<Col>
@@ -293,22 +263,8 @@ class EditInfoPage extends React.Component {
 												}}
 											/>
 										</Col>
-										<Col>
-											<Field
-												name="city"
-												label="City(*)"
-												type="text"
-												component={ReactstrapInput}
-											/>
-										</Col>
-										<Col>
-											<Field
-												name="PLZ"
-												label="PLZ(*)"
-												type="text"
-												component={ReactstrapInput}
-											/>
-										</Col>
+										{this.textInput("City(*)", "city")}
+										{this.textInput("PLZ(*)", "PLZ")}
 									</FormGroup>
 									<FormGroup row>
 										<Col>

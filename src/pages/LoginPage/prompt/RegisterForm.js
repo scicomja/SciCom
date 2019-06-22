@@ -15,11 +15,13 @@ import {
 } from "reactstrap"
 import { Field, ErrorMessage } from "formik"
 import { Mode } from "../../../constants"
+import EnterKeyListener from "../../../components/EnterKeyListener"
+
 import { login as Locale, common as CommonLocale } from "locale"
 import PropTypes from "prop-types"
 import * as _ from "lodash"
 
-export default class RegisterForm extends React.Component {
+class RegisterForm extends React.Component {
 	static propTypes = {
 		mode: PropTypes.string.isRequired,
 		toggle: PropTypes.func.isRequired,
@@ -95,11 +97,11 @@ export default class RegisterForm extends React.Component {
 			</Form>
 		)
 	}
-	handleKeyDown(e) {
-		if (e.key === "Enter") {
-			this.props.submitForm()
-		}
+
+	onEnter() {
+		this.props.submitForm()
 	}
+
 	render() {
 		const {
 			isSubmitting,
@@ -110,7 +112,7 @@ export default class RegisterForm extends React.Component {
 			error
 		} = this.props
 		return (
-			<div onKeyDown={this.handleKeyDown.bind(this)}>
+			<div {...this.props}>
 				<ModalHeader toggle={toggle}>{this.getModeString()}</ModalHeader>
 				<ModalBody>
 					{error && <Alert color="danger">{error}</Alert>}
@@ -135,3 +137,5 @@ export default class RegisterForm extends React.Component {
 		)
 	}
 }
+
+export default EnterKeyListener(RegisterForm)

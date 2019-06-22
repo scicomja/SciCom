@@ -13,8 +13,9 @@ import PropTypes from "prop-types"
 import { Formik } from "formik"
 import * as Form from "./Form"
 import ForgotPasswordPrompt from "./ForgotPasswordPrompt"
+import EnterKeyListener from "../../../components/EnterKeyListener"
 
-export default class LoginForm extends React.Component {
+class LoginForm extends React.Component {
 	static propTypes = {
 		onLogin: PropTypes.func.isRequired,
 		error: PropTypes.string.isRequired
@@ -33,9 +34,13 @@ export default class LoginForm extends React.Component {
 		})
 	}
 
+	onEnter() {
+		// hack here
+		document.getElementById("login-button").click()
+	}
 	render() {
 		return (
-			<div className="center LoginRegisterBox">
+			<div className="center LoginRegisterBox" {...this.props}>
 				<ForgotPasswordPrompt
 					isOpen={this.state.isForgotPasswordPromptOpen}
 					toggle={this.toggleForgorPasswordPrompt.bind(this)}
@@ -48,6 +53,7 @@ export default class LoginForm extends React.Component {
 						)}
 
 						<Formik
+							ref={this.formRef}
 							initialValues={Form.initialValues}
 							validationSchema={Form.validationSchema}
 							onSubmit={this.props.onLogin.bind(this)}>
@@ -70,6 +76,7 @@ export default class LoginForm extends React.Component {
 									</div>
 									<Button
 										block
+										id="login-button"
 										style={style.loginButton}
 										href="#"
 										onClick={() => this.props.onLogin(formikProps.values)}>
@@ -89,6 +96,8 @@ export default class LoginForm extends React.Component {
 		)
 	}
 }
+
+export default EnterKeyListener(LoginForm)
 
 const style = {
 	title: {

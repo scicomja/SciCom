@@ -10,10 +10,12 @@ import {
 	Input
 } from "reactstrap"
 import Icon from "components/icon"
+import EnterKeyListener from "components/EnterKeyListener"
+
 import PropTypes from "prop-types"
 import { Formik, Field, ErrorMessage } from "formik"
 
-export default class EmailVerificationForm extends React.Component {
+class EmailVerificationForm extends React.Component {
 	static propTypes = {
 		toggle: PropTypes.func.isRequired,
 		onReturnToRegistration: PropTypes.func.isRequired,
@@ -27,10 +29,8 @@ export default class EmailVerificationForm extends React.Component {
 			verificationCode: ""
 		}
 	}
-	handleKeyDown(e) {
-		if (e.key === "Enter") {
-			this.props.verify(this.state.verificationCode)
-		}
+	onEnter() {
+		this.props.verify(this.state.verificationCode)
 	}
 	onCodeChange(e) {
 		const verificationCode = document.getElementById("code").value
@@ -41,10 +41,8 @@ export default class EmailVerificationForm extends React.Component {
 		const { verificationCode } = this.state
 
 		return (
-			<div>
-				<ModalHeader onKeyDown={this.handleKeyDown.bind(this)} toggle={toggle}>
-					Verify your email address
-				</ModalHeader>
+			<div {...this.props}>
+				<ModalHeader toggle={toggle}>Verify your email address</ModalHeader>
 
 				<ModalBody>
 					<p>
@@ -81,6 +79,8 @@ export default class EmailVerificationForm extends React.Component {
 		)
 	}
 }
+
+export default EnterKeyListener(EmailVerificationForm)
 
 const style = {
 	buttonGroupContainer: {

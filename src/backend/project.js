@@ -20,6 +20,7 @@ export const initialValues = content => {
 			to: null,
 			nature: ProjectNature[0],
 			salary: 0,
+			workingHours: 0,
 			questions: [],
 			tags: []
 		}
