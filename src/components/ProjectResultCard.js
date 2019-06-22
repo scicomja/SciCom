@@ -47,6 +47,11 @@ export default class ProjectResultCard extends React.Component {
 
 	render() {
 		const { project, onClick, highlight, isShowingLatest } = this.props
+		const isQuickQuestion = project.nature == "quick-question"
+		let timeString = formatDate(project.from)
+		if (!isQuickQuestion) {
+			timeString += ` - ${formatDate(project.to)}`
+		}
 		return (
 			<div
 				style={{ ...style.container, ...this.extraStyle() }}
@@ -72,10 +77,7 @@ export default class ProjectResultCard extends React.Component {
 					)}
 					<div style={style.detailContainer}>
 						<div style={style.detailCell}>{project.nature}</div>
-						<div style={style.detailCell}>
-							{" "}
-							{` ${formatDate(project.from)} - ${formatDate(project.to)}`}
-						</div>
+						<div style={style.detailCell}> {timeString}</div>
 						<div style={style.detailCell}>Ansprechpartner</div>
 						<div style={style.detailCell}>{getName(project.creator)}</div>
 					</div>

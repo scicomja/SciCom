@@ -142,7 +142,7 @@ const style = {
 		minWidth: "50%",
 		flexGrow: 1,
 		padding: 16,
-		fontSize: "calc(14px + 1.5vw)",
+		fontSize: "calc(14px + 1vw)",
 		flexDirection: "row",
 		justifyContent: "space-between"
 	},
