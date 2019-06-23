@@ -74,7 +74,9 @@ class App extends Component {
 							/>
 							<Route
 								path="/latest"
-								component={this.props.auth.token ? NewsPage : LoginPage}
+								component={
+									this.props.auth.token ? EditInfoGuard(NewsPage) : LoginPage
+								}
 							/>
 							<Route path="/" component={LoginPage} />
 						</Switch>

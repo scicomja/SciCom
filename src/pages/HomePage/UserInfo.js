@@ -20,7 +20,7 @@ export default class UserInfo extends React.Component {
 		if (isPolitician) {
 			this.fields += ",workingPhone,party,position,duty"
 		} else {
-			this.fields += ",university,semester"
+			this.fields += ",university,major,semester"
 		}
 
 		this.fieldNameDict = {
@@ -30,10 +30,16 @@ export default class UserInfo extends React.Component {
 		}
 	}
 	infoDetailRow({ name, value }) {
+		const arrayValue = "major".split(",")
+		let displayValue = value || "--"
+		if (arrayValue.indexOf(name) > -1) {
+			// display the array
+			displayValue = value.join(",") || "--"
+		}
 		return (
 			<div style={style.infoDetailContainer}>
 				<div style={style.infoName}>{this.fieldNameDict[name] || name}:</div>
-				<div style={style.infoDetail}>{value || "--"}</div>
+				<div style={style.infoDetail}>{displayValue}</div>
 			</div>
 		)
 	}
