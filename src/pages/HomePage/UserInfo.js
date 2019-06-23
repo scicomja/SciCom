@@ -52,7 +52,9 @@ export default class UserInfo extends React.Component {
 		return (
 			<div className="UserInfo" style={style.container}>
 				<Row>
-					<Avatar size={96} user={user} />
+					<div style={style.avatarContainer}>
+						<Avatar size={96} user={user} />
+					</div>
 					<Col style={style.nameColumn}>
 						<Row>
 							<div style={style.name}>{getName(user)}</div>
@@ -60,7 +62,7 @@ export default class UserInfo extends React.Component {
 						</Row>
 						<Row>
 							{isUserHimself && (
-								<a style={style.editInfoLink} href="/editInfo">
+								<a href="/editInfo">
 									<Icon name="edit" />
 									Profil bearbeiten
 								</a>
@@ -123,7 +125,7 @@ const style = {
 	nameColumn: {
 		paddingLeft: 32,
 		minWidth: 256,
-		flex: 1,
+		flex: 8,
 		display: "flex",
 		flexDirection: "column",
 		justifyContent: "space-between"
@@ -132,7 +134,8 @@ const style = {
 		padding: 16
 	},
 	name: {
-		fontSize: 48
+		fontSize: 48,
+		display: "flex"
 	},
 	createProjectButtonContainer: {
 		margin: 16
@@ -140,10 +143,13 @@ const style = {
 	createProjectContainer: {
 		flex: 1
 	},
-	editInfoLink: {},
+	avatarContainer: {
+		display: "flex",
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center"
+	},
 	infoDetailContainer: {
-		// minWidth: "50vw",
-		// maxWidth: "100vw",
 		display: "flex",
 		minWidth: "50%",
 		flexGrow: 1,
