@@ -16,12 +16,6 @@ export default class UserInfo extends React.Component {
 		super(props)
 
 		const { isPolitician } = props.user
-		this.fields = "email,phone,state,city,PLZ,website,linkedIn"
-		if (isPolitician) {
-			this.fields += ",workingPhone,party,position,duty"
-		} else {
-			this.fields += ",university,major,semester"
-		}
 
 		this.fieldNameDict = {
 			workingPhone: "Phone (Office)",
@@ -44,7 +38,13 @@ export default class UserInfo extends React.Component {
 		)
 	}
 	getUserInfoFieldNames() {
-		return this.fields.split(",")
+		let fields = "email,phone,state,city,PLZ,website,linkedIn"
+		if (this.props.user.isPolitician) {
+			fields += ",workingPhone,party,position,duty"
+		} else {
+			fields += ",university,major,semester"
+		}
+		return fields.split(",")
 	}
 	render() {
 		const { user, isUserHimself } = this.props
