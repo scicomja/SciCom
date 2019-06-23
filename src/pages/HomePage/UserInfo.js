@@ -141,7 +141,7 @@ const style = {
 		margin: 16
 	},
 	createProjectContainer: {
-		flex: 1
+		flex: 8
 	},
 	avatarContainer: {
 		display: "flex",
