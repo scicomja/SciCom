@@ -47,6 +47,11 @@ export default class ProjectResultCard extends React.Component {
 
 	render() {
 		const { project, onClick, highlight, isShowingLatest } = this.props
+		const { creator } = project
+
+		// stop malformed project (it's creator) from breaking the app
+		if (!creator || !creator.firstName) return null
+
 		const isQuickQuestion = project.nature == "quick-question"
 		let timeString = formatDate(project.from)
 		if (!isQuickQuestion) {

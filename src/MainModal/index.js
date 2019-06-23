@@ -190,6 +190,7 @@ class MainModal extends React.Component {
 								<DatePicker
 									name="from"
 									autoComplete="off"
+									dateFormat="dd/MM/yyyy"
 									selected={values.from}
 									minDate={tomorrow.toDate()}
 									onChange={e => {
@@ -207,6 +208,7 @@ class MainModal extends React.Component {
 								<DatePicker
 									name="to"
 									autoComplete="off"
+									dateFormat="dd/MM/yyyy"
 									selected={values.to}
 									minDate={moment(values.from)
 										.add(1, "day")
