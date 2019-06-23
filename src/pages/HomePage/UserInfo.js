@@ -148,7 +148,7 @@ const style = {
 		minWidth: "50%",
 		flexGrow: 1,
 		padding: 16,
-		fontSize: "calc(14px + 1vw)",
+		fontSize: "calc(14px + 0.8vw)",
 		flexDirection: "row",
 		justifyContent: "space-between"
 	},
