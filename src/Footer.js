@@ -34,7 +34,8 @@ export default class Footer extends React.Component {
 				<div style={{ ...style.block, ...style.centerBlock }}>
 					2019 sci-com.org®
 					<div className="FooterContainer">
-						<a href="/impressum">Impressum</a> | <a href="#">Datenschutz</a> |{" "}
+						<a href="/impressum">Impressum</a> |{" "}
+						<a href="/datenschutz">Datenschutz</a> |{" "}
 						<a href="#">Nutzungsbedingungen</a>
 					</div>
 				</div>
