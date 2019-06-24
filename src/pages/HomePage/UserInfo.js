@@ -31,11 +31,11 @@ export default class UserInfo extends React.Component {
 			// display the array
 			displayValue = value.join(",") || "--"
 		}
-		if (name == "website") {
+		if (name == "website" && value) {
 			const link = value.indexOf("http") == 0 ? value : `http://${value}`
 			displayValue = <a href={link}>{value}</a>
 		}
-		if (name == "linkedIn") {
+		if (name == "linkedIn" && value) {
 			const link =
 				value.indexOf("http") == 0
 					? value
