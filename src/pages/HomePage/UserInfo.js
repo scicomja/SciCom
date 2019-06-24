@@ -179,7 +179,8 @@ const style = {
 		display: "flex",
 		marginLeft: 16,
 		justifyContent: "center",
-		alignItems: "center",
+		alignItems: "flex-end",
+		paddingBottom: 10,
 		fontSize: 20
 	},
 	infoDetail: {
