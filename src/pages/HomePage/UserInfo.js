@@ -24,11 +24,23 @@ export default class UserInfo extends React.Component {
 		}
 	}
 	infoDetailRow({ name, value }) {
-		const arrayValue = "major".split(",")
+		const arrayValue = "major".split(",") // fields that contain URL
+		const linkValue = "website,linkedIn".split(",") // fields that contain URL
 		let displayValue = value || "--"
 		if (arrayValue.indexOf(name) > -1) {
 			// display the array
 			displayValue = value.join(",") || "--"
+		}
+		if (name == "website") {
+			const link = value.indexOf("http") == 0 ? value : `http://${value}`
+			displayValue = <a href={link}>{value}</a>
+		}
+		if (name == "linkedIn") {
+			const link =
+				value.indexOf("http") == 0
+					? value
+					: `https://www.linkedin.com/in/${value}`
+			displayValue = <a href={link}>{value}</a>
 		}
 		return (
 			<div style={style.infoDetailContainer}>
@@ -154,6 +166,7 @@ const style = {
 		minWidth: "50%",
 		flexGrow: 1,
 		padding: 16,
+		paddingRight: 24,
 		fontSize: "calc(14px + 0.8vw)",
 		flexDirection: "row",
 		justifyContent: "space-between"
@@ -166,6 +179,7 @@ const style = {
 		display: "flex",
 		marginLeft: 16,
 		justifyContent: "center",
+		alignItems: "center",
 		fontSize: 20
 	},
 	infoDetail: {

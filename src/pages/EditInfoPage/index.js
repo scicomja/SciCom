@@ -289,6 +289,7 @@ class EditInfoPage extends React.Component {
 													label="Major"
 													name="major"
 													component={ChipsInput}
+													createChipKeys={[" ", "Enter"]}
 													value={values["major"]}
 													onChange={v => setFieldValue("major", v)}
 												/>
