@@ -42,7 +42,7 @@ class EditInfoPage extends React.Component {
 			showDeletePopup: false,
 			showChangePasswordPopup: false
 		}
-		const phoneRegex = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+		const phoneRegex = /^((\+49)|(00))?\ ?[\d]{3,4}\ ?[\d]{6,8}$/
 		this.rawSchema = {
 			firstName: Yup.string().required(),
 			lastName: Yup.string().required(),
