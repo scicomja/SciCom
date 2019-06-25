@@ -6,7 +6,12 @@ import UserInfo from "./UserInfo"
 import { Button, Container, Row, Col } from "reactstrap"
 import Section from "./Section"
 import FrontPage from "./frontPage"
-import { getProject, getApplications, getUser } from "../../backend/user"
+import {
+	getProject,
+	getApplications,
+	getUser,
+	getProjectsOfUser
+} from "../../backend/user"
 import { CREATE_PROJECT, CREATE_QUICK_QUESTION } from "../../actions/modal"
 import Icon from "../../components/icon"
 
@@ -28,9 +33,20 @@ class HomePage extends React.Component {
 			// load other users
 			const otherUsername = pathComponents[1]
 			const otherUser = await getUser(otherUsername, this.props.token)
-			this.setState({
-				extendedUser: otherUser
-			})
+			if (otherUser.isPolitician) {
+				const projects = await getProjectsOfUser(
+					otherUsername,
+					this.props.token
+				)
+				this.setState({
+					extendedUser: { ...otherUser, projects }
+				})
+			} else {
+				this.setState({
+					extendedUser: otherUser
+				})
+			}
+
 			return
 		}
 

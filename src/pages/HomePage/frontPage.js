@@ -86,32 +86,30 @@ class FrontPage extends React.Component {
 
 	render() {
 		const { isPolitician, bookmarks, applications, projects } = this.props.user
-
+		const { isUserHimself } = this.props
+		console.log("front page", this.props.user)
 		// students' front page
-		if (this.props.isUserHimself)
-			return (
-				<div style={style.container}>
-					<Container>
-						{isPolitician && projects && (
-							<Section title="Projects" icon="project">
-								{this.projectList(projects)}
-							</Section>
-						)}
-						{!isPolitician && bookmarks && (
-							<Section icon="bookmark" title="Bookmarks">
-								{this.bookmarkTab(bookmarks)}
-							</Section>
-						)}
-
+		return (
+			<div style={style.container}>
+				<Container>
+					{isPolitician && projects && (
+						<Section title="Projects" icon="project">
+							{this.projectList(projects)}
+						</Section>
+					)}
+					{!isPolitician && bookmarks && isUserHimself && (
+						<Section icon="bookmark" title="Bookmarks">
+							{this.bookmarkTab(bookmarks)}
+						</Section>
+					)}
+					{isUserHimself && (
 						<Section icon="application" title="Applications">
 							{this.applicationTab(applications)}
 						</Section>
-					</Container>
-				</div>
-			)
-		else {
-			return null
-		}
+					)}
+				</Container>
+			</div>
+		)
 	}
 }
 
