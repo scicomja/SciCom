@@ -15,7 +15,7 @@ const style = {
 		color: "white"
 	},
 	footerContainer: {
-		margin: 16,
+		// padding: 16,
 		display: "flex",
 		flexDirection: "row",
 		justifyContent: "flex-end"
@@ -36,7 +36,7 @@ export default class Footer extends React.Component {
 					<div className="FooterContainer">
 						<a href="/impressum">Impressum</a> |{" "}
 						<a href="/datenschutz">Datenschutz</a> |{" "}
-						<a href="#">Nutzungsbedingungen</a>
+						<a href="/nutzung">Nutzungsbedingungen</a>
 					</div>
 				</div>
 				<div style={{ ...style.block, ...style.footerContainer }}>

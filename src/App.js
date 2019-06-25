@@ -16,6 +16,7 @@ import EditInfoPage from "./pages/EditInfoPage"
 
 import ImpressumPage from "./pages/ImpressumPage"
 import DatenSchutzPage from "./pages/Datenschutz"
+import NutzungsPage from "./pages/Nutzung"
 
 import NewsPage from "./pages/NewsPage"
 
@@ -64,6 +65,7 @@ class App extends Component {
 							<Route path="/about" component={AboutPage} />
 							<Route path="/impressum" component={ImpressumPage} />
 							<Route path="/datenschutz" component={DatenSchutzPage} />
+							<Route path="/nutzung" component={NutzungsPage} />
 							<Route
 								path="/user/:user_id"
 								component={EditInfoGuard(HomePage)}
