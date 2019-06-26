@@ -20,6 +20,7 @@ class HomePage extends React.Component {
 		super(props)
 
 		this.state = {
+			errors: null,
 			extendedUser: { ...props.user }
 		}
 	}
@@ -33,6 +34,11 @@ class HomePage extends React.Component {
 			// load other users
 			const otherUsername = pathComponents[1]
 			const otherUser = await getUser(otherUsername, this.props.token)
+			// check the error from result
+			if (otherUser.error) {
+				this.setState({ errors: otherUser.error })
+				return
+			}
 			if (otherUser.isPolitician) {
 				const projects = await getProjectsOfUser(
 					otherUsername,
@@ -72,19 +78,23 @@ class HomePage extends React.Component {
 		}
 	}
 	render() {
-		const { extendedUser: user } = this.state
+		const { errors, extendedUser: user } = this.state
 		const isUserHimself = user.username == this.props.user.username
 		return (
 			<div style={style.container}>
-				<Container>
-					<UserInfo
-						user={user}
-						onCreateProject={this.props.createProject}
-						onCreateQuickQuestion={this.props.createQuickQuestion}
-						isUserHimself={isUserHimself}
-					/>
-					<FrontPage user={user} isUserHimself={isUserHimself} />
-				</Container>
+				{!errors ? (
+					<Container>
+						<UserInfo
+							user={user}
+							onCreateProject={this.props.createProject}
+							onCreateQuickQuestion={this.props.createQuickQuestion}
+							isUserHimself={isUserHimself}
+						/>
+						<FrontPage user={user} isUserHimself={isUserHimself} />
+					</Container>
+				) : (
+					<CenterNotice title="Error occured" />
+				)}
 			</div>
 		)
 	}
