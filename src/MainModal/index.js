@@ -145,7 +145,7 @@ class MainModal extends React.Component {
 					<Form>
 						<Field
 							name="title"
-							label="Title"
+							label={Locale.projectForm.title}
 							type="text"
 							component={ReactstrapInput}
 						/>
@@ -173,7 +173,7 @@ class MainModal extends React.Component {
 							</div>
 						</div>
 						<FormGroup>
-							<Label for="nature"> Project Type </Label>
+							<Label for="nature"> {Locale.projectForm.nature} </Label>
 							<Field
 								name="nature"
 								component={ReactstrapSelect}
@@ -185,7 +185,7 @@ class MainModal extends React.Component {
 						</FormGroup>
 						<FormGroup row>
 							<Col style={style.specialFormGroup}>
-								<Label for="from"> From </Label>
+								<Label for="from"> {Locale.projectForm.from} </Label>
 								<DatePicker
 									name="from"
 									autoComplete="off"
@@ -203,7 +203,7 @@ class MainModal extends React.Component {
 							</Col>
 
 							<Col style={style.specialFormGroup}>
-								<Label for="to"> To </Label> {"\n"}
+								<Label for="to"> {Locale.projectForm.to} </Label> {"\n"}
 								<DatePicker
 									name="to"
 									autoComplete="off"
@@ -225,9 +225,9 @@ class MainModal extends React.Component {
 						</FormGroup>
 						<FormGroup row>
 							<Col>
-								<Label for="tags">Tags</Label>
+								<Label for="tags">{Locale.projectForm.tags}</Label>
 								<Field
-									label="Tags"
+									label={Locale.projectForm.tags}
 									name="tags"
 									component={ChipsInput}
 									value={values["tags"]}
@@ -238,7 +238,7 @@ class MainModal extends React.Component {
 						<FormGroup row>
 							<Col>
 								<Field
-									label="Gehalt (€ pro Monat)"
+									label={Locale.projectForm.salary}
 									type="number"
 									name="salary"
 									component={ReactstrapInput}
@@ -246,7 +246,7 @@ class MainModal extends React.Component {
 							</Col>
 							<Col>
 								<Field
-									label="Arbeitszeit (pro Woche)"
+									label={Locale.projectForm.workingHours}
 									type="number"
 									name="workingHours"
 									component={ReactstrapInput}
@@ -255,14 +255,14 @@ class MainModal extends React.Component {
 						</FormGroup>
 
 						<CheckboxWithOthers
-							label="Mindestqualifikation"
+							label={Locale.projectForm.qualication}
 							onValueChange={v => setFieldValue("qualification", v)}
 							options={qualificationOptions}
 						/>
 						<FormGroup row>
 							<Col>
 								<Field
-									label="Bevorzugte Parteizugehörigkeit des Bewerbers"
+									label={Locale.projectForm.partyMembership}
 									name="partyMembership"
 									type="text"
 									component={ReactstrapInput}
@@ -272,7 +272,7 @@ class MainModal extends React.Component {
 						<FormGroup row>
 							<Col>
 								<Field
-									label="Ort"
+									label={Locale.projectForm.location}
 									name="location"
 									type="text"
 									component={ReactstrapInput}
@@ -280,7 +280,7 @@ class MainModal extends React.Component {
 							</Col>
 						</FormGroup>
 						<Label id="question-label">
-							Fragen an den Bewerber
+							{Locale.projectForm.question}
 							<Icon name="question" />
 							<Tooltip
 								placement="right"
@@ -292,9 +292,7 @@ class MainModal extends React.Component {
 									})
 								}
 								target="question-label">
-								Fill in the questsion you would like the applicants to answer
-								before they submit applications to this project. You cannot
-								modify the questions of projects once they are created.
+								{Locale.projectForm.questionExplaination}
 							</Tooltip>
 						</Label>
 						<Col>

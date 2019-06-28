@@ -159,7 +159,6 @@ class ProjectPage extends React.Component {
 			// we bookmarked it!
 			toast.success("changes saved", {
 				position: toast.POSITION.BOTTOM_RIGHT
-				// onClose: window.location.reload
 			})
 			this.props.refreshUserInfo()
 		} catch (err) {

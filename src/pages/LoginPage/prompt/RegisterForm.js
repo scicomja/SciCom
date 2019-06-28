@@ -105,7 +105,11 @@ class RegisterForm extends React.Component {
 
 		return (
 			<div {...this.props}>
-				<ModalHeader toggle={toggle}>Register as Politician</ModalHeader>
+				<ModalHeader toggle={toggle}>
+					{mode == Mode.REGISTER_POLITICIAN
+						? Locale.registerForm.politicianTitle
+						: Locale.registerForm.studentTitle}
+				</ModalHeader>
 				<ModalBody>
 					{error && <Alert color="danger">{error}</Alert>}
 					{this.getForm(formikProps)}

@@ -32,7 +32,10 @@ const translation = {
 		question: "Fragen an den Bewerber",
 		questionExplaination:
 			"Bitte geben Sie Ihre Fragen an die Bewerber an. Sie finden die Antworten bei der zugehörigen Bewerbung. Sie können die Fragen nicht ändern nachdem das Projekt erstellt wurden. "
-	}
+	},
+
+	projectPage: {},
+	homePage: {}
 }
 
 export default translation
