@@ -16,8 +16,7 @@ import {
 import { Field, ErrorMessage } from "formik"
 import { Mode } from "../../../constants"
 import EnterKeyListener from "../../../components/EnterKeyListener"
-
-import { login as Locale, common as CommonLocale } from "locale"
+import Locale from "../../../locale"
 import PropTypes from "prop-types"
 import * as _ from "lodash"
 
@@ -33,37 +32,29 @@ class RegisterForm extends React.Component {
 		super(props)
 	}
 
-	getModeString() {
-		switch (this.props.mode) {
-			case Mode.REGISTER_PHD:
-				return Locale.PHD.de
-			case Mode.REGISTER_POLITICIAN:
-				return Locale.politician.de
-			default:
-				return Locale.login.de
-		}
-	}
-
 	getFields() {
 		return [
 			{
 				type: "text",
+				label: "Benutzername",
 				fieldName: "username",
-				placeholder: "username"
+				placeholder: "Benutzername"
 			},
 			{
 				type: "email",
+				label: "Bitte Passwort bestätigen",
 				fieldName: "email",
 				placeholder: "email"
 			},
 			{
 				type: "password",
+				label: "Bitte Passwort bestätigen",
 				fieldName: "password",
-				placeholder: "password"
+				placeholder: "Passwort"
 			},
 			{
 				type: "password",
-				label: "Confirm Password",
+				label: "Bitte Passwort bestätigen",
 				fieldName: "confirmPassword",
 				placeholder: "Confirm Password"
 			}
@@ -111,9 +102,10 @@ class RegisterForm extends React.Component {
 			formikProps,
 			error
 		} = this.props
+
 		return (
 			<div {...this.props}>
-				<ModalHeader toggle={toggle}>{this.getModeString()}</ModalHeader>
+				<ModalHeader toggle={toggle}>Register as Politician</ModalHeader>
 				<ModalBody>
 					{error && <Alert color="danger">{error}</Alert>}
 					{this.getForm(formikProps)}
@@ -127,10 +119,10 @@ class RegisterForm extends React.Component {
 							!_.isEmpty(formikProps.errors) ||
 							isSubmitting
 						}>
-						Register
+						{Locale.registerForm.register}
 					</Button>{" "}
 					<Button color="link" onClick={toggle}>
-						{CommonLocale.cancel.de}
+						{Locale.registerForm.cancel}
 					</Button>
 				</ModalFooter>
 			</div>

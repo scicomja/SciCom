@@ -36,22 +36,22 @@ export const initialValues = content => {
 
 export const validationSchema = Yup.object().shape({
 	title: Yup.string()
-		.min(8, "Title is too short")
-		.required("Title is required"),
+		.min(8, "Projektname ist zu kurz.")
+		.required("Projektname benötigt."),
 	nature: Yup.string()
-		.oneOf(ProjectNature, "Please select the nature of the project")
-		.required("Nature is required"),
+		.oneOf(ProjectNature, "Bitten den Projekttyp auswählen.")
+		.required("Projekttyp benötigt."),
 	from: Yup.date().required(),
 	to: Yup.date().when("from", (from, schema) => {
 		return Yup.date().min(from)
 	}),
 	salary: Yup.number()
-		.min(0, "Salary must be greater than 0")
-		.required("Invalid number"),
+		.min(0, "Bezahlung muss mehr als 0€ sein.")
+		.required("Ungültige Eingabe"),
 
 	workingHours: Yup.number()
-		.min(0, "working hours must be greater than 0")
-		.required("Invalid number"),
+		.min(0, "Arbeitstunden müssen mehr als 0 Stunden sein.")
+		.required("Ungültige Eingabe"),
 	qualification: Yup.string(),
 	partyMembership: Yup.string(),
 	location: Yup.string(),
@@ -69,8 +69,8 @@ export const quickQuestionInitalValues = content => {
 
 export const quickQuestionValidationSchema = Yup.object().shape({
 	title: Yup.string()
-		.min(8, "Title is too short")
-		.required("Title is required")
+		.min(8, "Name ist zu kurz")
+		.required("Name benötigt")
 })
 
 export const qualificationOptions = {

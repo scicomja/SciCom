@@ -3,6 +3,7 @@ import * as Yup from "yup"
 import { FormGroup as ReactstrapFormGroup, Input, Label } from "reactstrap"
 import { Field, ErrorMessage } from "formik"
 import * as _ from "lodash"
+import Locale from "../../../locale"
 
 export const initialValues = {
 	username: "",
@@ -32,7 +33,9 @@ export function FormGroup({
 				type={type}
 				invalid={errors && errors[name]}
 			/>
-			<ErrorMessage name={name} />
+			<ErrorMessage name={name}>
+				{msg => <div> Bitte geben Sie {Locale.loginForm[name]} ein </div>}
+			</ErrorMessage>
 		</ReactstrapFormGroup>
 	)
 }

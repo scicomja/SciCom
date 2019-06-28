@@ -1,6 +1,5 @@
 import React, { Component } from "react"
 import { Jumbotron, Button, Container, Row, Col } from "reactstrap"
-import { login as Locale } from "../../locale"
 import * as Actions from "actions/auth"
 
 import { Mode } from "../../constants"

@@ -25,8 +25,7 @@ import {
 	ModalMode,
 	ProjectNature,
 	ProjectStatus,
-	InitialProjectSearchPayload,
-	ProjectSearchPayloadValidator
+	InitialProjectSearchPayload
 } from "../constants"
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import { createProject, modifyProject } from "../backend/user"
@@ -44,6 +43,7 @@ import CheckboxWithOthers from "../components/CheckboxWithOthers"
 import * as Yup from "yup"
 import * as _ from "lodash"
 import moment from "moment"
+import Locale from "../locale"
 
 import * as ModalActions from "../actions/modal"
 
@@ -65,8 +65,8 @@ class MainModal extends React.Component {
 		const { mode, content } = this.props
 		if (content) return content.title // if it is editing something, the title should be used as header
 		return mode == ModalMode.PROJECT_DETAILS
-			? "Create a new project"
-			: "Create a quick question"
+			? Locale.projectForm.createProject
+			: Locale.projectForm.createQuickQuestion
 	}
 
 	addQuestion({ values, setFieldValue }) {
@@ -112,8 +112,7 @@ class MainModal extends React.Component {
 							descriptionExplainationOpen: !descriptionExplainationOpen
 						})
 					}>
-					You must fill in at least the description of this project or a file
-					describing it, or both.
+					{Locale.projectForm.descriptionNotice}
 				</Tooltip>
 			</div>
 		)
@@ -155,7 +154,7 @@ class MainModal extends React.Component {
 								type="textarea"
 								label={
 									<div style={style.descriptionLabel}>
-										Description
+										{Locale.projectForm.description}
 										{this.descriptionExplainIcon()}
 									</div>
 								}
@@ -163,7 +162,7 @@ class MainModal extends React.Component {
 								component={ReactstrapInput}
 							/>
 							<div className="form-group" style={style.specialFormGroup}>
-								<label for="file">File</label>
+								<label for="file">{Locale.projectForm.file}</label>
 								<input
 									type="file"
 									name="file"
@@ -190,7 +189,7 @@ class MainModal extends React.Component {
 								<DatePicker
 									name="from"
 									autoComplete="off"
-									dateFormat="dd/MM/yyyy"
+									dateFormat="dd.MM.yyyy"
 									selected={values.from}
 									minDate={tomorrow.toDate()}
 									onChange={e => {
@@ -208,7 +207,7 @@ class MainModal extends React.Component {
 								<DatePicker
 									name="to"
 									autoComplete="off"
-									dateFormat="dd/MM/yyyy"
+									dateFormat="dd.MM.yyyy"
 									selected={values.to}
 									minDate={moment(values.from)
 										.add(1, "day")
@@ -239,7 +238,7 @@ class MainModal extends React.Component {
 						<FormGroup row>
 							<Col>
 								<Field
-									label="Salary (€ per month)"
+									label="Gehalt (€ pro Monat)"
 									type="number"
 									name="salary"
 									component={ReactstrapInput}
@@ -247,7 +246,7 @@ class MainModal extends React.Component {
 							</Col>
 							<Col>
 								<Field
-									label="Working Hours (per week)"
+									label="Arbeitszeit (pro Woche)"
 									type="number"
 									name="workingHours"
 									component={ReactstrapInput}
@@ -256,14 +255,14 @@ class MainModal extends React.Component {
 						</FormGroup>
 
 						<CheckboxWithOthers
-							label="Expected Qualification"
+							label="Mindestqualifikation"
 							onValueChange={v => setFieldValue("qualification", v)}
 							options={qualificationOptions}
 						/>
 						<FormGroup row>
 							<Col>
 								<Field
-									label="Political Party Membership"
+									label="Bevorzugte Parteizugehörigkeit des Bewerbers"
 									name="partyMembership"
 									type="text"
 									component={ReactstrapInput}
@@ -273,7 +272,7 @@ class MainModal extends React.Component {
 						<FormGroup row>
 							<Col>
 								<Field
-									label="Location"
+									label="Ort"
 									name="location"
 									type="text"
 									component={ReactstrapInput}
@@ -281,7 +280,7 @@ class MainModal extends React.Component {
 							</Col>
 						</FormGroup>
 						<Label id="question-label">
-							Questions
+							Fragen an den Bewerber
 							<Icon name="question" />
 							<Tooltip
 								placement="right"

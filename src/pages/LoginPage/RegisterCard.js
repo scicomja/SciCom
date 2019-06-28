@@ -9,6 +9,7 @@ import {
 	Button
 } from "reactstrap"
 import PropTypes from "prop-types"
+import Locale from "../../locale"
 
 export default class RegisterCard extends React.Component {
 	static propTypes = {
@@ -19,13 +20,13 @@ export default class RegisterCard extends React.Component {
 		return (
 			<div className="center LoginRegisterBox">
 				<Card className="LoginRegisterCard">
-					<CardTitle style={style.title}>Register</CardTitle>
+					<CardTitle style={style.title}>{Locale.registerForm.title}</CardTitle>
 					<div style={style.buttonContainer}>
 						<Button
 							style={style.button}
 							block
 							onClick={this.props.onRegisterPolitician}>
-							As politician
+							{Locale.registerForm.politicianTitle}
 						</Button>
 					</div>
 					<div style={style.buttonContainer}>
@@ -33,7 +34,7 @@ export default class RegisterCard extends React.Component {
 							style={style.button}
 							block
 							onClick={this.props.onRegisterStudent}>
-							As student
+							{Locale.registerForm.studentTitle}
 						</Button>
 					</div>
 				</Card>

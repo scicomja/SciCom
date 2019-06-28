@@ -63,13 +63,13 @@ class LoginForm extends React.Component {
 										<Form.FormGroup
 											label="Username"
 											name="username"
-											placeholder="Username"
+											placeholder="Benutzername"
 											{...formikProps}
 										/>
 										<Form.FormGroup
 											label="Password"
 											name="password"
-											placeholder="password"
+											placeholder="Passwort"
 											type="password"
 											{...formikProps}
 										/>
@@ -85,7 +85,7 @@ class LoginForm extends React.Component {
 									<Button
 										onClick={this.toggleForgorPasswordPrompt.bind(this)}
 										color="link">
-										Forgot your password?
+										Passwort vegessen?
 									</Button>
 								</div>
 							)}
