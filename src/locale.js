@@ -29,6 +29,7 @@ const translation = {
 		internship: "Praktikum",
 		"quick-question": "Forumsfrage",
 		thesis: "Bachelorarbeit",
+		masterThesis: "Masterarbeit",
 		voluntary: "Freiwillige Tätigkeit"
 	},
 	projectStatus: {
@@ -227,7 +228,10 @@ const translation = {
 		nature: "Projektart",
 		salary: "Bezahlung",
 		date: "Frühester Starttermin",
-		chooseAnOption: "-- Bitte wählen Sie aus --"
+		chooseAnOption: "-- Bitte wählen Sie aus --",
+		requiredSalary: "Nur nach Projekten mit Bezahlung suchen",
+		notRequireSalary: "Nur nach Projekten ohne Bezahlung suchen",
+		salaryDoesNotMatter: "Nach allen Projekten suchen"
 	},
 	searchResultPage: {
 		searchResultFor: word => `Suchergebnisse für "${word}"`,

@@ -35,6 +35,7 @@ export const projectStatus = ["open", "active", "completed", "closed"]
 export const projectType = [
 	"internship",
 	"thesis",
+	"masterThesis",
 	"parttime",
 	"voluntary",
 	"quick-question"

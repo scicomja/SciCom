@@ -1,11 +1,11 @@
 import { authorizedGet, authorizedPost } from "./user"
 import { serverURL, projectType } from "../constants"
 import * as Yup from "yup"
-
+import Locale from "../locale"
 export const salaryOptions = {
-	REQUIRED: "Required",
-	NOT_REQUIRED: "Not Required",
-	DOES_NOT_MATTER: "Does not matter"
+	REQUIRED: Locale.searchPrompt.requiredSalary,
+	NOT_REQUIRED: Locale.searchPrompt.notRequireSalary,
+	DOES_NOT_MATTER: Locale.searchPrompt.salaryDoesNotMatter
 }
 
 export const initialValues = {

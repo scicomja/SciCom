@@ -352,7 +352,11 @@ class ProjectPage extends React.Component {
 							partyMembership,
 							"text-danger"
 						)}
-						{listItem("question", this.getName("nature"), _.startCase(nature))}
+						{listItem(
+							"question",
+							this.getName("nature"),
+							Locale.projectNature[nature]
+						)}
 						{listItem(
 							"tag",
 							this.getName("tags"),

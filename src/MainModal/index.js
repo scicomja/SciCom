@@ -179,7 +179,9 @@ class MainModal extends React.Component {
 								component={ReactstrapSelect}
 								inputprops={{
 									name: "nature",
-									options: ProjectNature.slice(0, ProjectNature.length - 1) // no quick-question here
+									options: ProjectNature.slice(0, ProjectNature.length - 1).map(
+										name => ({ id: name, name: Locale.projectNature[name] })
+									) // no quick-question here
 								}}
 							/>
 						</FormGroup>
