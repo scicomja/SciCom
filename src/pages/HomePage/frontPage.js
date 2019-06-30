@@ -22,6 +22,7 @@ import Icon from "../../components/icon"
 import ApplicationCard from "./applicationCard"
 import classnames from "classnames"
 import Section from "./Section"
+import Locale from "../../locale"
 
 class FrontPage extends React.Component {
 	constructor(props) {
@@ -93,7 +94,7 @@ class FrontPage extends React.Component {
 			<div style={style.container}>
 				<Container>
 					{isPolitician && projects && (
-						<Section title="Projects" icon="project">
+						<Section title={Locale.homePage.project} icon="project">
 							{this.projectList(projects)}
 						</Section>
 					)}
@@ -103,7 +104,7 @@ class FrontPage extends React.Component {
 						</Section>
 					)}
 					{isUserHimself && (
-						<Section icon="application" title="Applications">
+						<Section icon="application" title={Locale.homePage.applications}>
 							{this.applicationTab(applications)}
 						</Section>
 					)}

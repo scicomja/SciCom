@@ -1,14 +1,25 @@
 import React from "react"
 import PropTypes from "prop-types"
 import {
-	Modal, ModalHeader, ModalFooter, ModalBody,
-	FormGroup, Input, Alert, Label, Button
+	Modal,
+	ModalHeader,
+	ModalFooter,
+	ModalBody,
+	FormGroup,
+	Input,
+	Alert,
+	Label,
+	Button
 } from "reactstrap"
 
-import { withRouter } from 'react-router-dom'
+import { withRouter } from "react-router-dom"
 import { toast } from "react-toastify"
 
-import { requestResetPasswordVerificationCode, verifyAndResetPassword } from "../../../backend/user"
+import {
+	requestResetPasswordVerificationCode,
+	verifyAndResetPassword
+} from "../../../backend/user"
+import Locale from "../../../locale"
 
 class ForgorPasswordPrompt extends React.Component {
 	static propTypes = {
@@ -35,14 +46,14 @@ class ForgorPasswordPrompt extends React.Component {
 	async requestVerificationCode() {
 		const { email } = this.state
 		const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-		if(!emailRegex.test(email.toLowerCase())) {
-			this.setState({ error: "Invalid email address"})
+		if (!emailRegex.test(email.toLowerCase())) {
+			this.setState({ error: "Invalid email address" })
 			return false
 		}
 		try {
 			await requestResetPasswordVerificationCode(email)
 			return true
-		} catch(err) {
+		} catch (err) {
 			return false
 		}
 	}
@@ -55,8 +66,7 @@ class ForgorPasswordPrompt extends React.Component {
 			})
 			const { updated } = await response.json()
 			return updated
-
-		} catch(err) {
+		} catch (err) {
 			alert(JSON.stringify(err))
 			return false
 		}
@@ -67,11 +77,15 @@ class ForgorPasswordPrompt extends React.Component {
 
 	isFormValid() {
 		const { beforeEmailSent } = this.state
-		if(beforeEmailSent) {
+		if (beforeEmailSent) {
 			return this.state.email.length > 0
 		} else {
 			const { email, verificationCode, password, confirmPassword } = this.state
-			return verificationCode.length > 0 && password.length > 0 && password == confirmPassword
+			return (
+				verificationCode.length > 0 &&
+				password.length > 0 &&
+				password == confirmPassword
+			)
 		}
 	}
 
@@ -82,17 +96,18 @@ class ForgorPasswordPrompt extends React.Component {
 
 	// function for proceeding to the next step
 	async next() {
-		if(this.state.beforeEmailSent) {
+		if (this.state.beforeEmailSent) {
 			const hasRequestCodeSent = await this.requestVerificationCode()
-			if(hasRequestCodeSent) {
+			if (hasRequestCodeSent) {
 				this.setState({ beforeEmailSent: false, error: null })
 			}
-
 		} else {
 			// TODO: submit the form
 			const hasPasswordReset = await this.submitResetPasswordRequest()
-			if(!hasPasswordReset) {
-				this.setState({ error: "Cannot verify your token. Please close this popup and try again."})
+			if (!hasPasswordReset) {
+				this.setState({
+					error: Locale.resetPasswordPrompt.errorCodeMessage
+				})
 				return
 			}
 			// close the popup after two seconds
@@ -101,25 +116,19 @@ class ForgorPasswordPrompt extends React.Component {
 	}
 	notifyResetSuccessAndClosePopup() {
 		const timeToClose = 3000
-		toast.success(
-			"The password of your account has been reset. You can now log in with your new credentials",
-			{
-				autoClose: timeToClose
-			}
-		)
+		toast.success(Locale.resetPasswordPrompt.passwordResetSuccessfulText, {
+			autoClose: timeToClose
+		})
 		setTimeout(this.toggle.bind(this, true), timeToClose)
-
 	}
 	// the toClose flag indicates whether you want this popup to solely close
 	toggle(toClose = false) {
-		if(this.props.isOpen) {
+		if (this.props.isOpen) {
 			// clear the form before it is closed
 			this.setState(this.defaultState)
 		}
 		// if the popup means to be closed, toggle only when it is still open
 		this.props.toggle && this.props.toggle()
-
-
 	}
 
 	render() {
@@ -127,57 +136,62 @@ class ForgorPasswordPrompt extends React.Component {
 		const { isOpen } = this.props
 		return (
 			<Modal isOpen={isOpen} toggle={this.toggle.bind(this)}>
-				<ModalHeader>Reset your password </ModalHeader>
+				<ModalHeader>{Locale.resetPasswordPrompt.title}</ModalHeader>
 				<ModalBody>
+					{error && <Alert color="danger">{error}</Alert>}
 
-					{error && <Alert color="danger">{error}</Alert> }
-
-					<p>
-						Enter your email address of the account which you have forgot its password to receive an verification code.
-					</p>
+					<p>{Locale.resetPasswordPrompt.resetExplanation}</p>
 					<FormGroup>
-						<Label for="email">Email</Label>
+						<Label for="email">{Locale.resetPasswordPrompt.email}</Label>
 						<Input
 							id="email"
 							disabled={!beforeEmailSent}
 							name="email"
-							onChange={this.setField.bind(this, 'email')}
+							onChange={this.setField.bind(this, "email")}
 						/>
 					</FormGroup>
 					{!beforeEmailSent && (
-							<div>
-								<FormGroup>
-									<Label for="verificationCode">Verfication Code</Label>
-									<Input
-										id="verificationCode"
-										name="verificationCode"
-										onChange={this.setField.bind(this, 'verificationCode')}
-									/>
-								</FormGroup>
-								<FormGroup>
-									<Label for="password">Password</Label>
-									<Input
-										id="password"
-										type="password"
-										name="password"
-										onChange={this.setField.bind(this, 'password')}
-									/>
-								</FormGroup>
-								<FormGroup>
-									<Label for="confirmPassword">Confirm Password</Label>
-									<Input
-										id="confirmPassword"
-										type="password"
-										name="confirmPassword"
-										onChange={this.setField.bind(this, 'confirmPassword')}
-									/>
-								</FormGroup>
-							</div>
+						<div>
+							<FormGroup>
+								<Label for="verificationCode">
+									{Locale.resetPasswordPrompt.verificationCode}
+								</Label>
+								<Input
+									id="verificationCode"
+									name="verificationCode"
+									onChange={this.setField.bind(this, "verificationCode")}
+								/>
+							</FormGroup>
+							<FormGroup>
+								<Label for="password">
+									{Locale.resetPasswordPrompt.password}
+								</Label>
+								<Input
+									id="password"
+									type="password"
+									name="password"
+									onChange={this.setField.bind(this, "password")}
+								/>
+							</FormGroup>
+							<FormGroup>
+								<Label for="confirmPassword">
+									{Locale.resetPasswordPrompt.confirmPassword}
+								</Label>
+								<Input
+									id="confirmPassword"
+									type="password"
+									name="confirmPassword"
+									onChange={this.setField.bind(this, "confirmPassword")}
+								/>
+							</FormGroup>
+						</div>
 					)}
 				</ModalBody>
 				<ModalFooter>
 					<Button onClick={this.next.bind(this)} disabled={!this.isFormValid()}>
-						{ this.state.beforeEmailSent?"Request verification code":"Reset password"}
+						{this.state.beforeEmailSent
+							? Locale.resetPasswordPrompt.sendRequestCode
+							: Locale.resetPasswordPrompt.changePasswordText}
 					</Button>
 				</ModalFooter>
 			</Modal>

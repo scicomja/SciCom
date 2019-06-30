@@ -18,6 +18,8 @@ import {
 	ModalFooter
 } from "reactstrap"
 
+import Locale from "./locale"
+
 import logo from "./logo.png"
 import * as ModalActions from "./actions/modal"
 import * as SearchActions from "./actions/search"
@@ -38,7 +40,9 @@ class Header extends Component {
 		const { isPolitician } = this.props.user
 		return (
 			<NavItem>
-				<NavLink onClick={this.props.searchProjects}>Search</NavLink>
+				<NavLink onClick={this.props.searchProjects}>
+					{Locale.header.search}
+				</NavLink>
 			</NavItem>
 		)
 	}
@@ -53,13 +57,12 @@ class Header extends Component {
 					</NavItem>
 					<NavItem>
 						<NavLink href="/" onClick={this.props.logout}>
-							{" "}
-							Logout{" "}
+							{Locale.header.logout}
 						</NavLink>
 					</NavItem>
 
 					<NavItem>
-						<NavLink href="/about">Über uns</NavLink>
+						<NavLink href="/about">{Locale.header.aboutus}</NavLink>
 					</NavItem>
 				</Nav>
 			)
@@ -69,7 +72,7 @@ class Header extends Component {
 				<Nav className="ml-auto" navbar>
 					{this.getSearchNavItems()}
 					<NavItem>
-						<NavLink href="/about">Über uns</NavLink>
+						<NavLink href="/about">{Locale.header.aboutus}</NavLink>
 					</NavItem>
 				</Nav>
 			)

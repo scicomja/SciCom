@@ -47,7 +47,6 @@ const ProjectCard = function(props) {
 			body
 			inverse
 			color={customColor || "secondary"}
-			onClick={() => alert("click projec!")}
 			style={{ ...style.container, ...customStyle }}>
 			<CardTitle>
 				<div style={style.spread}>

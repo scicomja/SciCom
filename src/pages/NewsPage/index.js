@@ -3,6 +3,8 @@ import { withRouter } from "react-router-dom"
 import ProjectCard from "../../components/ProjectResultCard"
 import { getLatestProjects } from "../../backend/user"
 import { connect } from "react-redux"
+import Locale from "../../locale"
+
 class NewsPage extends React.Component {
 	constructor(props) {
 		super(props)
@@ -21,7 +23,7 @@ class NewsPage extends React.Component {
 	render() {
 		return (
 			<div style={style.container}>
-				<h2> Latest Projects</h2>
+				<h2>{Locale.newsPage.title}</h2>
 				{this.state.projects.map(project => (
 					<ProjectCard
 						onClick={() => this.props.history.push(`/project/${project._id}`)}

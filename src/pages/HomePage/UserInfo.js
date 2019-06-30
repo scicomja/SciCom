@@ -5,6 +5,7 @@ import Avatar from "../../components/Avatar"
 import Icon from "../../components/icon"
 import { getName } from "../../utils/user"
 import { cvURL } from "../../backend/user"
+import Locale from "../../locale"
 
 export default class UserInfo extends React.Component {
 	static propTypes = {
@@ -17,11 +18,12 @@ export default class UserInfo extends React.Component {
 
 		const { isPolitician } = props.user
 
-		this.fieldNameDict = {
-			workingPhone: "Phone (Office)",
-			position: "Political Position",
-			duty: "Job Duty"
-		}
+		// this.fieldNameDict = {
+		// 	workingPhone: "Phone (Office)",
+		// 	position: "Political Position",
+		// 	duty: "Job Duty"
+		// }
+		this.fieldNameDict = Locale.userAttributes
 	}
 	infoDetailRow({ name, value }) {
 		const arrayValue = "major".split(",") // fields that contain URL
@@ -76,7 +78,7 @@ export default class UserInfo extends React.Component {
 							{isUserHimself && (
 								<a href="/editInfo">
 									<Icon name="edit" />
-									Profil bearbeiten
+									{Locale.homePage.editProfile}
 								</a>
 							)}
 						</Row>
@@ -89,7 +91,7 @@ export default class UserInfo extends React.Component {
 										block
 										color="primary"
 										onClick={this.props.onCreateProject}>
-										Create Projects
+										{Locale.homePage.createProjectButton}
 									</Button>
 								</Col>
 							</Row>
@@ -99,7 +101,7 @@ export default class UserInfo extends React.Component {
 										block
 										color="primary"
 										onClick={this.props.onCreateQuickQuestion}>
-										Create quick questions
+										{Locale.homePage.createQuickQuestionButton}
 									</Button>
 								</Col>
 							</Row>
@@ -117,7 +119,7 @@ export default class UserInfo extends React.Component {
 						{user.CV &&
 							this.infoDetailRow({
 								name: "CV",
-								value: <a href={cvURL(user)}> Download </a>
+								value: <a href={cvURL(user)}> {Locale.homePage.download} </a>
 							})}
 					</div>
 				</Row>

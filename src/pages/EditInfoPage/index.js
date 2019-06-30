@@ -17,6 +17,7 @@ import {
 	Input,
 	Alert
 } from "reactstrap"
+import Locale from "../../locale"
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import ChangePasswordPopup from "./changePasswordPopup"
 import ChipsInput, { Chip } from "react-chips"
@@ -107,12 +108,13 @@ class EditInfoPage extends React.Component {
 			showChangePasswordPopup: false
 		})
 	}
-	textInput(label, name) {
+	textInput(name, required = false) {
+		const fieldName = Locale.userAttributes[name] + (required ? "(*)" : "")
 		return (
 			<Col>
 				<Field
 					name={name}
-					label={label}
+					label={fieldName}
 					type="text"
 					component={ReactstrapInput}
 				/>
@@ -154,16 +156,12 @@ class EditInfoPage extends React.Component {
 					<Row>
 						<Col>
 							<h1 style={style.header}>
-								<Icon name="edit" /> Modify your info
+								<Icon name="edit" /> {Locale.editInfoPage.title}
 							</h1>
 						</Col>
 					</Row>
 					{this.props.location.search.indexOf("block") > -1 && (
-						<Alert color="danger">
-							{" "}
-							You must fill in your personal information before using
-							Sci-com.org{" "}
-						</Alert>
+						<Alert color="danger">{Locale.editInfoPage.blockMessage}</Alert>
 					)}
 					<Row style={style.basicContainer}>
 						<Col
@@ -175,7 +173,9 @@ class EditInfoPage extends React.Component {
 								onClick={() => document.getElementById("avatar").click()}
 								src={temporaryAvatar}
 							/>
-							<p>Click to edit</p>
+							<p style={{ textAlign: "center" }}>
+								{Locale.editInfoPage.clickToEdit}
+							</p>
 						</Col>
 						<Col style={style.nameComponent}>
 							<Row>
@@ -192,7 +192,7 @@ class EditInfoPage extends React.Component {
 										block
 										style={style.changePasswordButton}
 										onClick={this.onEditPassword.bind(this)}>
-										Change Password
+										{Locale.editInfoPage.changePasswordButton}
 									</Button>
 								</Col>
 							</Row>
@@ -203,7 +203,8 @@ class EditInfoPage extends React.Component {
 										block
 										color="danger"
 										onClick={this.showAccountDeletePopup.bind(this)}>
-										<Icon name="trash" /> Delete Account
+										<Icon name="trash" />{" "}
+										{Locale.editInfoPage.deleteAccountButton}
 									</Button>
 								</Col>
 							</Row>
@@ -240,36 +241,35 @@ class EditInfoPage extends React.Component {
 										}}
 									/>
 									<FormGroup row>
-										{this.textInput("First Name(*)", "firstName")}
-										{this.textInput("Last Name(*)", "lastName")}
+										{this.textInput("firstName", true)}
+										{this.textInput("lastName", true)}
 									</FormGroup>
 									<FormGroup row>
-										{this.textInput("Phone(*)", "phone")}
-										{isPolitician &&
-											this.textInput("Working Phone", "workingPhone")}
+										{this.textInput("phone", true)}
+										{isPolitician && this.textInput("workingPhone")}
 
-										{this.textInput("Website", "website")}
-										{this.textInput("LinkedIn", "linkedIn")}
+										{this.textInput("website")}
+										{this.textInput("linkedIn")}
 									</FormGroup>
 									<FormGroup row>
 										<Col>
 											<Field
-												label="State(*)"
+												label={Locale.userAttributes.state + "(*)"}
 												name="state"
 												component={ReactstrapSelect}
 												inputprops={{
-													label: "State(*)",
+													label: Locale.userAttributes.state + "(*)",
 													options: germanStates
 												}}
 											/>
 										</Col>
-										{this.textInput("City(*)", "city")}
-										{this.textInput("PLZ(*)", "PLZ")}
+										{this.textInput("city", true)}
+										{this.textInput("PLZ", true)}
 									</FormGroup>
 									<FormGroup row>
 										<Col>
 											<div className="form-group">
-												<label for="CV">CV</label>
+												<label for="CV">{Locale.userAttributes.CV}</label>
 												<input
 													type="file"
 													name="CV"
@@ -279,14 +279,14 @@ class EditInfoPage extends React.Component {
 												/>
 											</div>
 										</Col>
-										{this.textInput("Title", "title")}
+										{this.textInput("title")}
 									</FormGroup>
 									{!isPolitician ? (
 										<FormGroup row>
 											<Col>
 												<Label for="major">Major</Label>
 												<Field
-													label="Major"
+													label={Locale.userAttributes.major}
 													name="major"
 													component={ChipsInput}
 													createChipKeys={[" ", "Enter"]}
@@ -294,14 +294,14 @@ class EditInfoPage extends React.Component {
 													onChange={v => setFieldValue("major", v)}
 												/>
 											</Col>
-											{this.textInput("University", "university")}
-											{this.textInput("Semester", "semester")}
+											{this.textInput("university")}
+											{this.textInput("semester")}
 										</FormGroup>
 									) : (
 										<FormGroup row>
-											{this.textInput("Party", "party")}
-											{this.textInput("Political Position", "position")}
-											{this.textInput("Job Duty", "duty")}
+											{this.textInput("party")}
+											{this.textInput("position")}
+											{this.textInput("duty")}
 										</FormGroup>
 									)}
 									<Button
@@ -309,7 +309,7 @@ class EditInfoPage extends React.Component {
 										disabled={!isValid || !dirty}
 										onClick={() => this.updateInfo(values)}
 										color="primary">
-										Update
+										{Locale.editInfoPage.saveButton}
 									</Button>
 								</Form>
 							)}

@@ -4,6 +4,7 @@ import Highlighter from "react-highlight-words"
 import Icon from "../components/icon"
 import * as moment from "moment"
 import { getName } from "../utils/user"
+import Locale from "../locale"
 
 export default class ProjectResultCard extends React.Component {
 	constructor(props) {
@@ -31,18 +32,34 @@ export default class ProjectResultCard extends React.Component {
 		const diff = moment.duration(now.diff(targetTime))
 		const formatNumber = num => Math.round(num)
 		if (diff.asMonths() > 1) {
-			return `vor ${Math.round(diff.asMonths())} Monaten`
+			const display = Math.round(diff.asMonths())
+			const plural = display > 1
+			return `vor ${Math.round(diff.asMonths())} ${Locale.newsPageCard.month(
+				plural
+			)}`
 		}
 		if (diff.asDays() > 1) {
-			return `vor ${Math.round(diff.asDays())} Tage`
+			const display = Math.round(diff.asDays())
+			const plural = display > 1
+			return `vor ${Math.round(diff.asDays())} ${Locale.newsPageCard.day(
+				plural
+			)}`
 		}
 		if (diff.asHours() > 1) {
-			return `vor ${Math.round(diff.asHours())} Stunden`
+			const display = Math.round(diff.asHours())
+			const plural = display > 1
+			return `vor ${Math.round(diff.asHours())} ${Locale.newsPageCard.hour(
+				plural
+			)}`
 		}
 		if (diff.asMinutes() > 1) {
-			return `vor ${Math.round(diff.asMinutes())} Minuten`
+			const display = Math.round(diff.asMinutes())
+			const plural = display > 1
+			return `vor ${Math.round(diff.asMinutes())} ${Locale.newsPageCard.minute(
+				plural
+			)}`
 		}
-		return "Recently"
+		return Locale.newsPageCard.recently
 	}
 
 	render() {
@@ -81,7 +98,9 @@ export default class ProjectResultCard extends React.Component {
 						<h5 style={style.name}>{project.title}</h5>
 					)}
 					<div style={style.detailContainer}>
-						<div style={style.detailCell}>{project.nature}</div>
+						<div style={style.detailCell}>
+							{Locale.projectNature[project.nature]}
+						</div>
 						<div style={style.detailCell}> {timeString}</div>
 						<div style={style.detailCell}>Ansprechpartner</div>
 						<div style={style.detailCell}>{getName(project.creator)}</div>
