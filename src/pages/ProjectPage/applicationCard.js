@@ -15,6 +15,7 @@ import UserChip from "../../components/userChip"
 import CenterNotice from "../../components/centerNotice"
 import { withRouter } from "react-router-dom"
 import { toast } from "react-toastify"
+import Locale from "../../locale"
 
 class ApplicationCard extends React.Component {
 	noApplicationsNotice() {
@@ -54,7 +55,9 @@ class ApplicationCard extends React.Component {
 			<Card body inverse color="secondary" style={style.container}>
 				<CardTitle>
 					<Icon name="edit" />
-					{isQuickQuestion ? "Answers" : "Applications"}
+					{isQuickQuestion
+						? Locale.projectPage.answers
+						: Locale.projectPage.applications}
 				</CardTitle>
 				<CardText>
 					{!applications || !applications.length

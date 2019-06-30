@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import UserResultCard from "./UserResultCard"
 import Icon from "../../components/icon"
 import CenterNotice from "../../components/centerNotice"
+import Locale from "../../locale"
 
 export default class ResultsList extends React.Component {
 	static propTypes = {
@@ -20,7 +21,11 @@ export default class ResultsList extends React.Component {
 					<h3 style={style.headerText}>{title}</h3>
 				</div>
 				<div style={style.resultsContainer}>
-					{!isEmpty ? children : <CenterNotice title="No results" />}
+					{!isEmpty ? (
+						children
+					) : (
+						<CenterNotice title={Locale.searchResultPage.noResults} />
+					)}
 				</div>
 			</div>
 		)

@@ -51,7 +51,6 @@ class Prompt extends React.Component {
 		}
 		// mark down the email address for email verification
 		const { email } = values
-		console.log("email in pending:", email)
 		this.setState({ pendingEmailAddress: email })
 
 		const result = this.props.register(payload)

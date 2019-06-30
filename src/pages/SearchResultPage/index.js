@@ -21,6 +21,8 @@ import Icon from "../../components/icon"
 import Avatar from "../../components/Avatar"
 import * as SearchActions from "../../actions/search"
 
+import Locale from "../../locale"
+
 import { toast } from "react-toastify"
 
 import ResultsList from "./ResultsList"
@@ -58,7 +60,7 @@ class SearchResultPage extends React.Component {
 			const results = await search(form, token, n)
 			this.setState({ results, page: n })
 		} catch (err) {
-			toast.error("Error occurred while performing search.")
+			toast.error(Locale.searchResultPage.errorWhileSearching)
 		}
 	}
 
@@ -72,7 +74,7 @@ class SearchResultPage extends React.Component {
 			<div style={style.container}>
 				<h3 style={style.header}>Suchergebnisse für "{searchTerm}"</h3>
 				<div style={style.innerContainer}>
-					<ResultsList title="Users" icon="user">
+					<ResultsList title={Locale.searchResultPage.users} icon="user">
 						{userResults.map(user => (
 							<UserResultCard
 								onClick={() => history.push(`/user/${user.username}`)}
@@ -81,7 +83,7 @@ class SearchResultPage extends React.Component {
 						))}
 					</ResultsList>
 
-					<ResultsList title="Projects" icon="gear">
+					<ResultsList title={Locale.searchResultPage.projects} icon="gear">
 						{projectResults.map(project => (
 							<ProjectResultCard
 								highlight={searchTerm}

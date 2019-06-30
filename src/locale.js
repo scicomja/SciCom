@@ -1,11 +1,30 @@
 /* Key: English, value: German */
 const translation = {
+	registration: {
+		registrationSuccess:
+			"Sie haben die Registrierung abgeschlossen, Sie werden nun auf die Startseite weitergeleitet...",
+		username: "Benutzername",
+		email: "Email-Adresse",
+		password: "Passwort",
+		confirmPassword: "Passwort bestätigen",
+		usernameRequired: "Benutzername benötigt",
+		passwordRequired: "Passwort benötigt",
+		emailRequired: "E-Mail benötigt",
+		confirmPasswordRequired: "Bitte bestätigen Sie das Passwort",
+		passwordNotMatchError: "Passwort nicht korrekt",
+		invalidEmailError: "Ungültige E-Mail-Adresse"
+	},
 	projectNature: {
 		parttime: "WerkstudentIn/ Teilzeitstelle",
 		internship: "Praktikum",
 		"quick-question": "Forumsfrage",
 		thesis: "Bachelorarbeit",
 		voluntary: "Freiwillige Tätigkeit"
+	},
+	projectStatus: {
+		open: "Offen",
+		closed: "geschlossen",
+		completed: "Abgeschlossen"
 	},
 	userAttributes: {
 		firstName: "Vorname",
@@ -48,8 +67,13 @@ const translation = {
 		changePasswordButton: "Passwort ändern",
 		deleteAccountButton: "Account löschen",
 		saveButton: "Speichern",
+		phoneNumberFormatError: "Telefonnummer hat ein ungültiges Format",
+		plzError: "Postleitzahl sollte 5 Ziffern lang sein",
+		positionError: "Die Politische Position muss länger als fünf Zeichen sein.",
 		blockMessage:
-			"Sie müssen die benötigten persönlichen Informationen (mit einem * markiert) eingeben, bevor Sie sci-com.org nutzen können."
+			"Sie müssen die benötigten persönlichen Informationen (mit einem * markiert) eingeben, bevor Sie sci-com.org nutzen können.",
+		updateFailError:
+			"Profiländerung kann nicht gespeichert werden. Bitte überprüfen Sie den Dateityp ihres Lebenslaufes und versuchen Sie es in ein paar Minuten erneut."
 	},
 	loginForm: {
 		username: "Ihren Benutzername",
@@ -102,7 +126,7 @@ const translation = {
 		tags: "Suchtags (bitte mit Komma trennen)",
 		salary: "Gehalt (€ pro Monat)",
 		workingHours: "Arbeitszeit (pro Woche)",
-		qualication: "Mindestqualifikation",
+		qualication: "Vorausgesetzte Qualifikation",
 		partyMembership: "Bevorzugte Parteizugehörigkeit des Bewerbers",
 		location: "Ort",
 		question: "Fragen an den Bewerber",
@@ -121,7 +145,45 @@ const translation = {
 		ask: "Frage abschicken",
 		update: "Update"
 	},
-	projectPage: {},
+	projectPage: {
+		edit: "Bearbeiten",
+		salary: "Bezahlung",
+		workingHours: "Arbeitsstunden",
+		tags: "Projekttags",
+
+		closed: "closed",
+		markAsClosed: "Als ‚geschlossen‘ markieren",
+		markAsCompleted: "Mark as Completed",
+		reopen: "Projekt wieder öffnen",
+
+		addToBookmark: "Als Lesezeichen speichern",
+		removeBookmark: "Lesezeichen entfernen",
+
+		changesSaved: "Änderung gespeichert",
+
+		apply: "Bewerben",
+		unapply: "Bewerbung zurückziehen",
+
+		delete: "Löschen",
+		party: "Präferierte Parteizugehörigkeit",
+		none: "Keine",
+		answers: "Antworten",
+		applications: "Bewerbungen",
+		noApplicationsFound: "keine Bewerbungen vorhanden",
+		about: "Projektbeschreibung",
+		creator: "Ersteller"
+	},
+	applicationDetailsPopup: {
+		title: name => `Bewerbung von ${name} Angenommen`,
+		accepted: "Angenommen",
+		accept: "Annehmen",
+		reject: "Ablehnen",
+		rejected: "Abgelehnt",
+		answersToQuestion: "Antworten auf die Fragen",
+		applicant: "Bewerber",
+		acceptedMessage: "Diese Bewerbung wurde angenommen.",
+		rejectedMessage: "Diese Bewerbung wurde abgelehnt."
+	},
 	homePage: {
 		project: "Projekte",
 		applications: "Bewerbungen",
@@ -139,6 +201,22 @@ const translation = {
 		salary: "Bezahlung",
 		date: "Frühester Starttermin",
 		chooseAnOption: "-- Bitte wählen Sie aus --"
+	},
+	searchResultPage: {
+		searchResultFor: word => `Suchergebnisse für "${word}"`,
+		users: "Benutzer",
+		noResults: "Keine Ergebnisse",
+		projects: "Projekte",
+		errorWhileSearching:
+			"Ein Fehler ist bei der Suche aufgetreten. Bitte versuchen Sie es in ein paar Minuten erneut."
+	},
+	confirmDeletePopup: {
+		projectDeleted: "Projekt gelöscht",
+		title: "Bestätigung der Projektlöschung",
+		description:
+			"Sie sind gerade dabei, dieses Projekt und alle damit verbundenen Bewerbungen und Lesezeichen zu löschen.",
+		delete: "Projekt löschen",
+		cancel: "Abbrechen"
 	}
 }
 

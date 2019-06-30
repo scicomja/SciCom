@@ -27,6 +27,8 @@ import Icon from "../../components/icon"
 import Avatar from "../../components/Avatar"
 import { Field, Form } from "formik"
 import { ReactstrapInput } from "reactstrap-formik"
+import Locale from "../../locale"
+
 class ApplicationDetails extends React.Component {
 	constructor(props) {
 		super(props)
@@ -39,14 +41,14 @@ class ApplicationDetails extends React.Component {
 		return (
 			<a href={`/user/${username}`}>
 				<div style={style.applicantCard}>
-					Applicant
+					{Locale.applicationDetailsPopup.applicant}
 					<div style={style.applicantCardInner}>
 						<Avatar user={applicant} />
 
 						<div style={{ flex: 1, marginLeft: 8 }}>{displayName}</div>
 						{CV && (
 							<Button href={cvURL(applicant)}>
-								<Icon name="download" /> CV
+								<Icon name="download" /> {Locale.userAttributes.CV}
 							</Button>
 						)}
 					</div>
@@ -93,18 +95,18 @@ class ApplicationDetails extends React.Component {
 				<ModalHeader toggle={onClose}>
 					<div style={style.header}>
 						<div style={{ flex: 1, marginRight: 8 }}>
-							Application of {getName(applicant)}
+							{Locale.applicationDetailsPopup.title(getName(applicant))}
 						</div>
 
 						{status == "pending" && (
 							<div>
 								<Button onClick={this.accept.bind(this)} color="success">
 									<Icon name="check" />
-									Accept
+									{Locale.applicationDetailsPopup.accept}
 								</Button>{" "}
 								<Button onClick={this.reject.bind(this)} color="danger">
 									<Icon name="remove" />
-									Reject
+									{Locale.applicationDetailsPopup.reject}
 								</Button>
 							</div>
 						)}
@@ -112,7 +114,7 @@ class ApplicationDetails extends React.Component {
 							<div>
 								<Button disabled color="success">
 									<Icon name="check" />
-									Accepted
+									{Locale.applicationDetailsPopup.accepted}
 								</Button>
 							</div>
 						)}
@@ -120,7 +122,7 @@ class ApplicationDetails extends React.Component {
 							<div>
 								<Button disabled color="danger">
 									<Icon name="remove" />
-									Rejected
+									{Locale.applicationDetailsPopup.rejected}
 								</Button>
 							</div>
 						)}
@@ -134,7 +136,7 @@ class ApplicationDetails extends React.Component {
 						{Object.keys(answers).length > 0 && (
 							<Row>
 								<Col>
-									<h4>Answers to questions</h4>
+									<h4>{Locale.applicationDetailsPopup.answersToQuestion}</h4>
 									<Form>
 										{Object.keys(answers).map(question =>
 											this.answerComponent({

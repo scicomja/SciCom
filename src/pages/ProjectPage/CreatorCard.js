@@ -4,9 +4,15 @@ import { Card, CardTitle, CardText, Container, Row, Col } from "reactstrap"
 import Avatar from "../../components/Avatar"
 import { avatarURL } from "../../utils/requests"
 import Icon from "../../components/icon"
+import Locale from "../../locale"
+
 class CreatorCard extends React.Component {
 	render() {
-		const { creator, history, cardTitle = "Creator" } = this.props
+		const {
+			creator,
+			history,
+			cardTitle = Locale.projectPage.creator
+		} = this.props
 		const { title, username } = creator
 		const getName = ({ firstName, lastName, username }) => {
 			if (!firstName && !lastName) return username

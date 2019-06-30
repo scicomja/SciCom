@@ -41,6 +41,8 @@ import ApplyApplicationPopup from "./ApplyApplicationPopup"
 import ConfirmDeletePopup from "./ConfirmDeletePopup"
 import moment from "moment"
 import * as _ from "lodash"
+import Locale from "../../locale"
+
 /*
   Display details of the project
   for politician:
@@ -102,7 +104,6 @@ class ProjectPage extends React.Component {
 			const result = await func(this.state.project, this.props.token)
 			window.location.reload()
 		} catch (err) {
-			console.log("err")
 			toast("Error occured:" + err.message, {
 				position: toast.POSITION.BOTTOM_RIGHT
 			})
@@ -157,7 +158,7 @@ class ProjectPage extends React.Component {
 				this.props.token
 			)
 			// we bookmarked it!
-			toast.success("changes saved", {
+			toast.success(Locale.projectPage.changesSaved, {
 				position: toast.POSITION.BOTTOM_RIGHT
 			})
 			this.props.refreshUserInfo()
@@ -171,7 +172,7 @@ class ProjectPage extends React.Component {
 		this.showConfirmDeletePopup()
 		try {
 			const result = await deleteProject(this.state.project, this.props.token)
-			toast.success("Project deleted", {
+			toast.success(Locale.confirmDeletePopup.projectDeleted, {
 				position: toast.POSITION.BOTTOM_RIGHT
 			})
 			window.location.reload()
@@ -197,7 +198,9 @@ class ProjectPage extends React.Component {
 						onClick={this.applyProject.bind(this)}
 						color={hasAppliedThis ? "danger" : "primary"}>
 						<Icon name={hasAppliedThis ? "remove" : "add"} />
-						{hasAppliedThis ? "Un-apply" : "Apply"}
+						{hasAppliedThis
+							? Locale.projectPage.unapply
+							: Locale.projectPage.apply}
 					</Button>
 					<Button
 						style={style.actionButton}
@@ -207,7 +210,9 @@ class ProjectPage extends React.Component {
 						onClick={this.bookmarkProject.bind(this)}
 						color="info">
 						<Icon name="bookmark" />{" "}
-						{this.hasBookmarkedThis() ? "Remove bookmark" : "Add to Bookmark"}
+						{this.hasBookmarkedThis()
+							? Locale.projectPage.removeBookmark
+							: Locale.projectPage.addToBookmark}
 					</Button>
 				</div>
 			)
@@ -226,7 +231,7 @@ class ProjectPage extends React.Component {
 						size="md"
 						onClick={this.editProject.bind(this)}
 						color="info">
-						Edit
+						{Locale.projectPage.edit}
 					</Button>
 					<Button
 						block
@@ -234,7 +239,9 @@ class ProjectPage extends React.Component {
 						onClick={this.closeProject.bind(this)}
 						size="md"
 						color="danger">
-						{status != "closed" ? "Mark as closed" : "Reopen the project"}
+						{status != "closed"
+							? Locale.projectPage.markAsClosed
+							: Locale.projectPage.reopen}
 					</Button>
 					{status == "closed" && (
 						<Button
@@ -243,7 +250,7 @@ class ProjectPage extends React.Component {
 							size="md"
 							color="info"
 							onClick={this.completeProject.bind(this)}>
-							Mark as Completed
+							{Locale.projectPage.markAsCompleted}
 						</Button>
 					)}
 					<Button
@@ -252,7 +259,7 @@ class ProjectPage extends React.Component {
 						size="md"
 						color="danger"
 						onClick={this.showConfirmDeletePopup.bind(this)}>
-						Delete
+						{Locale.projectPage.delete}
 					</Button>
 				</div>
 			)
@@ -281,6 +288,10 @@ class ProjectPage extends React.Component {
 			</div>
 		)
 	}
+	getName(name) {
+		return Locale.projectPage[name] || Locale.projectForm[name] || name
+	}
+
 	infoCard({
 		_id,
 		salary,
@@ -307,37 +318,44 @@ class ProjectPage extends React.Component {
 				</h5>
 			</ListGroupItem>
 		)
+		// fall back for the names
+
 		return (
 			<Card style={style.infoCard} body inverse color={color}>
 				<CardTitle>
-					<Icon name="info" /> <b>About</b>
+					<Icon name="info" /> <b>{Locale.projectPage.about}</b>
 				</CardTitle>
 				<CardText>
 					<ListGroup flush style={{ backgroundColor: color }}>
-						{listItem("money", "Salary", `${salary}€ / Monat`, "text-success")}
+						{listItem(
+							"money",
+							this.getName("salary"),
+							`${salary}€ / Monat`,
+							"text-success"
+						)}
 						{listItem(
 							"loading",
-							"Working Hours",
+							this.getName("workingHours"),
 							`${workingHours} Stunden / Woche`,
 							"text-warning"
 						)}
-						{listItem("map-pin", "Location", location)}
+						{listItem("map-pin", this.getName("location"), location)}
 						{listItem(
 							"male",
-							"Expected Qualification",
+							this.getName("qualication"),
 							qualification,
 							"text-danger"
 						)}
 						{listItem(
 							"bank",
-							"Required Political Party Membership",
+							this.getName("party"),
 							partyMembership,
 							"text-danger"
 						)}
-						{listItem("question", "Project Type", _.startCase(nature))}
+						{listItem("question", this.getName("nature"), _.startCase(nature))}
 						{listItem(
 							"tag",
-							"Topics",
+							this.getName("tags"),
 							<div style={style.secondaryInfo}>
 								<h5>
 									<b>
@@ -348,7 +366,7 @@ class ProjectPage extends React.Component {
 												</Badge>
 											))
 										) : (
-											<h5>None</h5>
+											<h5>{Locale.projectPage.none}</h5>
 										)}
 									</b>
 								</h5>
@@ -368,7 +386,9 @@ class ProjectPage extends React.Component {
 		return (
 			<Card style={style.descriptionCard} body inverse color="secondary">
 				<CardTitle>
-					<Icon name="pencil" /> <b>Description</b>
+					<Icon name="pencil" />
+					{this.getName("description")}
+					<b />
 				</CardTitle>
 				<CardText>{description}</CardText>
 			</Card>

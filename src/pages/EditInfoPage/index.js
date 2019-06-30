@@ -48,11 +48,11 @@ class EditInfoPage extends React.Component {
 			firstName: Yup.string().required(),
 			lastName: Yup.string().required(),
 			phone: Yup.string()
-				.matches(phoneRegex, "Phone number has invalid format")
+				.matches(phoneRegex, Locale.editInfoPage.phoneNumberFormatError)
 				.required(),
 			workingPhone: Yup.string().matches(
 				phoneRegex,
-				"Phone number has invalid format"
+				Locale.editInfoPage.phoneNumberFormatError
 			),
 			party: Yup.string(),
 			duty: Yup.string(),
@@ -67,13 +67,13 @@ class EditInfoPage extends React.Component {
 				.oneOf(germanStates)
 				.required(),
 			PLZ: Yup.string()
-				.matches(/^\d{5}$/, "PLZ should be 5 digits")
+				.matches(/^\d{5}$/, Locale.editInfoPage.plzError)
 				.required(),
 
 			title: Yup.string(),
 			major: Yup.array().of(Yup.string()),
 			university: Yup.string(),
-			position: Yup.string().min(5, "position too short")
+			position: Yup.string().min(5, Locale.editInfoPage.positionError)
 		}
 		this.validationSchema = Yup.object().shape(this.rawSchema)
 	}
@@ -95,7 +95,7 @@ class EditInfoPage extends React.Component {
 			this.props.updateInfo(result)
 			this.props.history.push("/")
 		} catch (err) {
-			toast.error(err.message)
+			toast.error(Locale.editInfoPage.updateFailError)
 		}
 	}
 	onEditPassword() {

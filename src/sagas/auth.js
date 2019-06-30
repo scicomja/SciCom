@@ -7,7 +7,7 @@ import { authorizedRequestGet } from "../utils/requests"
 import * as LoginActions from "actions/auth"
 import * as AuthActions from "actions/auth"
 import { toast } from "react-toastify"
-
+import Locale from "../locale"
 export function* getUser() {
 	const user = yield call(authorizedRequestGet, `${serverURL}/user`)
 	return user
@@ -80,12 +80,9 @@ export function* verifyEmail({ email, token }) {
 	)
 	// if there are tokens returned, that means the verification process is completed.
 	if (loginToken) {
-		toast.success(
-			"You have completed the registration, you will be redirected to the home page...",
-			{
-				autoClose: 2000
-			}
-		)
+		toast.success(Locale.registration.registrationSuccess, {
+			autoClose: 2000
+		})
 		yield call(delay, 2000)
 		yield call(markLogin, loginToken, "/editInfo") // force the user to go editInfo page right after register
 	} else {
@@ -95,7 +92,6 @@ export function* verifyEmail({ email, token }) {
 		})
 	}
 }
-
 
 export function* refreshUserInfo() {
 	const user = yield call(getUser)

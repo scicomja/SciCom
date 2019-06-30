@@ -20,7 +20,7 @@ import {
 	DropdownMenu,
 	DropdownItem
 } from "reactstrap"
-import DatePicker from "react-datepicker"
+import DatePicker, { registerLocale } from "react-datepicker"
 import {
 	ModalMode,
 	germanStates,
@@ -48,7 +48,6 @@ import Locale from "./locale"
 class SearchModal extends React.Component {
 	constructor(props) {
 		super(props)
-
 		this.state = {
 			isProjectNatureDropdownOpen: false,
 			isSalaryDropdownOpen: false

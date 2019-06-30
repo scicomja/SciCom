@@ -36,25 +36,25 @@ class RegisterForm extends React.Component {
 		return [
 			{
 				type: "text",
-				label: "Benutzername",
+				label: Locale.registration.username,
 				fieldName: "username",
 				placeholder: "Benutzername"
 			},
 			{
 				type: "email",
-				label: "Bitte Passwort bestätigen",
+				label: Locale.registration.email,
 				fieldName: "email",
 				placeholder: "email"
 			},
 			{
 				type: "password",
-				label: "Bitte Passwort bestätigen",
+				label: Locale.registration.password,
 				fieldName: "password",
 				placeholder: "Passwort"
 			},
 			{
 				type: "password",
-				label: "Bitte Passwort bestätigen",
+				label: Locale.registration.confirmPassword,
 				fieldName: "confirmPassword",
 				placeholder: "Confirm Password"
 			}
@@ -102,7 +102,7 @@ class RegisterForm extends React.Component {
 			formikProps,
 			error
 		} = this.props
-
+		console.log("formit props", formikProps)
 		return (
 			<div {...this.props}>
 				<ModalHeader toggle={toggle}>
