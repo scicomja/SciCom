@@ -2,6 +2,7 @@ import React from "react"
 import { Button } from "reactstrap"
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import { ReactstrapInput, ReactstrapSelect } from "reactstrap-formik"
+import Locale from "../locale"
 
 import {
 	quickQuestionInitalValues,
@@ -25,13 +26,13 @@ export default function({ content, onSubmit }) {
 				<Form>
 					<Field
 						name="title"
-						label="Title"
+						label={Locale.quickQuestionPrompt.title}
 						type="text"
 						component={ReactstrapInput}
 					/>
 					<Field
 						type="textarea"
-						label="Description"
+						label={Locale.quickQuestionPrompt.description}
 						name="description"
 						component={ReactstrapInput}
 					/>
@@ -41,7 +42,9 @@ export default function({ content, onSubmit }) {
 						onClick={() => onSubmit(values)}
 						disabled={isSubmitting || !_.isEmpty(errors) || !dirty || !isValid}
 						type="submit">
-						{!!content ? "Update" : "Ask"}
+						{!!content
+							? Locale.quickQuestionPrompt.update
+							: Locale.quickQuestionPrompt.ask}
 					</Button>
 				</Form>
 			)}

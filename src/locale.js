@@ -62,6 +62,15 @@ const translation = {
 		politicianTitle: "Als PolitikerIn registrieren",
 		studentTitle: "Als StudentIn registrieren"
 	},
+	changePasswordPrompt: {
+		title: "Passwort ändern",
+		originalPassword: "Altes Passwort",
+		newPassword: "Neues Passwort",
+		confirmPassword: "Neues Passwort bestätigen",
+
+		changePasswordButton: "Passwort ändern",
+		cancelButton: "Abbrechen"
+	},
 	resetPasswordPrompt: {
 		title: "Passwort zurücksetzen",
 		resetExplanation:
@@ -98,16 +107,38 @@ const translation = {
 		location: "Ort",
 		question: "Fragen an den Bewerber",
 		questionExplaination:
-			"Bitte geben Sie Ihre Fragen an die Bewerber an. Sie finden die Antworten bei der zugehörigen Bewerbung. Sie können die Fragen nicht ändern nachdem das Projekt erstellt wurden. "
+			"Bitte geben Sie Ihre Fragen an die Bewerber an. Sie finden die Antworten bei der zugehörigen Bewerbung. Sie können die Fragen nicht ändern nachdem das Projekt erstellt wurden. ",
+		addAQuestionButton: "Frage hinzufügen",
+		submitButton: "Projekt erstellen",
+		questionPlaceholder: "Fragen an den Bewerber...",
+		add: "Hinzufügen",
+		cancel: "Abbrechen",
+		updateButton: "Frage ändern"
 	},
-
+	quickQuestionPrompt: {
+		title: "Fragestellung",
+		description: "Detaillierte Beschreibung",
+		ask: "Frage abschicken",
+		update: "Update"
+	},
 	projectPage: {},
 	homePage: {
 		project: "Projekte",
 		applications: "Bewerbungen",
+		bookmarks: "Lesezeichen",
 		editProfile: "Profil bearbeiten",
 		createProjectButton: "Projekt erstellen",
 		createQuickQuestionButton: "Forumsfrage erstellen"
+	},
+	searchPrompt: {
+		searchTerm: "Suchanfrage",
+		searchTermPlaceholder:
+			"Suchanfrage (Name, Projekttitel, Studienfach, etc...)",
+		search: "Suche",
+		nature: "Projektart",
+		salary: "Bezahlung",
+		date: "Frühester Starttermin",
+		chooseAnOption: "-- Bitte wählen Sie aus --"
 	}
 }
 

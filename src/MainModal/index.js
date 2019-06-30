@@ -324,7 +324,7 @@ class MainModal extends React.Component {
 									})
 								}
 								color="info">
-								<Icon name="plus" /> Add a question
+								<Icon name="plus" /> {Locale.projectForm.addAQuestionButton}
 							</Button>
 						)}
 						<Button
@@ -334,7 +334,9 @@ class MainModal extends React.Component {
 							}
 							type="submit"
 							style={style.submitButton}>
-							{!!content ? "Update" : "Submit"}
+							{!!content
+								? Locale.projectForm.updateButton
+								: Locale.projectForm.submitButton}
 						</Button>
 					</Form>
 				)}

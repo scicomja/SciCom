@@ -43,6 +43,7 @@ import * as Yup from "yup"
 import * as SearchActions from "./actions/search"
 import moment from "moment"
 import * as _ from "lodash"
+import Locale from "./locale"
 
 class SearchModal extends React.Component {
 	constructor(props) {
@@ -77,7 +78,7 @@ class SearchModal extends React.Component {
 		return (
 			<Modal isOpen={isModalOpen} toggle={close}>
 				<ModalHeader toggle={close}>
-					<Icon name="search" /> Search
+					<Icon name="search" /> {Locale.searchPrompt.search}
 				</ModalHeader>
 				<ModalBody>
 					<Formik
@@ -88,9 +89,11 @@ class SearchModal extends React.Component {
 						{({ values, errors, dirty, setFieldValue, submitForm }) => (
 							<Form style={style.formContainer}>
 								<FormGroup>
-									<Label for="searchTerm">Search Words</Label>
+									<Label for="searchTerm">
+										{Locale.searchPrompt.searchTerm}
+									</Label>
 									<Input
-										placeholder="search words (username, project title, etc...)"
+										placeholder={Locale.searchPrompt.searchTermPlaceholder}
 										tag={Field}
 										name="searchTerm"
 										type="text"
@@ -98,7 +101,7 @@ class SearchModal extends React.Component {
 								</FormGroup>
 
 								<FormGroup>
-									<Label for="type">Project nature</Label>
+									<Label for="type">{Locale.searchPrompt.nature}</Label>
 
 									<Dropdown
 										isOpen={this.state.isProjectNatureDropdownOpen}
@@ -106,11 +109,11 @@ class SearchModal extends React.Component {
 										<DropdownToggle caret>
 											{values.type
 												? projectTypeDict[values.type]
-												: "-- Choose an option --"}
+												: Locale.searchPrompt.chooseAnOption}
 										</DropdownToggle>
 										<DropdownMenu>
 											<DropdownItem onClick={() => setFieldValue("type", null)}>
-												-- Choose an option --
+												{Locale.searchPrompt.chooseAnOption}
 											</DropdownItem>
 											{Object.keys(projectTypeDict).map(value => (
 												<DropdownItem
@@ -123,7 +126,7 @@ class SearchModal extends React.Component {
 								</FormGroup>
 
 								<FormGroup>
-									<Label for="salary">Salary</Label>
+									<Label for="salary">{Locale.searchPrompt.salary}</Label>
 
 									<Dropdown
 										isOpen={this.state.isSalaryDropdownOpen}
@@ -131,7 +134,7 @@ class SearchModal extends React.Component {
 										<DropdownToggle caret>
 											{values.salary
 												? salaryOptions[values.salary]
-												: "-- Choose an option --"}
+												: Locale.searchPrompt.chooseAnOption}
 										</DropdownToggle>
 										<DropdownMenu>
 											<DropdownItem
@@ -148,7 +151,8 @@ class SearchModal extends React.Component {
 									</Dropdown>
 								</FormGroup>
 								<FormGroup>
-									<Label for="date">Project Date </Label>
+									<Label for="date">{Locale.searchPrompt.date}</Label>
+									<br />
 									<DatePicker
 										name="date"
 										placeholder="Date after"
@@ -163,7 +167,7 @@ class SearchModal extends React.Component {
 									/>
 								</FormGroup>
 								<Button disabled={!dirty || !_.isEmpty(errors)} type="submit">
-									Search
+									{Locale.searchPrompt.search}
 								</Button>
 							</Form>
 						)}

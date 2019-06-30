@@ -1,6 +1,7 @@
 import React from "react"
 import { Card, CardBody, Button } from "reactstrap"
 import Icon from "../components/icon"
+import Locale from "../locale"
 
 const style = {
 	questionCardContent: {
@@ -68,7 +69,7 @@ export default function({
 			{editing && (
 				<CardBody style={style.questionInputContainer}>
 					<input
-						placeholder="Question to ask the applicants..."
+						placeholder={Locale.projectForm.questionPlaceholder}
 						onChange={e => onEditQuestionChange(e.target.value)}
 					/>
 					<div style={style.addQuestionButtonGroup}>
@@ -84,7 +85,7 @@ export default function({
 									setFieldValue
 								})
 							}>
-							Add
+							{Locale.projectForm.add}
 						</Button>
 						<Button
 							style={{
@@ -92,7 +93,7 @@ export default function({
 								backgroundColor: "rgb(200,200,200)"
 							}}
 							onClick={() => onEditQuestionChange(null)}>
-							Cancel
+							{Locale.projectForm.cancel}
 						</Button>
 					</div>
 				</CardBody>

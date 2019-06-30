@@ -88,8 +88,6 @@ class FrontPage extends React.Component {
 	render() {
 		const { isPolitician, bookmarks, applications, projects } = this.props.user
 		const { isUserHimself } = this.props
-		console.log("front page", this.props.user)
-		// students' front page
 		return (
 			<div style={style.container}>
 				<Container>
@@ -99,7 +97,7 @@ class FrontPage extends React.Component {
 						</Section>
 					)}
 					{!isPolitician && bookmarks && isUserHimself && (
-						<Section icon="bookmark" title="Bookmarks">
+						<Section icon="bookmark" title={Locale.homePage.bookmarks}>
 							{this.bookmarkTab(bookmarks)}
 						</Section>
 					)}
