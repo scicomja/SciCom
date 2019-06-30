@@ -165,7 +165,7 @@ const translation = {
 
 		closed: "closed",
 		markAsClosed: "Als ‚geschlossen‘ markieren",
-		markAsCompleted: "Mark as Completed",
+		markAsCompleted: "Als ‚abgeschlossen‘ markieren",
 		reopen: "Projekt wieder öffnen",
 
 		addToBookmark: "Als Lesezeichen speichern",
