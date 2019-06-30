@@ -44,12 +44,14 @@ class EditInfoPage extends React.Component {
 			showChangePasswordPopup: false
 		}
 		const phoneRegex = /^((\+49)|(00))?\ ?[\d]{3,4}\ ?[\d]{6,8}$/
+		const requiredFieldError = name =>
+			Locale.editInfoPage.fieldRequiredError(Locale.userAttributes[name])
 		this.rawSchema = {
-			firstName: Yup.string().required(),
-			lastName: Yup.string().required(),
+			firstName: Yup.string().required(requiredFieldError("firstName")),
+			lastName: Yup.string().required(requiredFieldError("lastName")),
 			phone: Yup.string()
 				.matches(phoneRegex, Locale.editInfoPage.phoneNumberFormatError)
-				.required(),
+				.required(requiredFieldError("phone")),
 			workingPhone: Yup.string().matches(
 				phoneRegex,
 				Locale.editInfoPage.phoneNumberFormatError
@@ -62,13 +64,13 @@ class EditInfoPage extends React.Component {
 			avatar: Yup.mixed(),
 			linkedIn: Yup.string(),
 
-			city: Yup.string().required(),
+			city: Yup.string().required(requiredFieldError("city")),
 			state: Yup.string()
 				.oneOf(germanStates)
 				.required(),
 			PLZ: Yup.string()
 				.matches(/^\d{5}$/, Locale.editInfoPage.plzError)
-				.required(),
+				.required(requiredFieldError("PLZ")),
 
 			title: Yup.string(),
 			major: Yup.array().of(Yup.string()),

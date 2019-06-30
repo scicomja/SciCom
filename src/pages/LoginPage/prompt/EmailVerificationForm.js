@@ -11,7 +11,7 @@ import {
 } from "reactstrap"
 import Icon from "components/icon"
 import EnterKeyListener from "components/EnterKeyListener"
-
+import Locale from "../../../locale"
 import PropTypes from "prop-types"
 import { Formik, Field, ErrorMessage } from "formik"
 
@@ -42,20 +42,21 @@ class EmailVerificationForm extends React.Component {
 
 		return (
 			<div {...this.props}>
-				<ModalHeader toggle={toggle}>Verify your email address</ModalHeader>
+				<ModalHeader toggle={toggle}>
+					{Locale.emailVerification.verifyEmailAddress}
+				</ModalHeader>
 
 				<ModalBody>
-					<p>
-						Enter the code in the email address we have sent you to complete the
-						registration.
-					</p>
+					<p>{Locale.emailVerification.description}</p>
 					{error && (
 						<Alert color="danger">
-							Verification failed. Please check your token and try again.
+							{Locale.emailVerification.verificationCodeError}
 						</Alert>
 					)}
 					<FormGroup horizontal>
-						<Label for="code"> Verification Code: </Label>
+						<Label for="code">
+							{Locale.emailVerification.verificationCode}
+						</Label>
 						<Input
 							id="code"
 							name="code"
@@ -66,13 +67,14 @@ class EmailVerificationForm extends React.Component {
 
 				<ModalFooter style={style.buttonGroupContainer}>
 					<Button onClick={onReturnToRegistration} color="link">
-						<Icon name="arrow-left" /> Return to Registration
+						<Icon name="arrow-left" />{" "}
+						{Locale.emailVerification.returnToRegistration}
 					</Button>
 
 					<Button
 						disabled={!verificationCode}
 						onClick={() => verify(verificationCode)}>
-						Verify
+						{Locale.emailVerification.verify}
 					</Button>
 				</ModalFooter>
 			</div>

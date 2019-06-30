@@ -14,6 +14,16 @@ const translation = {
 		passwordNotMatchError: "Passwort nicht korrekt",
 		invalidEmailError: "Ungültige E-Mail-Adresse"
 	},
+	emailVerification: {
+		verifyEmailAddress: "E-Mail-Adresse verifizieren",
+		description:
+			"Bitte geben Sie den Code, der an Ihre angegebene E-Mail-Adresse geschickt wurde, ein, um die Registrierung abzuschließen.",
+		verificationCode: "Verifikations-Code:",
+		verificationCodeError:
+			"Verifikation fehlgeschlagen. Bitte überprüfen Sie den Verifikations-Code und versuchen Sie es erneut.",
+		returnToRegistration: "Zurück zur Registrierung",
+		verify: "Verifizieren"
+	},
 	projectNature: {
 		parttime: "WerkstudentIn/ Teilzeitstelle",
 		internship: "Praktikum",
@@ -23,7 +33,7 @@ const translation = {
 	},
 	projectStatus: {
 		open: "Offen",
-		closed: "geschlossen",
+		closed: "Geschlossen",
 		completed: "Abgeschlossen"
 	},
 	userAttributes: {
@@ -38,7 +48,7 @@ const translation = {
 		duty: "Beruf",
 		PLZ: "Postleitzahl",
 		state: "Bundesland",
-		download: "Herunterladen",
+
 		title: "Akademischer Titel",
 		website: "Website",
 		linkedIn: "LinkedIn",
@@ -70,6 +80,7 @@ const translation = {
 		phoneNumberFormatError: "Telefonnummer hat ein ungültiges Format",
 		plzError: "Postleitzahl sollte 5 Ziffern lang sein",
 		positionError: "Die Politische Position muss länger als fünf Zeichen sein.",
+		fieldRequiredError: name => `${name} benötigt`,
 		blockMessage:
 			"Sie müssen die benötigten persönlichen Informationen (mit einem * markiert) eingeben, bevor Sie sci-com.org nutzen können.",
 		updateFailError:
@@ -178,16 +189,32 @@ const translation = {
 		accepted: "Angenommen",
 		accept: "Annehmen",
 		reject: "Ablehnen",
+		acceptRejectNotice: accepted =>
+			`Die Bewerbung wurde ${accepted ? "angenommen" : "abgelehnt"}`,
 		rejected: "Abgelehnt",
 		answersToQuestion: "Antworten auf die Fragen",
 		applicant: "Bewerber",
 		acceptedMessage: "Diese Bewerbung wurde angenommen.",
 		rejectedMessage: "Diese Bewerbung wurde abgelehnt."
 	},
+	deleteAccountPopup: {
+		title: "Account-Löschung bestätigen",
+		description:
+			"Sie sind dabei, Ihren Account zu löschen. Sind Sie sich sicher?",
+		delete: "Account löschen",
+		cancel: "Abbrechen"
+	},
+	applicationPopup: {
+		title: "Bitte beantworten Sie diese Fragen für Ihre Bewerbung",
+		yourAnswerPlaceholder: "Ihre Antwort...",
+		answerEmptyError: "Sie müssen eine Antwort eingeben",
+		submit: "Abschicken"
+	},
 	homePage: {
 		project: "Projekte",
 		applications: "Bewerbungen",
 		bookmarks: "Lesezeichen",
+		download: "Herunterladen",
 		editProfile: "Profil bearbeiten",
 		createProjectButton: "Projekt erstellen",
 		createQuickQuestionButton: "Forumsfrage erstellen"

@@ -79,7 +79,7 @@ class ApplicationDetails extends React.Component {
 	}
 	notifyAcceptRejectResult(accept = true) {
 		const time = 2000
-		toast(`The application has been ${accept ? "accepted" : "rejected"}.`, {
+		toast(Locale.applicationDetailsPopup.acceptRejectNotice(accept), {
 			autoClose: time
 		})
 		setTimeout(() => window.location.reload(), time)
