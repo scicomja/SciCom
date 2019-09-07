@@ -7,7 +7,7 @@ export const serverURL =
 		: "http://localhost:3000"
 
 export const colors = {
-	primary: "#3f3ce8",
+	primary: "#f55d42",
 	background: "#ffffff"
 }
 // server-side definition
