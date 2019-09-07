@@ -58,9 +58,9 @@ const translation = {
 		major: "Major"
 	},
 	header: {
-		search: "Suche",
-		logout: "Ausloggen",
-		aboutus: "Über uns"
+		search: "Great",
+		logout: "we got",
+		aboutus: "here"
 	},
 	newsPageCard: {
 		day: plural => (plural ? "Tagen" : "Tag"),
