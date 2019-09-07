@@ -59,7 +59,7 @@ const translation = {
 	},
 	header: {
 		search: "Great",
-		logout: "we got",
+		logout: "we did",
 		aboutus: "here"
 	},
 	newsPageCard: {
