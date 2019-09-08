@@ -35,3 +35,4 @@ docker-compose.yml
 *.pdf
 
 debug.log
+debug.log
