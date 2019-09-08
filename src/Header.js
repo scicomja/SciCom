@@ -50,19 +50,21 @@ class Header extends Component {
 		if (this.props.user) {
 			const { username } = this.props.user
 			return (
-				<Nav className="ml-auto" navbar>
+					<Nav className="ml-auto" navbar>
 					{this.getSearchNavItems()}
+										
+					<NavItem>
+						<NavLink href="/latest">{Locale.header.latest}</NavLink>
+					</NavItem>
+					
 					<NavItem>
 						<NavLink href="/user"> {username} </NavLink>
 					</NavItem>
+										
 					<NavItem>
 						<NavLink href="/" onClick={this.props.logout}>
 							{Locale.header.logout}
 						</NavLink>
-					</NavItem>
-
-					<NavItem>
-						<NavLink href="/about">{Locale.header.aboutus}</NavLink>
 					</NavItem>
 				</Nav>
 			)
@@ -81,7 +83,7 @@ class Header extends Component {
 	render() {
 		return (
 			<Navbar color="dark" style={style.header} dark expand="md">
-				<NavbarBrand href="/latest">
+				<NavbarBrand href="/about">
 					<img src={logo} alt="SciCom" style={style.logo} />
 				</NavbarBrand>
 				<NavbarToggler
