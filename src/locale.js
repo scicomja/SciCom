@@ -60,7 +60,8 @@ const translation = {
 	header: {
 		search: "Suche",
 		logout: "Ausloggen",
-		aboutus: "Über uns"
+		aboutus: "Über uns",
+		latest: "Aktuell"
 	},
 	newsPageCard: {
 		day: plural => (plural ? "Tagen" : "Tag"),
@@ -135,7 +136,7 @@ const translation = {
 		nature: "Projekttyp",
 		from: "Frühester Starttermin",
 		to: "Spätester Endtermin",
-		tags: "Suchtags (bitte mit Komma trennen)",
+		tags: "Schlagwörter (bitte mit Komma trennen)",
 		salary: "Gehalt (€ pro Monat)",
 		workingHours: "Arbeitszeit (pro Woche)",
 		qualication: "Vorausgesetzte Qualifikation",
