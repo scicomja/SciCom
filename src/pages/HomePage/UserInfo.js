@@ -42,7 +42,7 @@ export default class UserInfo extends React.Component {
 				value.indexOf("http") == 0
 					? value
 					: `https://www.linkedin.com/in/${value}`
-			displayValue = <a href={link}>{value}</a>
+			displayValue = <a href={link}>{"Profil"}</a>
 		}
 		return (
 			<div style={style.infoDetailContainer}>
@@ -52,7 +52,7 @@ export default class UserInfo extends React.Component {
 		)
 	}
 	getUserInfoFieldNames() {
-		let fields = "email,phone,state,city,PLZ,website,linkedIn"
+		let fields = "email,phone,PLZ,city,state,website,linkedIn"
 		if (this.props.user.isPolitician) {
 			fields += ",workingPhone,party,position,duty"
 		} else {
@@ -71,12 +71,13 @@ export default class UserInfo extends React.Component {
 					</div>
 					<Col style={style.nameColumn}>
 						<Row>
-							<div style={style.name}>{getName(user)}</div>
 							<div style={style.title}>{user.title}</div>
+							<div style={style.name}>{getName(user)}</div>							
 						</Row>
 						<Row>
 							{isUserHimself && (
-								<a href="/editInfo">
+								<a href="/editInfo" 
+									style={style.urlstyle}>
 									<Icon name="edit" />
 									{Locale.homePage.editProfile}
 								</a>
@@ -142,14 +143,16 @@ const style = {
 		flex: 8,
 		display: "flex",
 		flexDirection: "column",
-		justifyContent: "space-between"
+		//justifyContent: "space-between"
 	},
 	container: {
 		padding: 16
 	},
 	name: {
-		fontSize: 48,
-		display: "flex"
+		fontSize: 40,
+		display: "flex",
+		paddingLeft: 8,
+		paddingTop: 10,
 	},
 	createProjectButtonContainer: {
 		margin: 16
@@ -179,13 +182,18 @@ const style = {
 	},
 	title: {
 		display: "flex",
-		marginLeft: 16,
-		justifyContent: "center",
+		//marginLeft: 10,
+		//justifyContent: "center",
 		alignItems: "flex-end",
-		paddingBottom: 10,
-		fontSize: 20
+		//paddingBottom: 5,
+		paddingTop: 10,
+		fontSize: 40
 	},
 	infoDetail: {
 		textOverflow: "ellipsis"
+	},
+	urlstyle: {
+		fontSize: 24,
+		paddingLeft: 3,
 	}
 }
