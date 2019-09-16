@@ -8,7 +8,7 @@ export const serverURL =
 
 export const colors = {
 	primary: "#3070b3",
-	background: "#d9dadb"
+	background: "#d9dadb",
 }
 // server-side definition
 export const germanStates = [
