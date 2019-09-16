@@ -254,8 +254,6 @@ class EditInfoPage extends React.Component {
 										{this.textInput("linkedIn")}
 									</FormGroup>
 									<FormGroup row>
-										{this.textInput("PLZ", true)}
-										{this.textInput("city", true)}
 										<Col>
 											<Field
 												label={Locale.userAttributes.state + "(*)"}
@@ -267,6 +265,8 @@ class EditInfoPage extends React.Component {
 												}}
 											/>
 										</Col>
+										{this.textInput("city", true)}
+										{this.textInput("PLZ", true)}
 									</FormGroup>
 									<FormGroup row>
 										<Col>
