@@ -10,7 +10,7 @@
 		"formik": "^1.4.2",
 		"formik-persist": "^1.1.0",
 		"moment": "^2.24.0",
-		"node-sass": "^4.12.0",
+		"node-sass": "^7.0.0",
 		"react": "^16.7.0",
 		"react-avatar": "^3.5.0",
 		"react-chips": "^0.8.0",
